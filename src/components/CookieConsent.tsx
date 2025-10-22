@@ -75,9 +75,9 @@ export function CookieConsent() {
     setShowBanner(false);
     setShowSettings(false);
 
-    // Reload page to apply analytics if accepted
-    if (prefs.analytics) {
-      window.location.reload();
+    // Initialize Google Analytics if accepted (no reload needed)
+    if (prefs.analytics && typeof window !== 'undefined' && (window as any).gtag) {
+      console.log('Analytics enabled via cookie consent');
     }
   };
 
