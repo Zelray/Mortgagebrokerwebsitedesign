@@ -132,12 +132,12 @@ export function Footer() {
             - Logo is full size, form has no background container
             ========================================================================
           */}
-          <div className="space-y-6">
-            {/* Full Size Logo */}
+          <div>
+            {/* Full Size Logo - Aligned with other column headings */}
             <img 
               src={logo} 
               alt="Mortgage Genius" 
-              className="w-[90%] h-auto brightness-0 invert" 
+              className="w-[90%] h-auto brightness-0 invert mb-6" 
             />
             
             {/* ========== QUICK CONTACT FORM (No container background) ========== */}

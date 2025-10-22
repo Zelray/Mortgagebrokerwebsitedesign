@@ -50,7 +50,7 @@ export function Header() {
               <img 
                 src={logo} 
                 alt="Mortgage Genius" 
-                className="h-16 md:h-20 w-auto" 
+                className="h-20 md:h-24 w-auto" 
                 style={{ imageRendering: 'crisp-edges' }}
               />
             </a>
