@@ -201,9 +201,6 @@ export function Header() {
               <Phone className="w-4 h-4" />
               (321) 555-0199
             </a>
-            <div className="text-xs text-muted-foreground" aria-label="NMLS License Number">
-              NMLS #2280851
-            </div>
           </div>
 
           {/* Mobile Menu Button - Accessibility: ARIA labels, proper state */}
