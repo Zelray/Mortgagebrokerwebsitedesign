@@ -62,7 +62,7 @@ export function Header() {
             aria-label="Main navigation"
           >
             <a 
-              href="#" 
+              href="/" 
               className="text-sm text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-[#10b981] focus:ring-offset-2 rounded"
             >
               Home
@@ -162,7 +162,9 @@ export function Header() {
               HELOC
             </a>
             <a 
-              href="#" 
+              href="https://tinyurl.com/42xx3hzu" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-sm text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-[#10b981] focus:ring-offset-2 rounded"
             >
               Apply Online
@@ -175,20 +177,29 @@ export function Header() {
             </a>
           </nav>
 
-          {/* Phone Number - Accessibility: Proper tel link, ARIA label */}
+          {/* Client Login and Contact Info - Accessibility: Proper links, ARIA labels */}
           <div className="hidden lg:flex items-center gap-3">
             <Button 
               className="bg-[#10b981] hover:bg-[#059669] text-white focus:ring-2 focus:ring-[#10b981] focus:ring-offset-2"
               asChild
             >
               <a 
-                href="tel:+13215550199" 
-                aria-label="Call us at 321-555-0199"
+                href="https://mortgagegenius.morty.com/login" 
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Client Login"
               >
-                <Phone className="w-4 h-4 mr-2" />
-                (321) 555-0199
+                Client Login
               </a>
             </Button>
+            <a 
+              href="tel:+13215550199" 
+              className="flex items-center gap-1 text-sm text-[#003366] hover:text-[#10b981] transition-colors"
+              aria-label="Call us at 321-555-0199"
+            >
+              <Phone className="w-4 h-4" />
+              (321) 555-0199
+            </a>
             <div className="text-xs text-muted-foreground" aria-label="NMLS License Number">
               NMLS #2280851
             </div>
@@ -215,7 +226,7 @@ export function Header() {
             aria-label="Mobile navigation"
           >
             <nav className="flex flex-col gap-4">
-              <a href="#" className="text-sm text-foreground hover:text-primary transition-colors">
+              <a href="/" className="text-sm text-foreground hover:text-primary transition-colors">
                 Home
               </a>
               <div>
@@ -242,7 +253,7 @@ export function Header() {
               <a href="#" className="text-sm text-foreground hover:text-primary transition-colors">
                 HELOC
               </a>
-              <a href="#" className="text-sm text-foreground hover:text-primary transition-colors">
+              <a href="https://tinyurl.com/42xx3hzu" target="_blank" rel="noopener noreferrer" className="text-sm text-foreground hover:text-primary transition-colors">
                 Apply Online
               </a>
               <a href="#" className="text-sm text-foreground hover:text-primary transition-colors">
