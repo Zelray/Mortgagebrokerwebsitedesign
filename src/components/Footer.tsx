@@ -19,7 +19,8 @@
  * ============================================================================
  */
 
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin, Send } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -301,18 +302,20 @@ export function Footer() {
             <div className="flex flex-wrap items-center gap-4 text-xs">
               <p>© 2025 Mortgage Genius. All rights reserved.</p>
               {/* TIER 2: Legal Pages */}
-              <a href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a>
-              <a href="/terms" className="hover:text-white transition-colors">Terms of Service</a>
+              <Link to="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
+              <Link to="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</Link>
+              <Link to="/equal-housing-opportunity" className="hover:text-white transition-colors">Equal Housing Opportunity</Link>
+              <Link to="/sitemap" className="hover:text-white transition-colors">Sitemap</Link>
               <a href="https://www.nmlsconsumeraccess.org/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">NMLS Consumer Access</a>
             </div>
             <div className="flex items-center gap-4">
               {/* Equal Housing Opportunity Logo */}
-              <div className="flex items-center gap-2">
+              <Link to="/equal-housing-opportunity" className="flex items-center gap-2 hover:text-white transition-colors">
                 <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2L2 8v14h20V8L12 2zm0 2.5L19 8v11h-3v-6h-8v6H5V8l7-3.5zM9 14h6v5H9v-5z"/>
                 </svg>
                 <span className="text-xs">Equal Housing Lender | NMLS #2280851</span>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
