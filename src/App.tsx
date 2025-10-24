@@ -61,6 +61,7 @@ import { PrivacyPolicy } from './components/PrivacyPolicy';
 import { TermsOfService } from './components/TermsOfService';
 import { HtmlSitemap } from './components/HtmlSitemap';
 import { EqualHousingOpportunity } from './components/EqualHousingOpportunity';
+import { ScrollToTop } from './components/ScrollToTop';
 
 // HomePage component - all the homepage sections
 function HomePage() {
@@ -136,6 +137,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <ErrorBoundary>
         <SEOHead />
         <GoogleAnalytics 
