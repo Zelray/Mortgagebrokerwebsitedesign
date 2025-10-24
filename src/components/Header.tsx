@@ -17,6 +17,7 @@
  */
 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Phone, Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from './ui/button';
 import logo from 'figma:asset/e6340308c6134549e4377a10a79640b817e82f3d.png';
@@ -46,14 +47,14 @@ export function Header() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo - Accessibility: Wrapped in link, proper alt text */}
           <div className="flex items-center gap-3">
-            <a href="/" aria-label="Mortgage Genius Home">
+            <Link to="/" aria-label="Mortgage Genius Home">
               <img 
                 src={logo} 
                 alt="Mortgage Genius" 
                 className="h-20 md:h-24 w-auto" 
                 style={{ imageRendering: 'crisp-edges' }}
               />
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Navigation - Accessibility: Semantic nav tag, ARIA label */}
@@ -61,12 +62,12 @@ export function Header() {
             className="hidden md:flex items-center gap-6"
             aria-label="Main navigation"
           >
-            <a 
-              href="/" 
+            <Link 
+              to="/" 
               className="text-sm text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-[#10b981] focus:ring-offset-2 rounded"
             >
               Home
-            </a>
+            </Link>
             
             {/* Purchase Dropdown - Accessibility: ARIA attributes, keyboard support */}
             <div 
@@ -226,9 +227,9 @@ export function Header() {
             aria-label="Mobile navigation"
           >
             <nav className="flex flex-col gap-4">
-              <a href="/" className="text-sm text-foreground hover:text-primary transition-colors">
+              <Link to="/" className="text-sm text-foreground hover:text-primary transition-colors">
                 Home
-              </a>
+              </Link>
               <div>
                 <div className="font-semibold text-sm mb-2">Purchase</div>
                 <div className="pl-4 flex flex-col gap-2">

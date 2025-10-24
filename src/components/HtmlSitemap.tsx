@@ -62,9 +62,7 @@ export function HtmlSitemap() {
           <div>
             <h2 className="text-2xl font-bold text-[#003366] mb-4">Resources</h2>
             <ul className="space-y-2">
-              <li>
-                <Link to="/resources" className="text-[#10b981] hover:underline">Blog</Link>
-              </li>
+              <li className="text-gray-600">Blog articles are accessible from the homepage</li>
             </ul>
           </div>
 

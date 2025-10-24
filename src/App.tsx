@@ -15,13 +15,14 @@
  * ✅ Google Analytics & Tag Manager - Visitor tracking
  * ✅ Cookie Consent Banner - GDPR/CCPA compliance
  * ✅ Lead Capture System - Copper CRM + Database backup
- * ✅ Legal Pages - Privacy Policy, Terms of Service
+ * ✅ Legal Pages - Privacy Policy, Terms of Service, Equal Housing, Sitemap
  * 
  * TIER 3 FEATURES IMPLEMENTED:
  * ✅ Admin Dashboard - Content management system
  * ✅ Blog System - Create/edit/publish articles
  * ✅ User Authentication - Admin login with Supabase
  * ✅ Image Upload - Supabase Storage integration
+ * ✅ React Router - Multi-page navigation
  * 
  * NOTE FOR CODER: 
  * - Main content has id="main-content" for skip link functionality
@@ -33,7 +34,8 @@
  * ============================================================================
  */
 
-import { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { SEOHead } from './components/SEOHead';
 import { SkipToContent } from './components/SkipToContent';
@@ -55,149 +57,18 @@ import { AdminLogin } from './components/AdminLogin';
 import { AdminDashboard } from './components/AdminDashboard';
 import { BlogPostEditor } from './components/BlogPostEditor';
 import { BlogPostView } from './components/BlogPostView';
+import { PrivacyPolicy } from './components/PrivacyPolicy';
+import { TermsOfService } from './components/TermsOfService';
+import { HtmlSitemap } from './components/HtmlSitemap';
+import { EqualHousingOpportunity } from './components/EqualHousingOpportunity';
 
-type ViewMode = 'home' | 'admin-login' | 'admin-dashboard' | 'blog-editor' | 'blog-view';
-
-export default function App() {
-  const [viewMode, setViewMode] = useState<ViewMode>('home');
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [userRole, setUserRole] = useState<string>('');
-  const [editingPostId, setEditingPostId] = useState<string | null>(null);
-  const [viewingSlug, setViewingSlug] = useState<string | null>(null);
-
-  // Check URL path on mount to determine view
-  useEffect(() => {
-    const path = window.location.pathname;
-    
-    if (path.startsWith('/admin/login')) {
-      setViewMode('admin-login');
-    } else if (path.startsWith('/admin')) {
-      // Check if user has valid session
-      const savedToken = sessionStorage.getItem('admin_token');
-      const savedRole = sessionStorage.getItem('admin_role');
-      if (savedToken && savedRole) {
-        setAccessToken(savedToken);
-        setUserRole(savedRole);
-        setViewMode('admin-dashboard');
-      } else {
-        setViewMode('admin-login');
-      }
-    } else if (path.startsWith('/resources/')) {
-      const slug = path.replace('/resources/', '');
-      setViewingSlug(slug);
-      setViewMode('blog-view');
-    } else {
-      setViewMode('home');
-    }
-  }, []);
-
-  const handleLoginSuccess = (token: string, role: string) => {
-    setAccessToken(token);
-    setUserRole(role);
-    sessionStorage.setItem('admin_token', token);
-    sessionStorage.setItem('admin_role', role);
-    setViewMode('admin-dashboard');
-    window.history.pushState({}, '', '/admin');
-  };
-
-  const handleLogout = () => {
-    setAccessToken(null);
-    setUserRole('');
-    sessionStorage.removeItem('admin_token');
-    sessionStorage.removeItem('admin_role');
-    setViewMode('admin-login');
-    window.history.pushState({}, '', '/admin/login');
-  };
-
-  const handleEditPost = (postId: string | null) => {
-    setEditingPostId(postId);
-    setViewMode('blog-editor');
-  };
-
-  const handleBackToDashboard = () => {
-    setViewMode('admin-dashboard');
-  };
-
-  const handleBackToHome = () => {
-    setViewMode('home');
-    window.history.pushState({}, '', '/');
-  };
-
-  // Render based on view mode
-  if (viewMode === 'admin-login') {
-    return (
-      <ErrorBoundary>
-        <SEOHead />
-        <AdminLogin onLoginSuccess={handleLoginSuccess} />
-        <Toaster position="top-right" richColors />
-      </ErrorBoundary>
-    );
-  }
-
-  if (viewMode === 'admin-dashboard' && accessToken) {
-    return (
-      <ErrorBoundary>
-        <SEOHead />
-        <AdminDashboard
-          accessToken={accessToken}
-          userRole={userRole}
-          onLogout={handleLogout}
-          onEditPost={handleEditPost}
-        />
-        <Toaster position="top-right" richColors />
-      </ErrorBoundary>
-    );
-  }
-
-  if (viewMode === 'blog-editor' && accessToken) {
-    return (
-      <ErrorBoundary>
-        <SEOHead />
-        <BlogPostEditor
-          postId={editingPostId}
-          accessToken={accessToken}
-          onBack={handleBackToDashboard}
-        />
-        <Toaster position="top-right" richColors />
-      </ErrorBoundary>
-    );
-  }
-
-  if (viewMode === 'blog-view' && viewingSlug) {
-    return (
-      <ErrorBoundary>
-        <SEOHead />
-        <BlogPostView slug={viewingSlug} onBack={handleBackToHome} />
-        <Toaster position="top-right" richColors />
-      </ErrorBoundary>
-    );
-  }
-
-  // Default: Home page
+// HomePage component - all the homepage sections
+function HomePage() {
   return (
-    // ========== ERROR BOUNDARY: Catches React errors and shows fallback UI ==========
-    <ErrorBoundary>
-      {/* ========== SEO: Meta tags for search engines and social media ========== */}
-      <SEOHead />
-      
-      {/* ========== TIER 2: Google Analytics (only loads if cookies accepted) ========== */}
-      <GoogleAnalytics 
-        measurementId="G-XXXXXXXXXX"  // TODO: Replace with your GA4 ID
-        gtmId="GTM-XXXXXXX"            // TODO: Replace with your GTM ID
-      />
-      
-      {/* ========== ACCESSIBILITY: Skip to content link for keyboard users ========== */}
+    <>
       <SkipToContent />
-      
       <div className="min-h-screen bg-white">
         <Header />
-        
-        {/* 
-          Main content area with accessibility attributes:
-          - id="main-content": Target for skip link
-          - tabIndex={-1}: Allows programmatic focus (not in tab order)
-          - role="main": Semantic landmark for screen readers
-        */}
         <main 
           id="main-content" 
           tabIndex={-1}
@@ -214,15 +85,153 @@ export default function App() {
           <BlogPreview />
           <CTABanner />
         </main>
-        
         <Footer />
       </div>
-      
-      {/* ========== TIER 2: Cookie Consent Banner (GDPR/CCPA compliance) ========== */}
-      <CookieConsent />
-      
-      {/* ========== Toast Notifications (for form submissions and alerts) ========== */}
-      <Toaster position="top-right" richColors />
-    </ErrorBoundary>
+    </>
+  );
+}
+
+// StandardPage component - for legal pages with header and footer
+function StandardPage({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <SkipToContent />
+      <div className="min-h-screen bg-white">
+        <Header />
+        <main id="main-content" tabIndex={-1} role="main" className="focus:outline-none">
+          {children}
+        </main>
+        <Footer />
+      </div>
+    </>
+  );
+}
+
+export default function App() {
+  const [accessToken, setAccessToken] = useState<string | null>(
+    () => sessionStorage.getItem('admin_token')
+  );
+  const [userRole, setUserRole] = useState<string>(
+    () => sessionStorage.getItem('admin_role') || ''
+  );
+  const [editingPostId, setEditingPostId] = useState<string | null>(null);
+
+  const handleLoginSuccess = (token: string, role: string) => {
+    setAccessToken(token);
+    setUserRole(role);
+    sessionStorage.setItem('admin_token', token);
+    sessionStorage.setItem('admin_role', role);
+  };
+
+  const handleLogout = () => {
+    setAccessToken(null);
+    setUserRole('');
+    sessionStorage.removeItem('admin_token');
+    sessionStorage.removeItem('admin_role');
+  };
+
+  const handleEditPost = (postId: string | null) => {
+    setEditingPostId(postId);
+  };
+
+  return (
+    <BrowserRouter>
+      <ErrorBoundary>
+        <SEOHead />
+        <GoogleAnalytics 
+          measurementId="G-XXXXXXXXXX"
+          gtmId="GTM-XXXXXXX"
+        />
+        
+        <Routes>
+          {/* Homepage */}
+          <Route path="/" element={<HomePage />} />
+          
+          {/* Legal Pages */}
+          <Route 
+            path="/privacy-policy" 
+            element={
+              <StandardPage>
+                <PrivacyPolicy />
+              </StandardPage>
+            } 
+          />
+          <Route 
+            path="/terms-of-service" 
+            element={
+              <StandardPage>
+                <TermsOfService />
+              </StandardPage>
+            } 
+          />
+          <Route 
+            path="/equal-housing-opportunity" 
+            element={
+              <StandardPage>
+                <EqualHousingOpportunity />
+              </StandardPage>
+            } 
+          />
+          <Route 
+            path="/sitemap" 
+            element={
+              <StandardPage>
+                <HtmlSitemap />
+              </StandardPage>
+            } 
+          />
+          
+          {/* Blog */}
+          <Route 
+            path="/resources/:slug" 
+            element={
+              <StandardPage>
+                <BlogPostView 
+                  slug={window.location.pathname.split('/resources/')[1] || ''} 
+                />
+              </StandardPage>
+            } 
+          />
+          
+          {/* Admin Routes */}
+          <Route 
+            path="/admin/login" 
+            element={<AdminLogin onLoginSuccess={handleLoginSuccess} />} 
+          />
+          <Route 
+            path="/admin" 
+            element={
+              accessToken ? (
+                <AdminDashboard
+                  accessToken={accessToken}
+                  userRole={userRole}
+                  onLogout={handleLogout}
+                  onEditPost={handleEditPost}
+                />
+              ) : (
+                <Navigate to="/admin/login" replace />
+              )
+            } 
+          />
+          <Route 
+            path="/admin/editor" 
+            element={
+              accessToken ? (
+                <BlogPostEditor
+                  postId={editingPostId}
+                  accessToken={accessToken}
+                  onBack={() => window.history.back()}
+                />
+              ) : (
+                <Navigate to="/admin/login" replace />
+              )
+            } 
+          />
+        </Routes>
+        
+        <CookieConsent />
+        <Toaster position="top-right" richColors />
+      </ErrorBoundary>
+    </BrowserRouter>
   );
 }
