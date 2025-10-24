@@ -1,5 +1,22 @@
+import React, { useEffect, useState } from 'react';
 import { MessageCircle, Sparkles } from 'lucide-react';
-import { useEffect, useState } from 'react';
+
+function TypebotEmbed() {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'module';
+    script.src = 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0.3/dist/web.js';
+    document.body.appendChild(script);
+
+    return () => {
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
+    };
+  }, []);
+
+  return <typebot-standard typebot="lead-generation-gfek6cj" style={{ width: "100%", height: "600px" }} />;
+}
 
 export function HeroSection() {
   const [typedText, setTypedText] = useState('');
@@ -128,53 +145,8 @@ export function HeroSection() {
               </div>
 
               {/* Chatbot Embed Area */}
-              <div className="p-8 min-h-[400px] bg-gradient-to-br from-gray-50 to-white">
-                {/* Placeholder Content */}
-                <div className="space-y-6">
-                  {/* Mock Chat Bubble 1 */}
-                  <div className="flex gap-3 animate-fade-in">
-                    <div className="w-8 h-8 bg-gradient-to-br from-[#003366] to-[#1e40af] rounded-full flex-shrink-0 flex items-center justify-center text-white text-sm font-bold">
-                      MG
-                    </div>
-                    <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-sm p-4 shadow-sm max-w-xs">
-                      <p className="text-sm text-gray-800">Hi! 👋 I'm here to help you find the perfect mortgage. Are you looking to purchase a home or refinance?</p>
-                    </div>
-                  </div>
-
-                  {/* Mock Response Buttons - Accessibility: ARIA labels, proper semantics */}
-                  <div className="flex flex-col gap-3 ml-11 animate-fade-in animation-delay-500">
-                    <button 
-                      className="bg-gradient-to-r from-[#10b981] to-[#14b8a6] hover:from-[#059669] hover:to-[#0d9488] text-white rounded-xl px-6 py-3 text-sm font-semibold shadow-lg hover:shadow-xl transition-all text-left group focus:outline-none focus:ring-4 focus:ring-[#10b981]/50"
-                      aria-label="I want to purchase a home"
-                    >
-                      🏠 Purchase a Home
-                      <div className="text-xs text-white/80 mt-1">First-time or moving up</div>
-                    </button>
-                    <button 
-                      className="bg-gradient-to-r from-[#06b6d4] to-[#0ea5e9] hover:from-[#0891b2] hover:to-[#0284c7] text-white rounded-xl px-6 py-3 text-sm font-semibold shadow-lg hover:shadow-xl transition-all text-left group focus:outline-none focus:ring-4 focus:ring-[#06b6d4]/50"
-                      aria-label="I want to refinance my mortgage"
-                    >
-                      💰 Refinance
-                      <div className="text-xs text-white/80 mt-1">Lower your rate or cash out</div>
-                    </button>
-                    <button className="bg-gradient-to-r from-[#a855f7] to-[#ec4899] hover:from-[#9333ea] hover:to-[#db2777] text-white rounded-xl px-6 py-3 text-sm font-semibold shadow-lg hover:shadow-xl transition-all text-left group">
-                      💬 Talk to an Expert
-                      <div className="text-xs text-white/80 mt-1">Get personalized help now</div>
-                    </button>
-                  </div>
-
-                  {/* Typebot Embed Instructions */}
-                  <div className="mt-8 p-4 bg-blue-50 border-2 border-dashed border-blue-300 rounded-xl">
-                    <p className="text-xs text-blue-900 font-semibold mb-2">🔌 Chatbot Integration Ready</p>
-                    <p className="text-xs text-blue-700">
-                      Replace this placeholder with your Typebot embed code. 
-                      The chatbot will appear here with full styling intact.
-                    </p>
-                    <div className="mt-3 bg-white rounded-lg p-3 font-mono text-xs text-gray-600 border border-blue-200">
-                      {`<!-- Paste Typebot embed here -->`}
-                    </div>
-                  </div>
-                </div>
+              <div className="bg-gradient-to-br from-gray-50 to-white">
+                <TypebotEmbed />
               </div>
 
               {/* Footer */}

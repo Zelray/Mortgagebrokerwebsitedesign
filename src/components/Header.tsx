@@ -16,7 +16,7 @@
  * ============================================================================
  */
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Phone, Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from './ui/button';
 import logo from 'figma:asset/e6340308c6134549e4377a10a79640b817e82f3d.png';
@@ -70,7 +70,7 @@ export function Header() {
             
             {/* Purchase Dropdown - Accessibility: ARIA attributes, keyboard support */}
             <div 
-              className="relative"
+              className="relative group"
               onMouseEnter={() => setActiveDropdown('purchase')}
               onMouseLeave={() => setActiveDropdown(null)}
             >
@@ -85,10 +85,11 @@ export function Header() {
               </button>
               {activeDropdown === 'purchase' && (
                 <div 
-                  className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border p-2 animate-in fade-in slide-in-from-top-2"
+                  className="absolute top-full left-0 pt-2"
                   role="menu"
                   aria-label="Purchase loan options"
                 >
+                  <div className="w-56 bg-white rounded-lg shadow-xl border p-2 animate-in fade-in slide-in-from-top-2">
                   <a href="#" className="block px-4 py-2 text-sm rounded-md hover:bg-muted transition-colors focus:outline-none focus:bg-muted" role="menuitem">
                     General Info
                   </a>
@@ -110,13 +111,14 @@ export function Header() {
                   <a href="#" className="block px-4 py-2 text-sm rounded-md hover:bg-muted transition-colors focus:outline-none focus:bg-muted" role="menuitem">
                     First Time Homebuyers
                   </a>
+                  </div>
                 </div>
               )}
             </div>
 
             {/* Refinance Dropdown - Accessibility: ARIA attributes, keyboard support */}
             <div 
-              className="relative"
+              className="relative group"
               onMouseEnter={() => setActiveDropdown('refinance')}
               onMouseLeave={() => setActiveDropdown(null)}
             >
@@ -131,10 +133,11 @@ export function Header() {
               </button>
               {activeDropdown === 'refinance' && (
                 <div 
-                  className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border p-2 animate-in fade-in slide-in-from-top-2"
+                  className="absolute top-full left-0 pt-2"
                   role="menu"
                   aria-label="Refinance loan options"
                 >
+                  <div className="w-56 bg-white rounded-lg shadow-xl border p-2 animate-in fade-in slide-in-from-top-2">
                   <a href="#" className="block px-4 py-2 text-sm rounded-md hover:bg-muted transition-colors focus:outline-none focus:bg-muted" role="menuitem">
                     General Info
                   </a>
@@ -147,6 +150,7 @@ export function Header() {
                   <a href="#" className="block px-4 py-2 text-sm rounded-md hover:bg-muted transition-colors focus:outline-none focus:bg-muted" role="menuitem">
                     FHA Streamline
                   </a>
+                  </div>
                 </div>
               )}
             </div>
