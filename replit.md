@@ -80,7 +80,8 @@ The server binds to `0.0.0.0:5000` and is configured for Replit's proxy environm
 This project is configured for the Replit environment:
 - Port: 5000 (frontend)
 - Host: 0.0.0.0 (allows external connections)
-- HMR configured for Replit's WSS proxy
+- Allowed hosts: true (permits Replit's dynamic proxy domains)
+- HMR configured for Replit's WSS proxy using REPLIT_DEV_DOMAIN environment variable
 
 ### File Structure
 
