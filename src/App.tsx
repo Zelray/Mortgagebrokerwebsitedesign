@@ -83,6 +83,8 @@ import { VAStreamline } from './components/arizona/va/VAStreamline';
 import { ArizonaHELOC } from './components/arizona/ArizonaHELOC';
 import { ArizonaJumboMortgage } from './components/arizona/ArizonaJumboMortgage';
 import { ArizonaUSDALoans } from './components/arizona/ArizonaUSDALoans';
+import { FloridaMortgageBroker } from './components/florida/FloridaMortgageBroker';
+import { TexasMortgageBroker } from './components/texas/TexasMortgageBroker';
 
 // HomePage component - all the homepage sections
 function HomePage() {
@@ -202,6 +204,12 @@ export default function App() {
           <Route path="/az/heloc" element={<ArizonaHELOC />} />
           <Route path="/az/jumbo-mortgage" element={<ArizonaJumboMortgage />} />
           <Route path="/az/usda-loans" element={<ArizonaUSDALoans />} />
+          
+          {/* Florida Pages */}
+          <Route path="/fl-mortgage-broker" element={<FloridaMortgageBroker />} />
+          
+          {/* Texas Pages */}
+          <Route path="/tx-mortgage-broker" element={<TexasMortgageBroker />} />
           
           {/* Legal Pages */}
           <Route 
