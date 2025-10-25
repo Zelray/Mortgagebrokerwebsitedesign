@@ -117,6 +117,26 @@ export function HtmlSitemap() {
             </ul>
           </div>
 
+          {/* Florida Loans */}
+          <div>
+            <h2 className="text-2xl font-bold text-[#003366] mb-4">Florida Loans</h2>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/fl-mortgage-broker" className="text-[#10b981] hover:underline">Florida Mortgage Loans</Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Texas Loans */}
+          <div>
+            <h2 className="text-2xl font-bold text-[#003366] mb-4">Texas Loans</h2>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/tx-mortgage-broker" className="text-[#10b981] hover:underline">Texas Mortgage Loans</Link>
+              </li>
+            </ul>
+          </div>
+
           {/* Resources */}
           <div>
             <h2 className="text-2xl font-bold text-[#003366] mb-4">Resources</h2>
