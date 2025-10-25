@@ -36,6 +36,7 @@
 
 import React, { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { SEOHead } from './components/SEOHead';
 import { SkipToContent } from './components/SkipToContent';
@@ -62,6 +63,26 @@ import { TermsOfService } from './components/TermsOfService';
 import { HtmlSitemap } from './components/HtmlSitemap';
 import { EqualHousingOpportunity } from './components/EqualHousingOpportunity';
 import { ScrollToTop } from './components/ScrollToTop';
+import { BuyersPrequalification } from './components/BuyersPrequalification';
+import { PurchaseGeneralInfo } from './components/PurchaseGeneralInfo';
+import { RefinanceGeneralInfo } from './components/RefinanceGeneralInfo';
+import { ArizonaMortgageBroker } from './components/arizona/ArizonaMortgageBroker';
+import { ArizonaPurchase } from './components/arizona/ArizonaPurchase';
+import { FirstTimeHomebuyers } from './components/arizona/buyers/FirstTimeHomebuyers';
+import { FHALoan } from './components/arizona/buyers/FHALoan';
+import { ConventionalMortgage } from './components/arizona/buyers/ConventionalMortgage';
+import { VALoanPurchase } from './components/arizona/buyers/VALoanPurchase';
+import { USDALoan } from './components/arizona/buyers/USDALoan';
+import { JumboLoan } from './components/arizona/buyers/JumboLoan';
+import { ArizonaRefinance } from './components/arizona/ArizonaRefinance';
+import { FHAStreamline } from './components/arizona/refinance/FHAStreamline';
+import { JumboRefinance } from './components/arizona/refinance/JumboRefinance';
+import { ConventionalRefinance } from './components/arizona/refinance/ConventionalRefinance';
+import { ArizonaVALoans } from './components/arizona/ArizonaVALoans';
+import { VAStreamline } from './components/arizona/va/VAStreamline';
+import { ArizonaHELOC } from './components/arizona/ArizonaHELOC';
+import { ArizonaJumboMortgage } from './components/arizona/ArizonaJumboMortgage';
+import { ArizonaUSDALoans } from './components/arizona/ArizonaUSDALoans';
 
 // HomePage component - all the homepage sections
 function HomePage() {
@@ -136,9 +157,10 @@ export default function App() {
   };
 
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <ErrorBoundary>
+    <HelmetProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <ErrorBoundary>
         <SEOHead />
         <GoogleAnalytics 
           measurementId="G-XXXXXXXXXX"
@@ -148,6 +170,38 @@ export default function App() {
         <Routes>
           {/* Homepage */}
           <Route path="/" element={<HomePage />} />
+          
+          {/* Top-Level Pages */}
+          <Route path="/prequal" element={<BuyersPrequalification />} />
+          <Route path="/purchase" element={<PurchaseGeneralInfo />} />
+          <Route path="/refinance" element={<RefinanceGeneralInfo />} />
+          
+          {/* Arizona Pages */}
+          <Route path="/az-mortgage-broker" element={<ArizonaMortgageBroker />} />
+          
+          {/* Arizona Purchase Pages */}
+          <Route path="/az/buyers" element={<ArizonaPurchase />} />
+          <Route path="/az/buyers/first-time-homebuyers" element={<FirstTimeHomebuyers />} />
+          <Route path="/az/buyers/fha-loan" element={<FHALoan />} />
+          <Route path="/az/buyers/conventional-mortgage" element={<ConventionalMortgage />} />
+          <Route path="/az/buyers/va-loan-purchase" element={<VALoanPurchase />} />
+          <Route path="/az/buyers/usda-loan" element={<USDALoan />} />
+          <Route path="/az/buyers/jumbo-loan" element={<JumboLoan />} />
+          
+          {/* Arizona Refinance Pages */}
+          <Route path="/az/refi" element={<ArizonaRefinance />} />
+          <Route path="/az/refi/refinance-fha-mortgage" element={<FHAStreamline />} />
+          <Route path="/az/refi/refinance-my-jumbo" element={<JumboRefinance />} />
+          <Route path="/az/refi/refinance-my-mortgage" element={<ConventionalRefinance />} />
+          
+          {/* Arizona VA Loans Pages */}
+          <Route path="/az/va-loans" element={<ArizonaVALoans />} />
+          <Route path="/az/va-loans/va-refinance" element={<VAStreamline />} />
+          
+          {/* Arizona Specialty Pages */}
+          <Route path="/az/heloc" element={<ArizonaHELOC />} />
+          <Route path="/az/jumbo-mortgage" element={<ArizonaJumboMortgage />} />
+          <Route path="/az/usda-loans" element={<ArizonaUSDALoans />} />
           
           {/* Legal Pages */}
           <Route 
@@ -234,6 +288,7 @@ export default function App() {
         <CookieConsent />
         <Toaster position="top-right" richColors />
       </ErrorBoundary>
-    </BrowserRouter>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
