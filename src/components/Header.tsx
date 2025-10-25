@@ -51,11 +51,13 @@ export function Header() {
               <img 
                 src={logo} 
                 alt="Mortgage Genius" 
-                className="h-12 md:h-16 w-auto object-contain"
+                className="w-[180px] sm:w-[220px] md:w-[250px] h-auto object-contain"
                 style={{ 
                   imageRendering: 'crisp-edges',
                   filter: 'brightness(1.1) contrast(1.1)'
                 }}
+                width="250"
+                height="auto"
               />
             </Link>
           </div>
