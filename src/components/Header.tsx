@@ -20,7 +20,6 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from './ui/button';
-import logo from 'figma:asset/e6340308c6134549e4377a10a79640b817e82f3d.png';
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -47,13 +46,13 @@ export function Header() {
         <div className="flex h-24 md:h-28 items-center justify-between">
           {/* Logo - Accessibility: Wrapped in link, proper alt text */}
           <div className="flex items-center gap-3">
-            <Link to="/" aria-label="Mortgage Genius Home">
-              <img 
-                src={logo} 
-                alt="Mortgage Genius" 
-                className="h-20 md:h-24 w-auto" 
-                style={{ imageRendering: 'crisp-edges' }}
-              />
+            <Link to="/" aria-label="Mortgage Genius Home" className="flex flex-col">
+              <span className="text-2xl md:text-3xl font-bold text-[#003366] leading-tight">
+                Mortgage Genius
+              </span>
+              <span className="text-xs text-[#10b981] font-medium">
+                Has Low Rates
+              </span>
             </Link>
           </div>
 
