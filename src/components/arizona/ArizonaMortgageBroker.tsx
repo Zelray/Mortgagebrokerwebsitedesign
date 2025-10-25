@@ -5,6 +5,11 @@ import { Footer } from '../Footer';
 import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronDown, MapPin, TrendingUp, Shield } from 'lucide-react';
 
+// Import Arizona images
+import azFlag from '../../../attached_assets/stock_images/arizona_state_flag_fe37bd55.jpg';
+import phoenixSkyline from '../../../attached_assets/stock_images/phoenix_arizona_skyl_06166dec.jpg';
+import azDesert from '../../../attached_assets/stock_images/arizona_desert_lands_23b1f0f3.jpg';
+
 export function ArizonaMortgageBroker() {
   return (
     <>
@@ -304,6 +309,57 @@ export function ArizonaMortgageBroker() {
                     </a>
                     , ensuring consumer protection and fair lending practices.
                   </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Arizona Mortgage Information Paragraph */}
+            <div className="bg-white rounded-xl p-8 shadow-md border border-gray-100 mb-10 animate-fade-in-up">
+              <div className="flex flex-col md:flex-row gap-6">
+                <img 
+                  src={azFlag} 
+                  alt="arizona-flag" 
+                  title="arizona-flag"
+                  className="w-32 h-24 object-cover rounded-lg shadow-md flex-shrink-0"
+                />
+                <div className="flex-1">
+                  <p className="text-gray-700 leading-relaxed mb-6">
+                    As a licensed mortgage broker serving the Grand Canyon State, we understand the unique characteristics 
+                    of Arizona's diverse real estate landscape. From the bustling Phoenix metropolitan area—the nation's 
+                    5th largest city—to Tucson's historic neighborhoods, Flagstaff's mountain communities, and the growing 
+                    retirement havens of Prescott and Sedona, each Arizona market presents distinct opportunities for homebuyers 
+                    and homeowners. Our expertise in Arizona-specific loan programs, including first-time homebuyer assistance 
+                    through the Arizona Housing Finance Authority, down payment assistance programs, and energy-efficient 
+                    mortgage options for desert-climate homes, ensures you receive financing tailored to Arizona's unique environment.
+                  </p>
+                  
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <img 
+                        src={phoenixSkyline} 
+                        alt="Phoenix Arizona downtown skyline showing urban growth and real estate development opportunities" 
+                        title="Phoenix Arizona Skyline - Urban Real Estate Market"
+                        className="w-full h-48 object-cover rounded-lg shadow-md mb-3"
+                      />
+                      <p className="text-sm text-gray-600 leading-relaxed">
+                        Phoenix and the surrounding Valley of the Sun continue to attract thousands of new residents annually, 
+                        creating robust demand for both purchase and refinance mortgages across all price ranges.
+                      </p>
+                    </div>
+                    
+                    <div>
+                      <img 
+                        src={azDesert} 
+                        alt="Arizona desert landscape with saguaro cactus and mountain views typical of Arizona residential properties" 
+                        title="Arizona Desert Landscape - Natural Beauty and Home Values"
+                        className="w-full h-48 object-cover rounded-lg shadow-md mb-3"
+                      />
+                      <p className="text-sm text-gray-600 leading-relaxed">
+                        Arizona's stunning natural beauty—from desert vistas to mountain ranges—enhances property values and 
+                        quality of life, making it one of the most desirable states for relocation and real estate investment.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
