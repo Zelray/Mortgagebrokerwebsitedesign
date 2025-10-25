@@ -55,20 +55,27 @@ export function ArizonaMortgageBroker() {
             }} />
           </div>
 
+          {/* Floating Particles */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-20 left-[10%] w-2 h-2 bg-white/30 rounded-full animate-float" />
+            <div className="absolute top-40 left-[25%] w-3 h-3 bg-white/20 rounded-full animate-float animation-delay-1000" />
+            <div className="absolute top-32 left-[40%] w-2 h-2 bg-white/25 rounded-full animate-float animation-delay-2000" />
+            <div className="absolute top-60 left-[55%] w-2 h-2 bg-white/30 rounded-full animate-float animation-delay-3000" />
+            <div className="absolute top-28 left-[70%] w-3 h-3 bg-white/20 rounded-full animate-float animation-delay-1500" />
+            <div className="absolute top-48 left-[85%] w-2 h-2 bg-white/25 rounded-full animate-float animation-delay-2500" />
+            <div className="absolute top-36 left-[15%] w-2 h-2 bg-white/20 rounded-full animate-float animation-delay-500" />
+            <div className="absolute top-56 left-[60%] w-2 h-2 bg-white/30 rounded-full animate-float animation-delay-3500" />
+          </div>
+
           {/* Content */}
           <div className="relative container mx-auto px-4 py-16 max-w-5xl">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 animate-fade-in-up">
               Arizona Mortgage Loans
             </h1>
-            <p className="text-xl text-white/90 leading-relaxed mb-6 animate-fade-in-up animation-delay-200">
+            <p className="text-xl text-white/90 leading-relaxed animate-fade-in-up animation-delay-200">
               Welcome to Arizona's trusted mortgage partner. Whether you're purchasing your first home in Phoenix, 
               refinancing in Tucson, or securing a vacation property in Sedona, we're here to help you navigate 
               Arizona's dynamic real estate market with competitive rates and personalized service.
-            </p>
-            <p className="text-lg text-white/80 leading-relaxed animate-fade-in-up animation-delay-400">
-              As a licensed mortgage broker in the State of Arizona, we work with multiple lenders to find you 
-              the best rates and terms for your unique situation. Our expertise covers all major Arizona markets 
-              including Phoenix, Tucson, Mesa, Chandler, Scottsdale, Glendale, Gilbert, Tempe, and beyond.
             </p>
           </div>
         </div>
@@ -80,9 +87,14 @@ export function ArizonaMortgageBroker() {
               <h2 className="text-3xl md:text-4xl font-bold text-[#003366] mb-4">
                 Arizona Mortgage Loan Programs
               </h2>
-              <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+              <p className="text-gray-600 text-lg max-w-3xl mx-auto mb-4">
                 Explore our comprehensive range of mortgage solutions designed specifically for Arizona homebuyers 
                 and homeowners. Click each section to learn more and find the right loan for your needs.
+              </p>
+              <p className="text-gray-700 text-base max-w-3xl mx-auto leading-relaxed">
+                As a licensed mortgage broker in the State of Arizona, we work with multiple lenders to find you 
+                the best rates and terms for your unique situation. Our expertise covers all major Arizona markets 
+                including Phoenix, Tucson, Mesa, Chandler, Scottsdale, Glendale, Gilbert, Tempe, and beyond.
               </p>
             </div>
 
@@ -94,11 +106,11 @@ export function ArizonaMortgageBroker() {
               >
                 <Accordion.Header>
                   <Accordion.Trigger className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-gray-50 transition-colors group">
-                    <div className="flex items-center space-x-4 md:space-x-6">
+                    <div className="flex items-center space-x-5 md:space-x-6 flex-1">
                       <div className="w-16 h-16 bg-gradient-to-br from-[#10b981] to-[#059669] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
                         <Home className="w-8 h-8 text-white" />
                       </div>
-                      <div>
+                      <div className="flex-1 pr-4">
                         <h3 className="text-xl md:text-2xl font-bold text-[#003366] mb-1">Arizona Home Purchase Loans</h3>
                         <p className="text-gray-600 text-sm md:text-base">Find the perfect financing for your Arizona dream home</p>
                       </div>
@@ -174,11 +186,11 @@ export function ArizonaMortgageBroker() {
               >
                 <Accordion.Header>
                   <Accordion.Trigger className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-gray-50 transition-colors group">
-                    <div className="flex items-center space-x-4 md:space-x-6">
+                    <div className="flex items-center space-x-5 md:space-x-6 flex-1">
                       <div className="w-16 h-16 bg-gradient-to-br from-[#003366] to-[#1e40af] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
                         <RefreshCw className="w-8 h-8 text-white" />
                       </div>
-                      <div>
+                      <div className="flex-1 pr-4">
                         <h3 className="text-xl md:text-2xl font-bold text-[#003366] mb-1">Arizona Mortgage Refinance</h3>
                         <p className="text-gray-600 text-sm md:text-base">Lower your rate, reduce payments, or tap into equity</p>
                       </div>
@@ -241,11 +253,11 @@ export function ArizonaMortgageBroker() {
               >
                 <Accordion.Header>
                   <Accordion.Trigger className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-gray-50 transition-colors group">
-                    <div className="flex items-center space-x-4 md:space-x-6">
+                    <div className="flex items-center space-x-5 md:space-x-6 flex-1">
                       <div className="w-16 h-16 bg-gradient-to-br from-[#10b981] to-[#059669] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
                         <PiggyBank className="w-8 h-8 text-white" />
                       </div>
-                      <div>
+                      <div className="flex-1 pr-4">
                         <h3 className="text-xl md:text-2xl font-bold text-[#003366] mb-1">Home Equity Loans & HELOCs</h3>
                         <p className="text-gray-600 text-sm md:text-base">Access your Arizona home's equity for any purpose</p>
                       </div>
