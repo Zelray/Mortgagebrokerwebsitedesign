@@ -223,8 +223,8 @@ export function TexasMortgageBroker() {
               <div className="flex flex-col md:flex-row gap-6">
                 <img 
                   src={txFlag} 
-                  alt="texas-flag" 
-                  title="texas-flag"
+                  alt="Texas state flag with lone star and red white blue colors" 
+                  title="Texas State Flag - Lone Star State Symbol"
                   className="w-32 h-24 object-cover rounded-lg shadow-md flex-shrink-0"
                 />
                 <div className="flex-1">
@@ -243,7 +243,7 @@ export function TexasMortgageBroker() {
                       <img 
                         src={dallasSkyline} 
                         alt="Dallas Texas downtown skyline showing metropolitan growth and urban real estate development" 
-                        title="Dallas Texas Skyline - Urban Economic Growth"
+                        title="Dallas Texas Downtown Skyline - Metropolitan Growth and Urban Real Estate Development"
                         className="w-full h-48 object-cover rounded-lg shadow-md mb-3"
                       />
                       <p className="text-sm text-gray-600 leading-relaxed">
@@ -256,7 +256,7 @@ export function TexasMortgageBroker() {
                       <img 
                         src={txLandscape} 
                         alt="Texas landscape countryside with open space representing rural property and ranch land opportunities" 
-                        title="Texas Landscape - Rural and Ranch Properties"
+                        title="Texas Wide Open Landscape - Rural Properties and Ranch Land Investment Opportunities"
                         className="w-full h-48 object-cover rounded-lg shadow-md mb-3"
                       />
                       <p className="text-sm text-gray-600 leading-relaxed">

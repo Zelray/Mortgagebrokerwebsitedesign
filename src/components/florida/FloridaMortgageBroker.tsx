@@ -223,8 +223,8 @@ export function FloridaMortgageBroker() {
               <div className="flex flex-col md:flex-row gap-6">
                 <img 
                   src={flFlag} 
-                  alt="florida-flag" 
-                  title="florida-flag"
+                  alt="Florida state flag with red cross and state seal" 
+                  title="Florida State Flag - Sunshine State Symbol"
                   className="w-32 h-24 object-cover rounded-lg shadow-md flex-shrink-0"
                 />
                 <div className="flex-1">
@@ -243,7 +243,7 @@ export function FloridaMortgageBroker() {
                       <img 
                         src={miamiSkyline} 
                         alt="Miami Florida downtown skyline waterfront showing urban growth and coastal real estate market" 
-                        title="Miami Florida Skyline - Coastal Urban Development"
+                        title="Miami Florida Downtown Skyline - Coastal Urban Development and Real Estate Growth"
                         className="w-full h-48 object-cover rounded-lg shadow-md mb-3"
                       />
                       <p className="text-sm text-gray-600 leading-relaxed">
@@ -256,7 +256,7 @@ export function FloridaMortgageBroker() {
                       <img 
                         src={flBeach} 
                         alt="Florida beach coastline with palm trees and tropical waters representing coastal property lifestyle" 
-                        title="Florida Beach - Coastal Living and Property Values"
+                        title="Florida Tropical Beach - Coastal Living Lifestyle and Waterfront Property Values"
                         className="w-full h-48 object-cover rounded-lg shadow-md mb-3"
                       />
                       <p className="text-sm text-gray-600 leading-relaxed">
