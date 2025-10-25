@@ -207,9 +207,14 @@ The `src/supabase/functions/` directory contains Deno-based Edge Functions for S
 - Integrated Recharts visualizations: line charts, bar charts, and amortization schedules
 - Hero section features happy couple image with CTA buttons
 - All calculations use accurate mortgage formulas (no external dependencies)
+- Fixed calculation accuracy: proper debt interest rate usage, amortization logic, and savings display
+- Savings display intelligently shows positive savings (green) or warnings when HELOC costs more (orange)
 - Responsive design matching existing site patterns
 - SEO-optimized with descriptive meta title and description
-- Added to HTML Sitemap under General Loan Info section
+- Added HELOC link to Header navigation menu
+- Added HELOC card to "Find Your Perfect Loan" section on homepage with link to /heloc
+- Made all loan program cards clickable with links to their respective pages
+- Already added to HTML Sitemap under General Loan Info section
 
 **October 25, 2025 - Florida and Texas State Pages:**
 - Created Florida mortgage broker page at `/fl-mortgage-broker` with original content

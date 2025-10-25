@@ -161,12 +161,12 @@ export function Header() {
               )}
             </div>
 
-            <a 
-              href="#" 
+            <Link 
+              to="/heloc" 
               className="text-sm text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-[#10b981] focus:ring-offset-2 rounded"
             >
               HELOC
-            </a>
+            </Link>
             <a 
               href="https://tinyurl.com/42xx3hzu" 
               target="_blank"

@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Button } from './ui/button';
 
@@ -10,7 +11,8 @@ export function LoanProgramsGrid() {
       image: "https://images.unsplash.com/photo-1591110105952-bbbb956d7063?w=600&h=400&fit=crop&auto=format&q=75",
       alt: "Proud veteran homeowner smiling",
       badge: "0% Down",
-      badgeColor: "bg-[#10b981]"
+      badgeColor: "bg-[#10b981]",
+      link: "/az/buyers/va-loan-purchase"
     },
     {
       title: "FHA Loans",
@@ -18,7 +20,8 @@ export function LoanProgramsGrid() {
       image: "https://images.unsplash.com/photo-1593884165215-43fdc8b9ad47?w=600&h=400&fit=crop&auto=format&q=75",
       alt: "Excited first-time homebuyer",
       badge: "3.5% Down",
-      badgeColor: "bg-[#2563eb]"
+      badgeColor: "bg-[#2563eb]",
+      link: "/az/buyers/fha-loan"
     },
     {
       title: "Conventional",
@@ -26,7 +29,8 @@ export function LoanProgramsGrid() {
       image: "https://images.unsplash.com/photo-1758523671637-5a39ea2c129b?w=600&h=400&fit=crop&auto=format&q=75",
       alt: "Family moving into new home",
       badge: "Popular",
-      badgeColor: "bg-[#f59e0b]"
+      badgeColor: "bg-[#f59e0b]",
+      link: "/az/buyers/conventional-mortgage"
     },
     {
       title: "Jumbo Loans",
@@ -34,7 +38,8 @@ export function LoanProgramsGrid() {
       image: "https://images.unsplash.com/photo-1685514823717-7e1ff6ee0563?w=600&h=400&fit=crop&auto=format&q=75",
       alt: "Beautiful luxury home exterior",
       badge: "Premium",
-      badgeColor: "bg-[#8b5cf6]"
+      badgeColor: "bg-[#8b5cf6]",
+      link: "/az/buyers/jumbo-loan"
     },
     {
       title: "USDA Loans",
@@ -42,7 +47,8 @@ export function LoanProgramsGrid() {
       image: "https://images.unsplash.com/photo-1758244016374-6c174ad28487?w=600&h=400&fit=crop&auto=format&q=75",
       alt: "Scenic rural property landscape",
       badge: "0% Down",
-      badgeColor: "bg-[#10b981]"
+      badgeColor: "bg-[#10b981]",
+      link: "/az/buyers/usda-loan"
     },
     {
       title: "Refinancing",
@@ -50,7 +56,17 @@ export function LoanProgramsGrid() {
       image: "https://images.unsplash.com/photo-1746557416662-0623ff3f4c73?w=600&h=400&fit=crop&auto=format&q=75",
       alt: "Couple reviewing refinance documents",
       badge: "Save Money",
-      badgeColor: "bg-[#10b981]"
+      badgeColor: "bg-[#10b981]",
+      link: "/refinance"
+    },
+    {
+      title: "HELOC",
+      description: "Access your home equity with a flexible credit line. Use funds for renovations, debt consolidation, or emergencies.",
+      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&h=400&fit=crop&auto=format&q=75",
+      alt: "Modern home renovation project",
+      badge: "Flexible",
+      badgeColor: "bg-[#6366f1]",
+      link: "/heloc"
     }
   ];
 
@@ -68,9 +84,10 @@ export function LoanProgramsGrid() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {programs.map((program, index) => (
-            <div
+            <Link
               key={program.title}
-              className="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer"
+              to={program.link || "#"}
+              className="group relative bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 cursor-pointer block"
             >
               {/* Image */}
               <div className="relative h-44 overflow-hidden">
@@ -106,7 +123,7 @@ export function LoanProgramsGrid() {
 
               {/* Hover Border Effect */}
               <div className="absolute inset-0 border-2 border-transparent group-hover:border-primary rounded-lg transition-colors duration-300 pointer-events-none" />
-            </div>
+            </Link>
           ))}
         </div>
 
