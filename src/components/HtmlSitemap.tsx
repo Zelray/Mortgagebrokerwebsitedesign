@@ -42,6 +42,9 @@ export function HtmlSitemap() {
               <li>
                 <Link to="/refinance" className="text-[#10b981] hover:underline">Refinance Your Mortgage</Link>
               </li>
+              <li>
+                <Link to="/heloc" className="text-[#10b981] hover:underline">Home Equity Line of Credit (HELOC)</Link>
+              </li>
             </ul>
           </div>
 

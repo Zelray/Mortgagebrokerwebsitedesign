@@ -85,6 +85,7 @@ import { ArizonaJumboMortgage } from './components/arizona/ArizonaJumboMortgage'
 import { ArizonaUSDALoans } from './components/arizona/ArizonaUSDALoans';
 import { FloridaMortgageBroker } from './components/florida/FloridaMortgageBroker';
 import { TexasMortgageBroker } from './components/texas/TexasMortgageBroker';
+import { HELOC } from './components/HELOC';
 
 // HomePage component - all the homepage sections
 function HomePage() {
@@ -177,6 +178,7 @@ export default function App() {
           <Route path="/prequal" element={<BuyersPrequalification />} />
           <Route path="/purchase" element={<PurchaseGeneralInfo />} />
           <Route path="/refinance" element={<RefinanceGeneralInfo />} />
+          <Route path="/heloc" element={<HELOC />} />
           
           {/* Arizona Pages */}
           <Route path="/az-mortgage-broker" element={<ArizonaMortgageBroker />} />
