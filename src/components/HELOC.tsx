@@ -4,7 +4,7 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronDown, Calculator, TrendingDown, Home } from 'lucide-react';
-import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import happyCoupleImage from '../../attached_assets/stock_images/happy_couple_homeown_c72ff8ac.jpg';
 
 export function HELOC() {
@@ -29,7 +29,15 @@ export function HELOC() {
 
   const calculateDebtConsolidation = () => {
     const currentMonthlyRate = debtInterestRate / 100 / 12;
-    const currentMonthly = debtBalance * 0.04;
+    const assumedCurrentTerm = 60;
+    
+    let currentMonthly = 0;
+    if (debtInterestRate > 0) {
+      currentMonthly = (debtBalance * currentMonthlyRate * Math.pow(1 + currentMonthlyRate, assumedCurrentTerm)) / 
+                       (Math.pow(1 + currentMonthlyRate, assumedCurrentTerm) - 1);
+    } else {
+      currentMonthly = debtBalance / assumedCurrentTerm;
+    }
     
     const helocMonthlyRate = helocRate / 100 / 12;
     const numPayments = helocTerm * 12;
@@ -90,25 +98,36 @@ export function HELOC() {
   const generateAmortization = () => {
     const data = [];
     const monthlyRate = helocInterest / 100 / 12;
-    const totalMonths = drawPeriod + repaymentPeriod;
+    const repayMonths = repaymentPeriod * 12;
+    const totalYears = drawPeriod + repaymentPeriod;
     let balance = helocAmount;
     
-    for (let year = 0; year <= totalMonths / 12; year++) {
+    for (let year = 0; year <= totalYears; year++) {
       data.push({ year, balance: Math.max(0, balance) });
       
       if (year < drawPeriod) {
-        balance = balance;
+        balance = helocAmount;
       } else {
-        const monthsInRepayment = (year - drawPeriod) * 12;
-        const remainingMonths = (repaymentPeriod * 12) - monthsInRepayment;
-        if (remainingMonths > 0 && helocInterest > 0) {
-          const payment = (balance * monthlyRate * Math.pow(1 + monthlyRate, remainingMonths)) / 
-                         (Math.pow(1 + monthlyRate, remainingMonths) - 1);
-          const interestPortion = balance * monthlyRate;
-          const principalPortion = payment - interestPortion;
-          balance -= principalPortion * 12;
+        const yearsInRepayment = year - drawPeriod;
+        const monthsInRepayment = yearsInRepayment * 12;
+        const remainingMonths = repayMonths - monthsInRepayment;
+        
+        if (remainingMonths > 0 && balance > 0) {
+          if (helocInterest > 0) {
+            const monthlyPayment = (balance * monthlyRate * Math.pow(1 + monthlyRate, remainingMonths)) / 
+                                   (Math.pow(1 + monthlyRate, remainingMonths) - 1);
+            
+            for (let month = 0; month < 12 && balance > 0; month++) {
+              const interestPortion = balance * monthlyRate;
+              const principalPortion = Math.min(monthlyPayment - interestPortion, balance);
+              balance -= principalPortion;
+            }
+          } else {
+            const monthlyPrincipal = helocAmount / repayMonths;
+            balance -= monthlyPrincipal * 12;
+          }
         } else {
-          balance -= (helocAmount / (repaymentPeriod * 12)) * 12;
+          balance = 0;
         }
       }
     }
@@ -571,12 +590,16 @@ export function HELOC() {
                 </div>
 
                 <div className="flex flex-col justify-center">
-                  <div className="bg-white rounded-xl shadow-lg p-8 text-center border-2 border-[#10b981]">
-                    <p className="text-gray-600 mb-3">Your new monthly payment could be</p>
-                    <p className="text-5xl font-bold text-[#10b981] mb-3">
+                  <div className={`bg-white rounded-xl shadow-lg p-8 text-center border-2 ${debtSavings.savings >= 0 ? 'border-[#10b981]' : 'border-orange-500'}`}>
+                    <p className="text-gray-600 mb-3">
+                      {debtSavings.savings >= 0 ? 'Your new monthly payment could be' : 'Note: Your new monthly payment would be'}
+                    </p>
+                    <p className={`text-5xl font-bold mb-3 ${debtSavings.savings >= 0 ? 'text-[#10b981]' : 'text-orange-600'}`}>
                       ${Math.abs(debtSavings.savings).toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                     </p>
-                    <p className="text-gray-600 mb-6">lower by consolidating your debt.</p>
+                    <p className="text-gray-600 mb-6">
+                      {debtSavings.savings >= 0 ? 'lower by consolidating your debt.' : 'higher with this HELOC term. Consider a longer term or wait for better rates.'}
+                    </p>
                     <div className="space-y-2 text-left mb-6">
                       <div className="flex justify-between text-sm">
                         <span className="text-gray-600">Current monthly payment:</span>
@@ -584,7 +607,9 @@ export function HELOC() {
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-gray-600">New monthly payment:</span>
-                        <span className="font-semibold text-[#10b981]">${debtSavings.new.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                        <span className={`font-semibold ${debtSavings.savings >= 0 ? 'text-[#10b981]' : 'text-orange-600'}`}>
+                          ${debtSavings.new.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </span>
                       </div>
                     </div>
                     <a 

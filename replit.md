@@ -142,6 +142,7 @@ The `src/supabase/functions/` directory contains Deno-based Edge Functions for S
 - `/prequal` - Buyers Prequalification (Get Pre-Qualified for Your Mortgage)
 - `/purchase` - Purchase General Info (Purchase a Home)
 - `/refinance` - Refinance General Info (Refinance Your Mortgage)
+- `/heloc` - Home Equity Line of Credit (comprehensive page with 3 calculators)
 
 **Arizona Mortgage Pages:**
 - `/az-mortgage-broker` - Arizona Mortgage Loans (main Arizona page)
@@ -194,6 +195,21 @@ The `src/supabase/functions/` directory contains Deno-based Edge Functions for S
 - `src/ADMIN_QUICK_REFERENCE.md` - Admin system guide
 
 ## Recent Changes
+
+**October 25, 2025 - HELOC Page with Interactive Calculators:**
+- Created comprehensive HELOC page at `/heloc` with extensive features
+- Built 3 fully-functional calculators using React state and Recharts:
+  - Home Equity Calculator - Calculate max HELOC based on home value and LTV ratio
+  - Debt Consolidation Calculator - Compare current vs HELOC payment savings
+  - HELOC Payment Calculator - Show interest-only and full repayment amounts
+- Implemented HELOC FAQ section with 8 questions in accordion format (2 columns)
+- Added interactive sliders for all calculator inputs with real-time updates
+- Integrated Recharts visualizations: line charts, bar charts, and amortization schedules
+- Hero section features happy couple image with CTA buttons
+- All calculations use accurate mortgage formulas (no external dependencies)
+- Responsive design matching existing site patterns
+- SEO-optimized with descriptive meta title and description
+- Added to HTML Sitemap under General Loan Info section
 
 **October 25, 2025 - Florida and Texas State Pages:**
 - Created Florida mortgage broker page at `/fl-mortgage-broker` with original content
