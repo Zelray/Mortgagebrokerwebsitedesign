@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Header } from '../Header';
 import { Footer } from '../Footer';
 import * as Accordion from '@radix-ui/react-accordion';
-import { ChevronDown, Home, RefreshCw, PiggyBank, MapPin, TrendingUp, Shield } from 'lucide-react';
+import { ChevronDown, MapPin, TrendingUp, Shield } from 'lucide-react';
 
 export function ArizonaMortgageBroker() {
   return (
@@ -101,14 +101,9 @@ export function ArizonaMortgageBroker() {
               >
                 <Accordion.Header>
                   <Accordion.Trigger className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-gray-50 transition-colors group">
-                    <div className="flex items-center flex-1 gap-[32px]">
-                      <div className="w-16 h-16 bg-gradient-to-br from-[#10b981] to-[#059669] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <Home className="w-8 h-8 text-white" />
-                      </div>
-                      <div className="flex-1 pr-4">
-                        <h3 className="text-xl md:text-2xl font-bold text-[#003366] mb-1">Arizona Home Purchase Loans</h3>
-                        <p className="text-gray-600 text-sm md:text-base">Find the perfect financing for your Arizona dream home</p>
-                      </div>
+                    <div className="flex-1 pr-4">
+                      <h3 className="text-xl md:text-2xl font-bold text-[#003366] mb-1">Arizona Home Purchase Loans</h3>
+                      <p className="text-gray-600 text-sm md:text-base">Find the perfect financing for your Arizona dream home</p>
                     </div>
                     <ChevronDown className="w-6 h-6 text-gray-500 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                   </Accordion.Trigger>
@@ -175,14 +170,9 @@ export function ArizonaMortgageBroker() {
               >
                 <Accordion.Header>
                   <Accordion.Trigger className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-gray-50 transition-colors group">
-                    <div className="flex items-center flex-1 gap-[32px]">
-                      <div className="w-16 h-16 bg-gradient-to-br from-[#003366] to-[#1e40af] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <RefreshCw className="w-8 h-8 text-white" />
-                      </div>
-                      <div className="flex-1 pr-4">
-                        <h3 className="text-xl md:text-2xl font-bold text-[#003366] mb-1">Arizona Mortgage Refinance</h3>
-                        <p className="text-gray-600 text-sm md:text-base">Lower your rate, reduce payments, or tap into equity</p>
-                      </div>
+                    <div className="flex-1 pr-4">
+                      <h3 className="text-xl md:text-2xl font-bold text-[#003366] mb-1">Arizona Mortgage Refinance</h3>
+                      <p className="text-gray-600 text-sm md:text-base">Lower your rate, reduce payments, or tap into equity</p>
                     </div>
                     <ChevronDown className="w-6 h-6 text-gray-500 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                   </Accordion.Trigger>
@@ -236,14 +226,9 @@ export function ArizonaMortgageBroker() {
               >
                 <Accordion.Header>
                   <Accordion.Trigger className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-gray-50 transition-colors group">
-                    <div className="flex items-center flex-1 gap-[32px]">
-                      <div className="w-16 h-16 bg-gradient-to-br from-[#10b981] to-[#059669] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                        <PiggyBank className="w-8 h-8 text-white" />
-                      </div>
-                      <div className="flex-1 pr-4">
-                        <h3 className="text-xl md:text-2xl font-bold text-[#003366] mb-1">Home Equity Loans & HELOCs</h3>
-                        <p className="text-gray-600 text-sm md:text-base">Access your Arizona home's equity for any purpose</p>
-                      </div>
+                    <div className="flex-1 pr-4">
+                      <h3 className="text-xl md:text-2xl font-bold text-[#003366] mb-1">Home Equity Loans & HELOCs</h3>
+                      <p className="text-gray-600 text-sm md:text-base">Access your Arizona home's equity for any purpose</p>
                     </div>
                     <ChevronDown className="w-6 h-6 text-gray-500 transition-transform duration-300 group-data-[state=open]:rotate-180" />
                   </Accordion.Trigger>
