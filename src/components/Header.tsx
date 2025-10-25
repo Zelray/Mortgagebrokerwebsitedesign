@@ -20,7 +20,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from './ui/button';
-import logo from 'figma:asset/e6340308c6134549e4377a10a79640b817e82f3d.png';
+import logo from '../assets/mortgage-genius-logo.png';
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -51,8 +51,11 @@ export function Header() {
               <img 
                 src={logo} 
                 alt="Mortgage Genius" 
-                className="h-16 md:h-20 w-auto" 
-                style={{ imageRendering: 'crisp-edges' }}
+                className="h-12 md:h-16 w-auto object-contain"
+                style={{ 
+                  imageRendering: 'crisp-edges',
+                  filter: 'brightness(1.1) contrast(1.1)'
+                }}
               />
             </Link>
           </div>
