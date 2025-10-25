@@ -107,7 +107,7 @@ export function ArizonaMortgageBroker() {
                 <Accordion.Header>
                   <Accordion.Trigger className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-gray-50 transition-colors group">
                     <div className="flex items-center flex-1">
-                      <div className="w-16 h-16 mr-5 md:mr-6 bg-gradient-to-br from-[#10b981] to-[#059669] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-16 h-16 mr-8 bg-gradient-to-br from-[#10b981] to-[#059669] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
                         <Home className="w-8 h-8 text-white" />
                       </div>
                       <div className="flex-1 pr-4">
@@ -187,7 +187,7 @@ export function ArizonaMortgageBroker() {
                 <Accordion.Header>
                   <Accordion.Trigger className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-gray-50 transition-colors group">
                     <div className="flex items-center flex-1">
-                      <div className="w-16 h-16 mr-5 md:mr-6 bg-gradient-to-br from-[#003366] to-[#1e40af] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-16 h-16 mr-8 bg-gradient-to-br from-[#003366] to-[#1e40af] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
                         <RefreshCw className="w-8 h-8 text-white" />
                       </div>
                       <div className="flex-1 pr-4">
@@ -254,7 +254,7 @@ export function ArizonaMortgageBroker() {
                 <Accordion.Header>
                   <Accordion.Trigger className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-gray-50 transition-colors group">
                     <div className="flex items-center flex-1">
-                      <div className="w-16 h-16 mr-5 md:mr-6 bg-gradient-to-br from-[#10b981] to-[#059669] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-16 h-16 mr-8 bg-gradient-to-br from-[#10b981] to-[#059669] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
                         <PiggyBank className="w-8 h-8 text-white" />
                       </div>
                       <div className="flex-1 pr-4">
