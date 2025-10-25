@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 export function HtmlSitemap() {
@@ -11,14 +10,18 @@ export function HtmlSitemap() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-12 max-w-6xl">
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="container mx-auto px-4 py-12 max-w-7xl">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           
+          {/* Main Pages */}
           <div>
             <h2 className="text-2xl font-bold text-[#003366] mb-4">Main Pages</h2>
             <ul className="space-y-2">
               <li>
                 <Link to="/" className="text-[#10b981] hover:underline">Home</Link>
+              </li>
+              <li>
+                <Link to="/prequal" className="text-[#10b981] hover:underline">Get Pre-Qualified</Link>
               </li>
               <li>
                 <a href="https://tinyurl.com/42xx3hzu" target="_blank" rel="noopener noreferrer" className="text-[#10b981] hover:underline">Apply Online</a>
@@ -29,36 +32,92 @@ export function HtmlSitemap() {
             </ul>
           </div>
 
+          {/* General Loan Info */}
           <div>
-            <h2 className="text-2xl font-bold text-[#003366] mb-4">Purchase Loans</h2>
+            <h2 className="text-2xl font-bold text-[#003366] mb-4">General Loan Info</h2>
             <ul className="space-y-2">
-              <li className="text-gray-600">General Information (Coming Soon)</li>
-              <li className="text-gray-600">FHA Loans (Coming Soon)</li>
-              <li className="text-gray-600">VA Loans (Coming Soon)</li>
-              <li className="text-gray-600">Conventional Loans (Coming Soon)</li>
-              <li className="text-gray-600">Jumbo Loans (Coming Soon)</li>
-              <li className="text-gray-600">USDA Loans (Coming Soon)</li>
-              <li className="text-gray-600">First Time Homebuyers (Coming Soon)</li>
+              <li>
+                <Link to="/purchase" className="text-[#10b981] hover:underline">Purchase a Home</Link>
+              </li>
+              <li>
+                <Link to="/refinance" className="text-[#10b981] hover:underline">Refinance Your Mortgage</Link>
+              </li>
             </ul>
           </div>
 
+          {/* Arizona - Main */}
           <div>
-            <h2 className="text-2xl font-bold text-[#003366] mb-4">Refinance Loans</h2>
+            <h2 className="text-2xl font-bold text-[#003366] mb-4">Arizona Loans</h2>
             <ul className="space-y-2">
-              <li className="text-gray-600">General Information (Coming Soon)</li>
-              <li className="text-gray-600">Conventional Refinance (Coming Soon)</li>
-              <li className="text-gray-600">VA Streamline (Coming Soon)</li>
-              <li className="text-gray-600">FHA Streamline (Coming Soon)</li>
+              <li>
+                <Link to="/az-mortgage-broker" className="text-[#10b981] hover:underline">Arizona Mortgage Loans</Link>
+              </li>
+              <li>
+                <Link to="/az/buyers" className="text-[#10b981] hover:underline">Arizona Purchase Loans</Link>
+              </li>
+              <li>
+                <Link to="/az/refi" className="text-[#10b981] hover:underline">Arizona Refinance</Link>
+              </li>
+              <li>
+                <Link to="/az/va-loans" className="text-[#10b981] hover:underline">Arizona VA Loans</Link>
+              </li>
+              <li>
+                <Link to="/az/heloc" className="text-[#10b981] hover:underline">Arizona HELOC</Link>
+              </li>
+              <li>
+                <Link to="/az/jumbo-mortgage" className="text-[#10b981] hover:underline">Arizona Jumbo Loans</Link>
+              </li>
+              <li>
+                <Link to="/az/usda-loans" className="text-[#10b981] hover:underline">Arizona USDA Loans</Link>
+              </li>
             </ul>
           </div>
 
+          {/* Arizona Purchase */}
           <div>
-            <h2 className="text-2xl font-bold text-[#003366] mb-4">Other Services</h2>
+            <h2 className="text-2xl font-bold text-[#003366] mb-4">Arizona Purchase</h2>
             <ul className="space-y-2">
-              <li className="text-gray-600">HELOC (Coming Soon)</li>
+              <li>
+                <Link to="/az/buyers/first-time-homebuyers" className="text-[#10b981] hover:underline">First-Time Homebuyers</Link>
+              </li>
+              <li>
+                <Link to="/az/buyers/fha-loan" className="text-[#10b981] hover:underline">FHA Home Loans</Link>
+              </li>
+              <li>
+                <Link to="/az/buyers/conventional-mortgage" className="text-[#10b981] hover:underline">Conventional Mortgages</Link>
+              </li>
+              <li>
+                <Link to="/az/buyers/va-loan-purchase" className="text-[#10b981] hover:underline">VA Home Loans</Link>
+              </li>
+              <li>
+                <Link to="/az/buyers/usda-loan" className="text-[#10b981] hover:underline">USDA Home Loans</Link>
+              </li>
+              <li>
+                <Link to="/az/buyers/jumbo-loan" className="text-[#10b981] hover:underline">Jumbo Home Loans</Link>
+              </li>
             </ul>
           </div>
 
+          {/* Arizona Refinance */}
+          <div>
+            <h2 className="text-2xl font-bold text-[#003366] mb-4">Arizona Refinance</h2>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/az/refi/refinance-fha-mortgage" className="text-[#10b981] hover:underline">FHA Streamline Refinance</Link>
+              </li>
+              <li>
+                <Link to="/az/refi/refinance-my-mortgage" className="text-[#10b981] hover:underline">Conventional Refinance</Link>
+              </li>
+              <li>
+                <Link to="/az/refi/refinance-my-jumbo" className="text-[#10b981] hover:underline">Jumbo Refinance</Link>
+              </li>
+              <li>
+                <Link to="/az/va-loans/va-refinance" className="text-[#10b981] hover:underline">VA Streamline (IRRRL)</Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Resources */}
           <div>
             <h2 className="text-2xl font-bold text-[#003366] mb-4">Resources</h2>
             <ul className="space-y-2">
@@ -66,6 +125,7 @@ export function HtmlSitemap() {
             </ul>
           </div>
 
+          {/* Legal & Compliance */}
           <div>
             <h2 className="text-2xl font-bold text-[#003366] mb-4">Legal & Compliance</h2>
             <ul className="space-y-2">

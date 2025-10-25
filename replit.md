@@ -5,8 +5,8 @@
 This is a professional mortgage broker website called "Mortgage Genius" built with React, TypeScript, and Vite. The website features a beautiful, accessible design with comprehensive functionality including lead capture, blog system, and admin dashboard.
 
 **Project Type:** Frontend Web Application (React + Vite)  
-**Current Status:** Development environment configured and running  
-**Last Updated:** October 24, 2025
+**Current Status:** Development environment configured with 20+ SEO-optimized pages  
+**Last Updated:** October 25, 2025
 
 ## Purpose and Goals
 
@@ -138,6 +138,38 @@ The `src/supabase/functions/` directory contains Deno-based Edge Functions for S
 - `/sitemap` - HTML Sitemap
 - `/resources/:slug` - Individual blog posts
 
+**Top-Level Loan Pages:**
+- `/prequal` - Buyers Prequalification (Get Pre-Qualified for Your Mortgage)
+- `/purchase` - Purchase General Info (Purchase a Home)
+- `/refinance` - Refinance General Info (Refinance Your Mortgage)
+
+**Arizona Mortgage Pages:**
+- `/az-mortgage-broker` - Arizona Mortgage Loans (main Arizona page)
+
+**Arizona Purchase Loans:**
+- `/az/buyers` - Arizona Home Purchase Loans (general info)
+- `/az/buyers/first-time-homebuyers` - First Time Homebuyer Programs in Arizona
+- `/az/buyers/fha-loan` - Arizona FHA Home Loans
+- `/az/buyers/conventional-mortgage` - Arizona Conventional Mortgage Loans
+- `/az/buyers/va-loan-purchase` - Arizona VA Home Loans
+- `/az/buyers/usda-loan` - Arizona USDA Home Loans
+- `/az/buyers/jumbo-loan` - Arizona Jumbo Home Loans
+
+**Arizona Refinance Loans:**
+- `/az/refi` - Arizona Mortgage Refinance (general info)
+- `/az/refi/refinance-fha-mortgage` - Arizona FHA Streamline Refinance
+- `/az/refi/refinance-my-jumbo` - Arizona Jumbo Mortgage Refinance
+- `/az/refi/refinance-my-mortgage` - Arizona Conventional Mortgage Refinance
+
+**Arizona VA Loans:**
+- `/az/va-loans` - Arizona VA Loans (general info)
+- `/az/va-loans/va-refinance` - Arizona VA Streamline Refinance (IRRRL)
+
+**Arizona Specialty Loans:**
+- `/az/heloc` - Arizona Home Equity Loans and HELOCs
+- `/az/jumbo-mortgage` - Arizona Jumbo Mortgage Loans (general info)
+- `/az/usda-loans` - Arizona USDA Loans (general info)
+
 **Admin Pages:**
 - `/admin/login` - Admin authentication
 - `/admin` - Admin dashboard (requires authentication)
@@ -156,6 +188,19 @@ The `src/supabase/functions/` directory contains Deno-based Edge Functions for S
 - `src/ADMIN_QUICK_REFERENCE.md` - Admin system guide
 
 ## Recent Changes
+
+**October 25, 2025 - Arizona SEO Page Structure:**
+- Created 20 new SEO-optimized mortgage pages with unique meta titles and descriptions
+- Implemented HelmetProvider for proper SEO meta tag management
+- Added 3 top-level pages: Buyers Prequalification, Purchase General Info, Refinance General Info
+- Created complete Arizona page hierarchy (17 pages) under /az/ structure
+- All pages follow SEO best practices with format: [H1 Tag] | Mortgage Genius Has Low Rates
+- Installed react-helmet-async for dynamic meta tag management
+- Added ScrollToTop component to ensure pages scroll to top on navigation
+- Removed NMLS number from header (kept in footer for legal compliance)
+- All Arizona pages include unique, compelling meta descriptions (150-160 characters)
+- Created organized folder structure: arizona/buyers/, arizona/refinance/, arizona/va/
+- Verified all 20 pages load correctly with proper Header/Footer components
 
 **October 24, 2025 - Navigation & Legal Pages Update:**
 - Installed React Router DOM for multi-page navigation
