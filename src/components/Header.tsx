@@ -44,7 +44,7 @@ export function Header() {
       </div>
 
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-24 md:h-28 items-center justify-between">
           {/* Logo - Accessibility: Wrapped in link, proper alt text */}
           <div className="flex items-center gap-3">
             <Link to="/" aria-label="Mortgage Genius Home">
