@@ -110,7 +110,8 @@ export function ArizonaMortgageBroker() {
                   <div className="mb-6">
                     <img 
                       src={azHome1} 
-                      alt="Beautiful Arizona home" 
+                      alt="Beautiful modern Arizona home with desert landscape - Purchase loan example" 
+                      title="Arizona Home Purchase Loan - Modern Desert Home"
                       className="w-full h-64 object-cover rounded-lg shadow-md mb-4"
                     />
                     <p className="text-gray-700 leading-relaxed">
@@ -189,7 +190,8 @@ export function ArizonaMortgageBroker() {
                   <div className="mb-6">
                     <img 
                       src={azHome2} 
-                      alt="Arizona home refinance" 
+                      alt="Arizona home exterior - Refinance mortgage example property" 
+                      title="Arizona Mortgage Refinance - Beautiful Home Example"
                       className="w-full h-64 object-cover rounded-lg shadow-md mb-4"
                     />
                     <p className="text-gray-700 leading-relaxed">
@@ -255,7 +257,8 @@ export function ArizonaMortgageBroker() {
                   <div className="mb-6">
                     <img 
                       src={azHome3} 
-                      alt="Arizona home equity" 
+                      alt="Arizona residential property - HELOC and home equity loan example" 
+                      title="Arizona HELOC - Home Equity Line of Credit Example Property"
                       className="w-full h-64 object-cover rounded-lg shadow-md mb-4"
                     />
                     <p className="text-gray-700 leading-relaxed">
