@@ -5,11 +5,6 @@ import { Footer } from '../Footer';
 import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronDown, Home, RefreshCw, PiggyBank, MapPin, TrendingUp, Shield } from 'lucide-react';
 
-// Import stock images
-import azHome1 from '../../assets/modern_arizona_home__86d57d0a.jpg';
-import azHome2 from '../../assets/modern_arizona_home__008d7259.jpg';
-import azHome3 from '../../assets/modern_arizona_home__8434f6b5.jpg';
-
 export function ArizonaMortgageBroker() {
   return (
     <>
@@ -107,7 +102,7 @@ export function ArizonaMortgageBroker() {
                 <Accordion.Header>
                   <Accordion.Trigger className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-gray-50 transition-colors group">
                     <div className="flex items-center flex-1">
-                      <div className="w-16 h-16 mr-8 bg-gradient-to-br from-[#10b981] to-[#059669] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-16 h-16 mr-16 bg-gradient-to-br from-[#10b981] to-[#059669] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
                         <Home className="w-8 h-8 text-white" />
                       </div>
                       <div className="flex-1 pr-4">
@@ -120,12 +115,6 @@ export function ArizonaMortgageBroker() {
                 </Accordion.Header>
                 <Accordion.Content className="px-6 md:px-8 pb-8 pt-2 animate-accordion-down">
                   <div className="mb-6">
-                    <img 
-                      src={azHome1} 
-                      alt="Beautiful modern Arizona home with desert landscape - Purchase loan example" 
-                      title="Arizona Home Purchase Loan - Modern Desert Home"
-                      className="w-full h-64 object-cover rounded-lg shadow-md mb-4"
-                    />
                     <p className="text-gray-700 leading-relaxed">
                       Buying a home in Arizona? We offer a full suite of purchase loan programs tailored to different 
                       buyer profiles, from first-timers to luxury home buyers. Our Arizona home purchase loans include 
@@ -187,7 +176,7 @@ export function ArizonaMortgageBroker() {
                 <Accordion.Header>
                   <Accordion.Trigger className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-gray-50 transition-colors group">
                     <div className="flex items-center flex-1">
-                      <div className="w-16 h-16 mr-8 bg-gradient-to-br from-[#003366] to-[#1e40af] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-16 h-16 mr-16 bg-gradient-to-br from-[#003366] to-[#1e40af] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
                         <RefreshCw className="w-8 h-8 text-white" />
                       </div>
                       <div className="flex-1 pr-4">
@@ -200,12 +189,6 @@ export function ArizonaMortgageBroker() {
                 </Accordion.Header>
                 <Accordion.Content className="px-6 md:px-8 pb-8 pt-2 animate-accordion-down">
                   <div className="mb-6">
-                    <img 
-                      src={azHome2} 
-                      alt="Arizona home exterior - Refinance mortgage example property" 
-                      title="Arizona Mortgage Refinance - Beautiful Home Example"
-                      className="w-full h-64 object-cover rounded-lg shadow-md mb-4"
-                    />
                     <p className="text-gray-700 leading-relaxed">
                       Arizona homeowners can benefit from refinancing to secure lower interest rates, reduce monthly payments, 
                       shorten loan terms, or access home equity for improvements and debt consolidation. We offer streamlined 
@@ -254,7 +237,7 @@ export function ArizonaMortgageBroker() {
                 <Accordion.Header>
                   <Accordion.Trigger className="w-full flex items-center justify-between p-6 md:p-8 text-left hover:bg-gray-50 transition-colors group">
                     <div className="flex items-center flex-1">
-                      <div className="w-16 h-16 mr-8 bg-gradient-to-br from-[#10b981] to-[#059669] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-16 h-16 mr-16 bg-gradient-to-br from-[#10b981] to-[#059669] rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
                         <PiggyBank className="w-8 h-8 text-white" />
                       </div>
                       <div className="flex-1 pr-4">
@@ -267,12 +250,6 @@ export function ArizonaMortgageBroker() {
                 </Accordion.Header>
                 <Accordion.Content className="px-6 md:px-8 pb-8 pt-2 animate-accordion-down">
                   <div className="mb-6">
-                    <img 
-                      src={azHome3} 
-                      alt="Arizona residential property - HELOC and home equity loan example" 
-                      title="Arizona HELOC - Home Equity Line of Credit Example Property"
-                      className="w-full h-64 object-cover rounded-lg shadow-md mb-4"
-                    />
                     <p className="text-gray-700 leading-relaxed">
                       Arizona's growing home values create opportunities to tap into your equity for home improvements, 
                       debt consolidation, education expenses, or other financial goals. Choose from fixed-rate home equity 
