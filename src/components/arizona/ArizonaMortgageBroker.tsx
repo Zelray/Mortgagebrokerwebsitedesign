@@ -87,11 +87,11 @@ export function ArizonaMortgageBroker() {
               <h2 className="text-3xl md:text-4xl font-bold text-[#003366] mb-4">
                 Arizona Mortgage Loan Programs
               </h2>
-              <p className="text-gray-600 text-lg max-w-3xl mx-auto mb-4">
+              <p className="text-gray-600 text-base max-w-3xl mx-auto mb-4">
                 Explore our comprehensive range of mortgage solutions designed specifically for Arizona homebuyers 
                 and homeowners. Click each section to learn more and find the right loan for your needs.
               </p>
-              <p className="text-gray-700 text-base max-w-3xl mx-auto leading-relaxed">
+              <p className="text-gray-600 text-base max-w-3xl mx-auto leading-relaxed">
                 As a licensed mortgage broker in the State of Arizona, we work with multiple lenders to find you 
                 the best rates and terms for your unique situation. Our expertise covers all major Arizona markets 
                 including Phoenix, Tucson, Mesa, Chandler, Scottsdale, Glendale, Gilbert, Tempe, and beyond.
