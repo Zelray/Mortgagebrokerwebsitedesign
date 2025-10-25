@@ -170,6 +170,12 @@ The `src/supabase/functions/` directory contains Deno-based Edge Functions for S
 - `/az/jumbo-mortgage` - Arizona Jumbo Mortgage Loans (general info)
 - `/az/usda-loans` - Arizona USDA Loans (general info)
 
+**Florida Mortgage Pages:**
+- `/fl-mortgage-broker` - Florida Mortgage Loans (main Florida page)
+
+**Texas Mortgage Pages:**
+- `/tx-mortgage-broker` - Texas Mortgage Loans (main Texas page)
+
 **Admin Pages:**
 - `/admin/login` - Admin authentication
 - `/admin` - Admin dashboard (requires authentication)
@@ -188,6 +194,18 @@ The `src/supabase/functions/` directory contains Deno-based Edge Functions for S
 - `src/ADMIN_QUICK_REFERENCE.md` - Admin system guide
 
 ## Recent Changes
+
+**October 25, 2025 - Florida and Texas State Pages:**
+- Created Florida mortgage broker page at `/fl-mortgage-broker` with original content
+- Created Texas mortgage broker page at `/tx-mortgage-broker` with original content
+- Downloaded state-specific stock images (flags, skylines, landscapes) for both states
+- All images include descriptive alt and title tags for SEO and accessibility compliance
+- Added Florida and Texas sections to HTML Sitemap
+- Updated StateSelection component on homepage to link location cards to state pages
+- Each state page features unique, SEO-optimized content specific to local markets and regulations
+- Meta titles follow format: [State] Mortgage Loans | Mortgage Genius Has Low Rates
+- Meta descriptions highlight state-specific value propositions (150-160 characters)
+- Included links to official state regulatory and housing resources (dofollow, noopener)
 
 **October 25, 2025 - Arizona SEO Page Structure:**
 - Created 20 new SEO-optimized mortgage pages with unique meta titles and descriptions

@@ -43,7 +43,7 @@ export function StateSelection() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {states.map((state, index) => (
+          {states.map((state) => (
             <Link
               key={state.name}
               to={state.link}
