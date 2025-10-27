@@ -30,9 +30,13 @@ Migrated 7 major content pages from React components to TinaCMS MDX files for ea
 
 ### Technical Updates
 - Added three new TinaCMS collections: State Pages, Legal Pages, and Loan Type Pages
-- Created `TinaPage` component to render MDX content dynamically
+- Created `TinaPage` component using Tina's generated client for reliable content loading
 - Updated routing in `App.tsx` to use TinaCMS content loader
 - Fixed frontmatter schema alignment between TinaCMS config and MDX files
+- **Implemented Google OAuth** with @mortgagegenius.pro domain restriction for admin access
+  - Replaced IP whitelist + password system with Google OAuth
+  - Only users with @mortgagegenius.pro email addresses can access admin area
+  - Created `GoogleOAuth` component for secure authentication
 
 ### Preserved as React Components
 - HELOC page with interactive calculators (`/heloc`)
