@@ -173,10 +173,7 @@ export function AdminSecurityGate({ children }: AdminSecurityProps) {
 
             <div className="mt-6 text-center">
               <p className="text-xs text-muted-foreground">
-                To whitelist your IP, add it to <code>admin-whitelist.csv</code>
-              </p>
-              <p className="text-xs text-muted-foreground mt-2">
-                Contact: zeeknugz@mortgagegenius.pro
+                Authorized personnel only
               </p>
             </div>
           </CardContent>

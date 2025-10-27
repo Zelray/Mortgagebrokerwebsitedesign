@@ -80,7 +80,7 @@ import { ArizonaHELOC } from './components/arizona/ArizonaHELOC';
 import { ArizonaJumboMortgage } from './components/arizona/ArizonaJumboMortgage';
 import { ArizonaUSDALoans } from './components/arizona/ArizonaUSDALoans';
 import { HELOC } from './components/HELOC';
-import { AdminSecurityGate } from './utils/admin-security';
+import { GoogleOAuth } from './components/GoogleOAuth';
 
 // HomePage component - all the homepage sections
 function HomePage() {
@@ -233,19 +233,11 @@ export default function App() {
             } 
           />
           
-          {/* Admin Routes - Protected by IP Whitelist + Password */}
-          <Route 
-            path="/admin/login" 
-            element={
-              <AdminSecurityGate>
-                <AdminLogin onLoginSuccess={handleLoginSuccess} />
-              </AdminSecurityGate>
-            } 
-          />
+          {/* Admin Routes - Protected by Google OAuth (@mortgagegenius.pro only) */}
           <Route 
             path="/admin" 
             element={
-              <AdminSecurityGate>
+              <GoogleOAuth>
                 {accessToken ? (
                   <AdminDashboard
                     accessToken={accessToken}
@@ -254,15 +246,15 @@ export default function App() {
                     onEditPost={handleEditPost}
                   />
                 ) : (
-                  <Navigate to="/admin/login" replace />
+                  <AdminLogin onLoginSuccess={handleLoginSuccess} />
                 )}
-              </AdminSecurityGate>
+              </GoogleOAuth>
             } 
           />
           <Route 
             path="/admin/editor" 
             element={
-              <AdminSecurityGate>
+              <GoogleOAuth>
                 {accessToken ? (
                   <BlogPostEditor
                     postId={editingPostId}
@@ -270,9 +262,9 @@ export default function App() {
                     onBack={() => window.history.back()}
                   />
                 ) : (
-                  <Navigate to="/admin/login" replace />
+                  <Navigate to="/admin" replace />
                 )}
-              </AdminSecurityGate>
+              </GoogleOAuth>
             } 
           />
         </Routes>
