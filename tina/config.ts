@@ -136,7 +136,7 @@ export default defineConfig({
       {
         name: "loanPage",
         label: "Loan Product Pages",
-        path: "content/pages/loans",
+        path: "content/pages/loan-types",
         format: "mdx",
         ui: {
           router: ({ document }) => {

@@ -6,7 +6,40 @@ Mortgage Genius is a professional mortgage broker website, developed with React,
 
 ## User Preferences
 
-None recorded yet.
+- **Domain Restriction for Admin:** Only @mortgagegenius.pro email addresses should have admin access
+- **Interactive Pages Stay as React:** Keep HELOC calculator, pre-qualification forms, and HTML sitemap as React components
+- **Content Pages Migrated to TinaCMS:** State pages, legal pages, and loan type overview pages now managed through TinaCMS
+
+## Recent Changes (October 27, 2025)
+
+### TinaCMS Content Migration
+Migrated 7 major content pages from React components to TinaCMS MDX files for easier content management:
+
+**State Pages:**
+- Florida Mortgage Broker (`/fl-mortgage-broker`) → `content/pages/states/fl-mortgage-broker.mdx`
+- Texas Mortgage Broker (`/tx-mortgage-broker`) → `content/pages/states/tx-mortgage-broker.mdx`
+
+**Legal Pages:**
+- Privacy Policy (`/privacy-policy`) → `content/pages/legal/privacy-policy.mdx`
+- Terms of Service (`/terms-of-service`) → `content/pages/legal/terms-of-service.mdx`
+- Equal Housing Opportunity (`/equal-housing-opportunity`) → `content/pages/legal/equal-housing-opportunity.mdx`
+
+**Loan Type Pages:**
+- Purchase (`/purchase`) → `content/pages/loan-types/purchase.mdx`
+- Refinance (`/refinance`) → `content/pages/loan-types/refinance.mdx`
+
+### Technical Updates
+- Added three new TinaCMS collections: State Pages, Legal Pages, and Loan Type Pages
+- Created `TinaPage` component to render MDX content dynamically
+- Updated routing in `App.tsx` to use TinaCMS content loader
+- Fixed frontmatter schema alignment between TinaCMS config and MDX files
+
+### Preserved as React Components
+- HELOC page with interactive calculators (`/heloc`)
+- Pre-qualification form (`/prequal`)
+- HTML Sitemap (`/sitemap`)
+- All Arizona-specific pages (still using React components)
+- Homepage with interactive sections
 
 ## System Architecture
 
