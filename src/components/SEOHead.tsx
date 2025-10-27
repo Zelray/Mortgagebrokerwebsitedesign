@@ -44,8 +44,8 @@ export function SEOHead({
   canonicalUrl
 }: SEOHeadProps) {
   
-  // TODO for coder: Replace with your actual production domain
-  const SITE_URL = 'https://mortgagegenius.com';
+  // Production domain
+  const SITE_URL = 'https://mortgagegenius.pro';
   const fullCanonicalUrl = canonicalUrl || SITE_URL;
 
   useEffect(() => {

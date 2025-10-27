@@ -26,7 +26,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { toast } from 'sonner@2.0.3';
 import { projectId, publicAnonKey } from '../utils/supabase/info';
-import logo from 'figma:asset/e6340308c6134549e4377a10a79640b817e82f3d.png';
+import logo from '../assets/mortgage-genius-logo.png';
 
 export function Footer() {
   // ========== QUICK CONTACT FORM STATE ==========
@@ -243,8 +243,8 @@ export function Footer() {
                 <Mail className="w-4 h-4 mt-0.5 flex-shrink-0 text-[#10b981]" />
                 <div>
                   <div className="text-xs text-white/70">Email Us</div>
-                  <a href="mailto:info@mortgagegenius.com" className="font-semibold hover:text-[#10b981] transition-colors text-sm">
-                    info@mortgagegenius.com
+                  <a href="mailto:info@mortgagegenius.pro" className="font-semibold hover:text-[#10b981] transition-colors text-sm">
+                    info@mortgagegenius.pro
                   </a>
                 </div>
               </li>

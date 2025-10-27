@@ -42,7 +42,7 @@ export function PrivacyPolicy() {
             <p className="text-gray-700 leading-relaxed mb-4">
               Mortgage Genius ("we," "us," or "our") is committed to protecting your privacy. 
               This Privacy Policy explains how we collect, use, disclose, and safeguard your 
-              information when you visit our website [www.mortgagegenius.com] or use our services.
+              information when you visit our website www.mortgagegenius.pro or use our services.
             </p>
             <p className="text-gray-700 leading-relaxed">
               As a licensed mortgage broker (NMLS #2280851), we are subject to strict federal and 
@@ -177,7 +177,7 @@ export function PrivacyPolicy() {
               <li><strong>California Residents:</strong> Additional rights under CCPA (see below)</li>
             </ul>
             <p className="text-gray-700 leading-relaxed">
-              To exercise these rights, contact us at [privacy@mortgagegenius.com] or (321) 555-0199.
+              To exercise these rights, contact us at [privacy@mortgagegenius.pro] or (321) 555-0199.
             </p>
           </section>
 
@@ -196,7 +196,7 @@ export function PrivacyPolicy() {
             </ul>
             <p className="text-gray-700 leading-relaxed">
               We do not sell personal information. To submit a request, call 1-800-XXX-XXXX or 
-              email [privacy@mortgagegenius.com].
+              email [privacy@mortgagegenius.pro].
             </p>
           </section>
 
@@ -249,7 +249,7 @@ export function PrivacyPolicy() {
               <p className="text-gray-700">123 Main Street</p>
               <p className="text-gray-700">Tampa, FL 33601</p>
               <p className="text-gray-700 mt-3">Phone: (321) 555-0199</p>
-              <p className="text-gray-700">Email: privacy@mortgagegenius.com</p>
+              <p className="text-gray-700">Email: privacy@mortgagegenius.pro</p>
               <p className="text-gray-700 mt-3">NMLS #2280851</p>
             </div>
           </section>

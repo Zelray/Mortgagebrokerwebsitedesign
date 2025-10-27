@@ -14,7 +14,7 @@ import { Input } from './ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { toast } from 'sonner@2.0.3';
 import { projectId } from '../utils/supabase/info';
-import logo from 'figma:asset/e6340308c6134549e4377a10a79640b817e82f3d.png';
+import logo from '../assets/mortgage-genius-logo.png';
 
 interface AdminLoginProps {
   onLoginSuccess: (accessToken: string, userRole: string) => void;
@@ -76,7 +76,7 @@ export function AdminLogin({ onLoginSuccess }: AdminLoginProps) {
                 <Input
                   id="email"
                   type="email"
-                  placeholder="admin@mortgagegenius.com"
+                  placeholder="zeeknugz@mortgagegenius.pro"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -114,7 +114,7 @@ export function AdminLogin({ onLoginSuccess }: AdminLoginProps) {
           </form>
 
           <div className="mt-6 text-center text-sm text-muted-foreground">
-            <p>Default admin: admin@mortgagegenius.com</p>
+            <p>Default admin: zeeknugz@mortgagegenius.pro</p>
             <p className="text-xs mt-1">Contact your system administrator for access</p>
           </div>
         </CardContent>

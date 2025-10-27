@@ -35,7 +35,7 @@ export function TermsOfService() {
             <p className="text-gray-700 leading-relaxed mb-4">
               These Terms of Service ("Terms") constitute a legally binding agreement between you 
               and Mortgage Genius, NMLS #2280851 ("Company," "we," "us," or "our") concerning your 
-              access to and use of the [www.mortgagegenius.com] website and our mortgage lending services.
+              access to and use of the www.mortgagegenius.pro website and our mortgage lending services.
             </p>
             <p className="text-gray-700 leading-relaxed">
               By accessing or using our website, you agree to be bound by these Terms. If you do not 
@@ -246,7 +246,7 @@ export function TermsOfService() {
               <p className="text-gray-700">123 Main Street</p>
               <p className="text-gray-700">Tampa, FL 33601</p>
               <p className="text-gray-700 mt-3">Phone: (321) 555-0199</p>
-              <p className="text-gray-700">Email: info@mortgagegenius.com</p>
+              <p className="text-gray-700">Email: info@mortgagegenius.pro</p>
             </div>
           </section>
 
