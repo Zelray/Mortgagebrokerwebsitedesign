@@ -1,0 +1,79 @@
+fragment StatePageParts on StatePage {
+  __typename
+  title
+  metaTitle
+  metaDescription
+  state
+  stateAbbr
+  hero {
+    __typename
+    headline
+    subheadline
+    image
+    imageAlt
+  }
+  body
+  seo {
+    __typename
+    ogImage
+    keywords
+  }
+}
+
+fragment LoanPageParts on LoanPage {
+  __typename
+  title
+  metaTitle
+  metaDescription
+  loanType
+  hero {
+    __typename
+    headline
+    subheadline
+    image
+  }
+  body
+}
+
+fragment BlogPostParts on BlogPost {
+  __typename
+  title
+  metaTitle
+  metaDescription
+  excerpt
+  publishDate
+  author
+  featuredImage
+  category
+  tags
+  body
+}
+
+fragment GlobalSettingsParts on GlobalSettings {
+  __typename
+  header {
+    __typename
+    phone
+    clientLoginUrl
+    applyOnlineUrl
+  }
+  footer {
+    __typename
+    nmls
+    companyName
+    tagline
+    address
+    social {
+      __typename
+      facebook
+      linkedin
+      twitter
+    }
+  }
+  seo {
+    __typename
+    siteName
+    siteUrl
+    defaultOgImage
+  }
+}
