@@ -196,6 +196,21 @@ The `src/supabase/functions/` directory contains Deno-based Edge Functions for S
 
 ## Recent Changes
 
+**October 27, 2025 - TinaCMS Integration:**
+- Integrated TinaCMS headless CMS for content management
+- Created content models for state pages, loan pages, blog posts, and global settings
+- Set up content directory structure (content/pages/, content/blog/, content/global/)
+- Migrated Arizona page to TinaCMS as proof of concept
+- Configured TinaCMS admin interface at /admin/index.html
+- Created comprehensive TINACMS_GUIDE.md documentation
+- Content is now stored as MDX/JSON files in the repository (Git-versioned)
+- Visual editor with rich text formatting and WYSIWYG editing
+- SEO meta fields fully editable per page
+- Image upload and management system
+- No authentication required in development (local mode)
+- Auto-generated TypeScript types and GraphQL client
+- Updated npm scripts to run TinaCMS dev server with Vite
+
 **October 25, 2025 - HELOC Page with Interactive Calculators:**
 - Created comprehensive HELOC page at `/heloc` with extensive features
 - Built 3 fully-functional calculators using React state and Recharts:
