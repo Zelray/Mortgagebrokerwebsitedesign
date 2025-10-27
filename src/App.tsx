@@ -86,6 +86,7 @@ import { ArizonaUSDALoans } from './components/arizona/ArizonaUSDALoans';
 import { FloridaMortgageBroker } from './components/florida/FloridaMortgageBroker';
 import { TexasMortgageBroker } from './components/texas/TexasMortgageBroker';
 import { HELOC } from './components/HELOC';
+import { AdminSecurityGate } from './utils/admin-security';
 
 // HomePage component - all the homepage sections
 function HomePage() {
@@ -259,38 +260,46 @@ export default function App() {
             } 
           />
           
-          {/* Admin Routes */}
+          {/* Admin Routes - Protected by IP Whitelist + Password */}
           <Route 
             path="/admin/login" 
-            element={<AdminLogin onLoginSuccess={handleLoginSuccess} />} 
+            element={
+              <AdminSecurityGate>
+                <AdminLogin onLoginSuccess={handleLoginSuccess} />
+              </AdminSecurityGate>
+            } 
           />
           <Route 
             path="/admin" 
             element={
-              accessToken ? (
-                <AdminDashboard
-                  accessToken={accessToken}
-                  userRole={userRole}
-                  onLogout={handleLogout}
-                  onEditPost={handleEditPost}
-                />
-              ) : (
-                <Navigate to="/admin/login" replace />
-              )
+              <AdminSecurityGate>
+                {accessToken ? (
+                  <AdminDashboard
+                    accessToken={accessToken}
+                    userRole={userRole}
+                    onLogout={handleLogout}
+                    onEditPost={handleEditPost}
+                  />
+                ) : (
+                  <Navigate to="/admin/login" replace />
+                )}
+              </AdminSecurityGate>
             } 
           />
           <Route 
             path="/admin/editor" 
             element={
-              accessToken ? (
-                <BlogPostEditor
-                  postId={editingPostId}
-                  accessToken={accessToken}
-                  onBack={() => window.history.back()}
-                />
-              ) : (
-                <Navigate to="/admin/login" replace />
-              )
+              <AdminSecurityGate>
+                {accessToken ? (
+                  <BlogPostEditor
+                    postId={editingPostId}
+                    accessToken={accessToken}
+                    onBack={() => window.history.back()}
+                  />
+                ) : (
+                  <Navigate to="/admin/login" replace />
+                )}
+              </AdminSecurityGate>
             } 
           />
         </Routes>
