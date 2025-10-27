@@ -35,6 +35,26 @@ fragment LoanPageParts on LoanPage {
   body
 }
 
+fragment LegalPageParts on LegalPage {
+  __typename
+  title
+  metaTitle
+  metaDescription
+  lastUpdated
+  body
+}
+
+fragment LoanTypePageParts on LoanTypePage {
+  __typename
+  title
+  metaTitle
+  metaDescription
+  heroHeadline
+  heroSubheadline
+  keywords
+  body
+}
+
 fragment BlogPostParts on BlogPost {
   __typename
   title

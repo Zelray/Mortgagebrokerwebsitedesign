@@ -207,6 +207,113 @@ export default defineConfig({
         ],
       },
       {
+        name: "legalPage",
+        label: "Legal Pages",
+        path: "content/pages/legal",
+        format: "mdx",
+        ui: {
+          router: ({ document }) => {
+            return `/${document._sys.filename}`;
+          },
+        },
+        fields: [
+          {
+            type: "string",
+            name: "title",
+            label: "Page Title",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "metaTitle",
+            label: "SEO Meta Title",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "metaDescription",
+            label: "SEO Meta Description",
+            required: true,
+            ui: {
+              component: "textarea",
+            },
+          },
+          {
+            type: "string",
+            name: "lastUpdated",
+            label: "Last Updated",
+            description: "e.g., January 2025",
+          },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Page Content",
+            isBody: true,
+          },
+        ],
+      },
+      {
+        name: "loanTypePage",
+        label: "Loan Type Pages",
+        path: "content/pages/loan-types",
+        format: "mdx",
+        ui: {
+          router: ({ document }) => {
+            return `/${document._sys.filename}`;
+          },
+        },
+        fields: [
+          {
+            type: "string",
+            name: "title",
+            label: "Page Title",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "metaTitle",
+            label: "SEO Meta Title",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "metaDescription",
+            label: "SEO Meta Description",
+            required: true,
+            ui: {
+              component: "textarea",
+            },
+          },
+          {
+            type: "string",
+            name: "heroHeadline",
+            label: "Hero Headline",
+          },
+          {
+            type: "string",
+            name: "heroSubheadline",
+            label: "Hero Subheadline",
+            ui: {
+              component: "textarea",
+            },
+          },
+          {
+            type: "string",
+            name: "keywords",
+            label: "Keywords",
+            ui: {
+              component: "textarea",
+            },
+          },
+          {
+            type: "rich-text",
+            name: "body",
+            label: "Page Content",
+            isBody: true,
+          },
+        ],
+      },
+      {
         name: "blogPost",
         label: "Blog Posts",
         path: "content/blog",

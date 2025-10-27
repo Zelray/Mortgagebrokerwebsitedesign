@@ -63,6 +63,7 @@ import { TermsOfService } from './components/TermsOfService';
 import { HtmlSitemap } from './components/HtmlSitemap';
 import { EqualHousingOpportunity } from './components/EqualHousingOpportunity';
 import { ScrollToTop } from './components/ScrollToTop';
+import { TinaPage } from './components/TinaPage';
 import { BuyersPrequalification } from './components/BuyersPrequalification';
 import { PurchaseGeneralInfo } from './components/PurchaseGeneralInfo';
 import { RefinanceGeneralInfo } from './components/RefinanceGeneralInfo';
@@ -177,8 +178,8 @@ export default function App() {
           
           {/* Top-Level Pages */}
           <Route path="/prequal" element={<BuyersPrequalification />} />
-          <Route path="/purchase" element={<PurchaseGeneralInfo />} />
-          <Route path="/refinance" element={<RefinanceGeneralInfo />} />
+          <Route path="/purchase" element={<TinaPage collection="loan-types" slug="purchase" />} />
+          <Route path="/refinance" element={<TinaPage collection="loan-types" slug="refinance" />} />
           <Route path="/heloc" element={<HELOC />} />
           
           {/* Arizona Pages */}
@@ -209,36 +210,15 @@ export default function App() {
           <Route path="/az/usda-loans" element={<ArizonaUSDALoans />} />
           
           {/* Florida Pages */}
-          <Route path="/fl-mortgage-broker" element={<FloridaMortgageBroker />} />
+          <Route path="/fl-mortgage-broker" element={<TinaPage collection="states" slug="fl-mortgage-broker" />} />
           
           {/* Texas Pages */}
-          <Route path="/tx-mortgage-broker" element={<TexasMortgageBroker />} />
+          <Route path="/tx-mortgage-broker" element={<TinaPage collection="states" slug="tx-mortgage-broker" />} />
           
           {/* Legal Pages */}
-          <Route 
-            path="/privacy-policy" 
-            element={
-              <StandardPage>
-                <PrivacyPolicy />
-              </StandardPage>
-            } 
-          />
-          <Route 
-            path="/terms-of-service" 
-            element={
-              <StandardPage>
-                <TermsOfService />
-              </StandardPage>
-            } 
-          />
-          <Route 
-            path="/equal-housing-opportunity" 
-            element={
-              <StandardPage>
-                <EqualHousingOpportunity />
-              </StandardPage>
-            } 
-          />
+          <Route path="/privacy-policy" element={<TinaPage collection="legal" slug="privacy-policy" />} />
+          <Route path="/terms-of-service" element={<TinaPage collection="legal" slug="terms-of-service" />} />
+          <Route path="/equal-housing-opportunity" element={<TinaPage collection="legal" slug="equal-housing-opportunity" />} />
           <Route 
             path="/sitemap" 
             element={
