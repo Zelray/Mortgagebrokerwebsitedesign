@@ -32,6 +32,11 @@ fragment LoanPageParts on LoanPage {
     subheadline
     image
   }
+  seo {
+    __typename
+    keywords
+    ogImage
+  }
   body
 }
 
@@ -41,17 +46,6 @@ fragment LegalPageParts on LegalPage {
   metaTitle
   metaDescription
   lastUpdated
-  body
-}
-
-fragment LoanTypePageParts on LoanTypePage {
-  __typename
-  title
-  metaTitle
-  metaDescription
-  heroHeadline
-  heroSubheadline
-  keywords
   body
 }
 

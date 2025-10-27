@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import ReactMarkdown from 'react-markdown';
+import client from '../../tina/__generated__/client';
 
 interface TinaPageProps {
   collection: string;
@@ -13,11 +14,14 @@ interface PageData {
   title: string;
   metaTitle?: string;
   metaDescription?: string;
-  heroHeadline?: string;
-  heroSubheadline?: string;
-  body?: string;
-  _body?: string;
+  hero?: {
+    headline?: string;
+    subheadline?: string;
+  };
+  body?: any;
   lastUpdated?: string;
+  state?: string;
+  stateAbbr?: string;
 }
 
 export function TinaPage({ collection, slug }: TinaPageProps) {
@@ -34,38 +38,34 @@ export function TinaPage({ collection, slug }: TinaPageProps) {
     setError(null);
     
     try {
-      const response = await fetch(`/content/pages/${collection}/${slug}.mdx`);
+      const relativePath = `${slug}.mdx`;
       
-      if (!response.ok) {
-        throw new Error('Page not found');
+      let result;
+      if (collection === 'statePage') {
+        result = await client.queries.statePage({ relativePath });
+      } else if (collection === 'legalPage') {
+        result = await client.queries.legalPage({ relativePath });
+      } else if (collection === 'loanPage') {
+        result = await client.queries.loanPage({ relativePath });
+      } else {
+        throw new Error(`Unknown collection: ${collection}`);
       }
 
-      const mdxContent = await response.text();
-      
-      const frontmatterMatch = mdxContent.match(/^---\n([\s\S]*?)\n---/);
-      const bodyContent = mdxContent.replace(/^---\n[\s\S]*?\n---\n/, '');
-      
-      let frontmatter: Record<string, string> = {};
-      if (frontmatterMatch) {
-        const frontmatterText = frontmatterMatch[1];
-        frontmatterText.split('\n').forEach(line => {
-          const match = line.match(/^([^:]+):\s*(.*)$/);
-          if (match) {
-            frontmatter[match[1].trim()] = match[2].trim();
-          }
+      if (result.data) {
+        const data = result.data[collection] as any;
+        setPageData({
+          title: data.title || '',
+          metaTitle: data.metaTitle || data.title,
+          metaDescription: data.metaDescription || '',
+          hero: data.hero || undefined,
+          lastUpdated: data.lastUpdated || undefined,
+          state: data.state || undefined,
+          stateAbbr: data.stateAbbr || undefined,
+          body: data.body || data._body,
         });
+      } else {
+        throw new Error('No data returned');
       }
-
-      setPageData({
-        title: frontmatter.title || '',
-        metaTitle: frontmatter.metaTitle || frontmatter.title,
-        metaDescription: frontmatter.metaDescription || '',
-        heroHeadline: frontmatter.heroHeadline,
-        heroSubheadline: frontmatter.heroSubheadline,
-        lastUpdated: frontmatter.lastUpdated,
-        body: bodyContent,
-        _body: bodyContent,
-      });
     } catch (err) {
       console.error('Error loading page:', err);
       setError('Failed to load page content');
@@ -89,13 +89,47 @@ export function TinaPage({ collection, slug }: TinaPageProps) {
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <h1 className="text-4xl font-bold mb-4">Page Not Found</h1>
-            <p className="text-muted-foreground mb-6">This page does not exist</p>
+            <p className="text-muted-foreground mb-6">
+              {error || 'This page does not exist'}
+            </p>
           </div>
         </div>
         <Footer />
       </div>
     );
   }
+
+  const renderBody = (body: any) => {
+    if (typeof body === 'string') {
+      return <ReactMarkdown>{body}</ReactMarkdown>;
+    }
+    
+    if (body?.children) {
+      return body.children.map((child: any, index: number) => {
+        if (child.type === 'h2') {
+          return <h2 key={index}>{child.children?.[0]?.text || ''}</h2>;
+        }
+        if (child.type === 'h3') {
+          return <h3 key={index}>{child.children?.[0]?.text || ''}</h3>;
+        }
+        if (child.type === 'p') {
+          return <p key={index}>{child.children?.[0]?.text || ''}</p>;
+        }
+        if (child.type === 'ul') {
+          return (
+            <ul key={index}>
+              {child.children?.map((li: any, liIndex: number) => (
+                <li key={liIndex}>{li.children?.[0]?.text || ''}</li>
+              ))}
+            </ul>
+          );
+        }
+        return null;
+      });
+    }
+    
+    return null;
+  };
 
   return (
     <>
@@ -108,7 +142,7 @@ export function TinaPage({ collection, slug }: TinaPageProps) {
 
       <main className="min-h-screen bg-white">
         {/* Hero Section */}
-        {pageData.heroHeadline && (
+        {pageData.hero?.headline && (
           <div className="relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-[#003366] via-[#1e40af] to-[#6366f1]">
               <div className="absolute top-0 -left-20 w-96 h-96 bg-gradient-to-br from-[#14b8a6] to-[#06b6d4] rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob" />
@@ -117,11 +151,11 @@ export function TinaPage({ collection, slug }: TinaPageProps) {
 
             <div className="relative container mx-auto px-4 py-16 max-w-5xl">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 animate-fade-in-up">
-                {pageData.heroHeadline}
+                {pageData.hero.headline}
               </h1>
-              {pageData.heroSubheadline && (
+              {pageData.hero.subheadline && (
                 <p className="text-xl text-white/90 leading-relaxed animate-fade-in-up animation-delay-200">
-                  {pageData.heroSubheadline}
+                  {pageData.hero.subheadline}
                 </p>
               )}
             </div>
@@ -129,7 +163,7 @@ export function TinaPage({ collection, slug }: TinaPageProps) {
         )}
 
         {/* Simple Header for Legal Pages */}
-        {!pageData.heroHeadline && (
+        {!pageData.hero?.headline && (
           <div className="bg-gradient-to-r from-[#003366] to-[#1e40af] text-white py-16">
             <div className="container mx-auto px-4">
               <h1 className="text-4xl font-bold mb-4">{pageData.title}</h1>
@@ -143,7 +177,7 @@ export function TinaPage({ collection, slug }: TinaPageProps) {
         {/* Content */}
         <div className="container mx-auto px-4 py-12 max-w-4xl">
           <div className="prose prose-lg max-w-none prose-headings:text-[#003366] prose-a:text-[#10b981] prose-a:no-underline hover:prose-a:underline">
-            <ReactMarkdown>{pageData.body || ''}</ReactMarkdown>
+            {renderBody(pageData.body)}
           </div>
         </div>
       </main>

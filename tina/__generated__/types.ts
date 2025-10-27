@@ -88,8 +88,6 @@ export type Query = {
   loanPageConnection: LoanPageConnection;
   legalPage: LegalPage;
   legalPageConnection: LegalPageConnection;
-  loanTypePage: LoanTypePage;
-  loanTypePageConnection: LoanTypePageConnection;
   blogPost: BlogPost;
   blogPostConnection: BlogPostConnection;
   globalSettings: GlobalSettings;
@@ -163,21 +161,6 @@ export type QueryLegalPageConnectionArgs = {
 };
 
 
-export type QueryLoanTypePageArgs = {
-  relativePath?: InputMaybe<Scalars['String']['input']>;
-};
-
-
-export type QueryLoanTypePageConnectionArgs = {
-  before?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Float']['input']>;
-  last?: InputMaybe<Scalars['Float']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<LoanTypePageFilter>;
-};
-
-
 export type QueryBlogPostArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
@@ -211,7 +194,6 @@ export type DocumentFilter = {
   statePage?: InputMaybe<StatePageFilter>;
   loanPage?: InputMaybe<LoanPageFilter>;
   legalPage?: InputMaybe<LegalPageFilter>;
-  loanTypePage?: InputMaybe<LoanTypePageFilter>;
   blogPost?: InputMaybe<BlogPostFilter>;
   globalSettings?: InputMaybe<GlobalSettingsFilter>;
 };
@@ -253,7 +235,7 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = StatePage | LoanPage | LegalPage | LoanTypePage | BlogPost | GlobalSettings | Folder;
+export type DocumentNode = StatePage | LoanPage | LegalPage | BlogPost | GlobalSettings | Folder;
 
 export type StatePageHero = {
   __typename?: 'StatePageHero';
@@ -347,6 +329,12 @@ export type LoanPageHero = {
   image?: Maybe<Scalars['String']['output']>;
 };
 
+export type LoanPageSeo = {
+  __typename?: 'LoanPageSeo';
+  keywords?: Maybe<Scalars['String']['output']>;
+  ogImage?: Maybe<Scalars['String']['output']>;
+};
+
 export type LoanPage = Node & Document & {
   __typename?: 'LoanPage';
   title: Scalars['String']['output'];
@@ -354,6 +342,7 @@ export type LoanPage = Node & Document & {
   metaDescription: Scalars['String']['output'];
   loanType: Scalars['String']['output'];
   hero?: Maybe<LoanPageHero>;
+  seo?: Maybe<LoanPageSeo>;
   body?: Maybe<Scalars['JSON']['output']>;
   id: Scalars['ID']['output'];
   _sys: SystemInfo;
@@ -366,12 +355,18 @@ export type LoanPageHeroFilter = {
   image?: InputMaybe<ImageFilter>;
 };
 
+export type LoanPageSeoFilter = {
+  keywords?: InputMaybe<StringFilter>;
+  ogImage?: InputMaybe<StringFilter>;
+};
+
 export type LoanPageFilter = {
   title?: InputMaybe<StringFilter>;
   metaTitle?: InputMaybe<StringFilter>;
   metaDescription?: InputMaybe<StringFilter>;
   loanType?: InputMaybe<StringFilter>;
   hero?: InputMaybe<LoanPageHeroFilter>;
+  seo?: InputMaybe<LoanPageSeoFilter>;
   body?: InputMaybe<RichTextFilter>;
 };
 
@@ -419,43 +414,6 @@ export type LegalPageConnection = Connection & {
   pageInfo: PageInfo;
   totalCount: Scalars['Float']['output'];
   edges?: Maybe<Array<Maybe<LegalPageConnectionEdges>>>;
-};
-
-export type LoanTypePage = Node & Document & {
-  __typename?: 'LoanTypePage';
-  title: Scalars['String']['output'];
-  metaTitle: Scalars['String']['output'];
-  metaDescription: Scalars['String']['output'];
-  heroHeadline?: Maybe<Scalars['String']['output']>;
-  heroSubheadline?: Maybe<Scalars['String']['output']>;
-  keywords?: Maybe<Scalars['String']['output']>;
-  body?: Maybe<Scalars['JSON']['output']>;
-  id: Scalars['ID']['output'];
-  _sys: SystemInfo;
-  _values: Scalars['JSON']['output'];
-};
-
-export type LoanTypePageFilter = {
-  title?: InputMaybe<StringFilter>;
-  metaTitle?: InputMaybe<StringFilter>;
-  metaDescription?: InputMaybe<StringFilter>;
-  heroHeadline?: InputMaybe<StringFilter>;
-  heroSubheadline?: InputMaybe<StringFilter>;
-  keywords?: InputMaybe<StringFilter>;
-  body?: InputMaybe<RichTextFilter>;
-};
-
-export type LoanTypePageConnectionEdges = {
-  __typename?: 'LoanTypePageConnectionEdges';
-  cursor: Scalars['String']['output'];
-  node?: Maybe<LoanTypePage>;
-};
-
-export type LoanTypePageConnection = Connection & {
-  __typename?: 'LoanTypePageConnection';
-  pageInfo: PageInfo;
-  totalCount: Scalars['Float']['output'];
-  edges?: Maybe<Array<Maybe<LoanTypePageConnectionEdges>>>;
 };
 
 export type BlogPost = Node & Document & {
@@ -617,8 +575,6 @@ export type Mutation = {
   createLoanPage: LoanPage;
   updateLegalPage: LegalPage;
   createLegalPage: LegalPage;
-  updateLoanTypePage: LoanTypePage;
-  createLoanTypePage: LoanTypePage;
   updateBlogPost: BlogPost;
   createBlogPost: BlogPost;
   updateGlobalSettings: GlobalSettings;
@@ -695,18 +651,6 @@ export type MutationCreateLegalPageArgs = {
 };
 
 
-export type MutationUpdateLoanTypePageArgs = {
-  relativePath: Scalars['String']['input'];
-  params: LoanTypePageMutation;
-};
-
-
-export type MutationCreateLoanTypePageArgs = {
-  relativePath: Scalars['String']['input'];
-  params: LoanTypePageMutation;
-};
-
-
 export type MutationUpdateBlogPostArgs = {
   relativePath: Scalars['String']['input'];
   params: BlogPostMutation;
@@ -734,7 +678,6 @@ export type DocumentUpdateMutation = {
   statePage?: InputMaybe<StatePageMutation>;
   loanPage?: InputMaybe<LoanPageMutation>;
   legalPage?: InputMaybe<LegalPageMutation>;
-  loanTypePage?: InputMaybe<LoanTypePageMutation>;
   blogPost?: InputMaybe<BlogPostMutation>;
   globalSettings?: InputMaybe<GlobalSettingsMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
@@ -744,7 +687,6 @@ export type DocumentMutation = {
   statePage?: InputMaybe<StatePageMutation>;
   loanPage?: InputMaybe<LoanPageMutation>;
   legalPage?: InputMaybe<LegalPageMutation>;
-  loanTypePage?: InputMaybe<LoanTypePageMutation>;
   blogPost?: InputMaybe<BlogPostMutation>;
   globalSettings?: InputMaybe<GlobalSettingsMutation>;
 };
@@ -778,12 +720,18 @@ export type LoanPageHeroMutation = {
   image?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type LoanPageSeoMutation = {
+  keywords?: InputMaybe<Scalars['String']['input']>;
+  ogImage?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type LoanPageMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   metaTitle?: InputMaybe<Scalars['String']['input']>;
   metaDescription?: InputMaybe<Scalars['String']['input']>;
   loanType?: InputMaybe<Scalars['String']['input']>;
   hero?: InputMaybe<LoanPageHeroMutation>;
+  seo?: InputMaybe<LoanPageSeoMutation>;
   body?: InputMaybe<Scalars['JSON']['input']>;
 };
 
@@ -792,16 +740,6 @@ export type LegalPageMutation = {
   metaTitle?: InputMaybe<Scalars['String']['input']>;
   metaDescription?: InputMaybe<Scalars['String']['input']>;
   lastUpdated?: InputMaybe<Scalars['String']['input']>;
-  body?: InputMaybe<Scalars['JSON']['input']>;
-};
-
-export type LoanTypePageMutation = {
-  title?: InputMaybe<Scalars['String']['input']>;
-  metaTitle?: InputMaybe<Scalars['String']['input']>;
-  metaDescription?: InputMaybe<Scalars['String']['input']>;
-  heroHeadline?: InputMaybe<Scalars['String']['input']>;
-  heroSubheadline?: InputMaybe<Scalars['String']['input']>;
-  keywords?: InputMaybe<Scalars['String']['input']>;
   body?: InputMaybe<Scalars['JSON']['input']>;
 };
 
@@ -852,11 +790,9 @@ export type GlobalSettingsMutation = {
 
 export type StatePagePartsFragment = { __typename: 'StatePage', title: string, metaTitle: string, metaDescription: string, state: string, stateAbbr: string, body?: any | null, hero?: { __typename: 'StatePageHero', headline: string, subheadline?: string | null, image?: string | null, imageAlt?: string | null } | null, seo?: { __typename: 'StatePageSeo', ogImage?: string | null, keywords?: string | null } | null };
 
-export type LoanPagePartsFragment = { __typename: 'LoanPage', title: string, metaTitle: string, metaDescription: string, loanType: string, body?: any | null, hero?: { __typename: 'LoanPageHero', headline?: string | null, subheadline?: string | null, image?: string | null } | null };
+export type LoanPagePartsFragment = { __typename: 'LoanPage', title: string, metaTitle: string, metaDescription: string, loanType: string, body?: any | null, hero?: { __typename: 'LoanPageHero', headline?: string | null, subheadline?: string | null, image?: string | null } | null, seo?: { __typename: 'LoanPageSeo', keywords?: string | null, ogImage?: string | null } | null };
 
 export type LegalPagePartsFragment = { __typename: 'LegalPage', title: string, metaTitle: string, metaDescription: string, lastUpdated?: string | null, body?: any | null };
-
-export type LoanTypePagePartsFragment = { __typename: 'LoanTypePage', title: string, metaTitle: string, metaDescription: string, heroHeadline?: string | null, heroSubheadline?: string | null, keywords?: string | null, body?: any | null };
 
 export type BlogPostPartsFragment = { __typename: 'BlogPost', title: string, metaTitle?: string | null, metaDescription?: string | null, excerpt: string, publishDate: string, author: string, featuredImage?: string | null, category?: string | null, tags?: Array<string | null> | null, body?: any | null };
 
@@ -886,7 +822,7 @@ export type LoanPageQueryVariables = Exact<{
 }>;
 
 
-export type LoanPageQuery = { __typename?: 'Query', loanPage: { __typename: 'LoanPage', id: string, title: string, metaTitle: string, metaDescription: string, loanType: string, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'LoanPageHero', headline?: string | null, subheadline?: string | null, image?: string | null } | null } };
+export type LoanPageQuery = { __typename?: 'Query', loanPage: { __typename: 'LoanPage', id: string, title: string, metaTitle: string, metaDescription: string, loanType: string, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'LoanPageHero', headline?: string | null, subheadline?: string | null, image?: string | null } | null, seo?: { __typename: 'LoanPageSeo', keywords?: string | null, ogImage?: string | null } | null } };
 
 export type LoanPageConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
@@ -898,7 +834,7 @@ export type LoanPageConnectionQueryVariables = Exact<{
 }>;
 
 
-export type LoanPageConnectionQuery = { __typename?: 'Query', loanPageConnection: { __typename?: 'LoanPageConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'LoanPageConnectionEdges', cursor: string, node?: { __typename: 'LoanPage', id: string, title: string, metaTitle: string, metaDescription: string, loanType: string, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'LoanPageHero', headline?: string | null, subheadline?: string | null, image?: string | null } | null } | null } | null> | null } };
+export type LoanPageConnectionQuery = { __typename?: 'Query', loanPageConnection: { __typename?: 'LoanPageConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'LoanPageConnectionEdges', cursor: string, node?: { __typename: 'LoanPage', id: string, title: string, metaTitle: string, metaDescription: string, loanType: string, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, hero?: { __typename: 'LoanPageHero', headline?: string | null, subheadline?: string | null, image?: string | null } | null, seo?: { __typename: 'LoanPageSeo', keywords?: string | null, ogImage?: string | null } | null } | null } | null> | null } };
 
 export type LegalPageQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -918,25 +854,6 @@ export type LegalPageConnectionQueryVariables = Exact<{
 
 
 export type LegalPageConnectionQuery = { __typename?: 'Query', legalPageConnection: { __typename?: 'LegalPageConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'LegalPageConnectionEdges', cursor: string, node?: { __typename: 'LegalPage', id: string, title: string, metaTitle: string, metaDescription: string, lastUpdated?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
-
-export type LoanTypePageQueryVariables = Exact<{
-  relativePath: Scalars['String']['input'];
-}>;
-
-
-export type LoanTypePageQuery = { __typename?: 'Query', loanTypePage: { __typename: 'LoanTypePage', id: string, title: string, metaTitle: string, metaDescription: string, heroHeadline?: string | null, heroSubheadline?: string | null, keywords?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
-
-export type LoanTypePageConnectionQueryVariables = Exact<{
-  before?: InputMaybe<Scalars['String']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Float']['input']>;
-  last?: InputMaybe<Scalars['Float']['input']>;
-  sort?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<LoanTypePageFilter>;
-}>;
-
-
-export type LoanTypePageConnectionQuery = { __typename?: 'Query', loanTypePageConnection: { __typename?: 'LoanTypePageConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'LoanTypePageConnectionEdges', cursor: string, node?: { __typename: 'LoanTypePage', id: string, title: string, metaTitle: string, metaDescription: string, heroHeadline?: string | null, heroSubheadline?: string | null, keywords?: string | null, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, hasReferences?: boolean | null, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
 export type BlogPostQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
@@ -1012,6 +929,11 @@ export const LoanPagePartsFragmentDoc = gql`
     subheadline
     image
   }
+  seo {
+    __typename
+    keywords
+    ogImage
+  }
   body
 }
     `;
@@ -1022,18 +944,6 @@ export const LegalPagePartsFragmentDoc = gql`
   metaTitle
   metaDescription
   lastUpdated
-  body
-}
-    `;
-export const LoanTypePagePartsFragmentDoc = gql`
-    fragment LoanTypePageParts on LoanTypePage {
-  __typename
-  title
-  metaTitle
-  metaDescription
-  heroHeadline
-  heroSubheadline
-  keywords
   body
 }
     `;
@@ -1253,63 +1163,6 @@ export const LegalPageConnectionDocument = gql`
   }
 }
     ${LegalPagePartsFragmentDoc}`;
-export const LoanTypePageDocument = gql`
-    query loanTypePage($relativePath: String!) {
-  loanTypePage(relativePath: $relativePath) {
-    ... on Document {
-      _sys {
-        filename
-        basename
-        hasReferences
-        breadcrumbs
-        path
-        relativePath
-        extension
-      }
-      id
-    }
-    ...LoanTypePageParts
-  }
-}
-    ${LoanTypePagePartsFragmentDoc}`;
-export const LoanTypePageConnectionDocument = gql`
-    query loanTypePageConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: LoanTypePageFilter) {
-  loanTypePageConnection(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sort: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasPreviousPage
-      hasNextPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      cursor
-      node {
-        ... on Document {
-          _sys {
-            filename
-            basename
-            hasReferences
-            breadcrumbs
-            path
-            relativePath
-            extension
-          }
-          id
-        }
-        ...LoanTypePageParts
-      }
-    }
-  }
-}
-    ${LoanTypePagePartsFragmentDoc}`;
 export const BlogPostDocument = gql`
     query blogPost($relativePath: String!) {
   blogPost(relativePath: $relativePath) {
@@ -1444,12 +1297,6 @@ export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) 
       },
     legalPageConnection(variables?: LegalPageConnectionQueryVariables, options?: C): Promise<{data: LegalPageConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalPageConnectionQueryVariables, query: string}> {
         return requester<{data: LegalPageConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LegalPageConnectionQueryVariables, query: string}, LegalPageConnectionQueryVariables>(LegalPageConnectionDocument, variables, options);
-      },
-    loanTypePage(variables: LoanTypePageQueryVariables, options?: C): Promise<{data: LoanTypePageQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LoanTypePageQueryVariables, query: string}> {
-        return requester<{data: LoanTypePageQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LoanTypePageQueryVariables, query: string}, LoanTypePageQueryVariables>(LoanTypePageDocument, variables, options);
-      },
-    loanTypePageConnection(variables?: LoanTypePageConnectionQueryVariables, options?: C): Promise<{data: LoanTypePageConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LoanTypePageConnectionQueryVariables, query: string}> {
-        return requester<{data: LoanTypePageConnectionQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: LoanTypePageConnectionQueryVariables, query: string}, LoanTypePageConnectionQueryVariables>(LoanTypePageConnectionDocument, variables, options);
       },
     blogPost(variables: BlogPostQueryVariables, options?: C): Promise<{data: BlogPostQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: BlogPostQueryVariables, query: string}> {
         return requester<{data: BlogPostQuery, errors?: { message: string, locations: { line: number, column: number }[], path: string[] }[], variables: BlogPostQueryVariables, query: string}, BlogPostQueryVariables>(BlogPostDocument, variables, options);

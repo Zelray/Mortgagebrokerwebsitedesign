@@ -60,8 +60,6 @@ type Query {
   loanPageConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: LoanPageFilter): LoanPageConnection!
   legalPage(relativePath: String): LegalPage!
   legalPageConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: LegalPageFilter): LegalPageConnection!
-  loanTypePage(relativePath: String): LoanTypePage!
-  loanTypePageConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: LoanTypePageFilter): LoanTypePageConnection!
   blogPost(relativePath: String): BlogPost!
   blogPostConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: BlogPostFilter): BlogPostConnection!
   globalSettings(relativePath: String): GlobalSettings!
@@ -72,7 +70,6 @@ input DocumentFilter {
   statePage: StatePageFilter
   loanPage: LoanPageFilter
   legalPage: LegalPageFilter
-  loanTypePage: LoanTypePageFilter
   blogPost: BlogPostFilter
   globalSettings: GlobalSettingsFilter
 }
@@ -100,7 +97,7 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = StatePage | LoanPage | LegalPage | LoanTypePage | BlogPost | GlobalSettings | Folder
+union DocumentNode = StatePage | LoanPage | LegalPage | BlogPost | GlobalSettings | Folder
 
 type StatePageHero {
   headline: String!
@@ -188,12 +185,18 @@ type LoanPageHero {
   image: String
 }
 
+type LoanPageSeo {
+  keywords: String
+  ogImage: String
+}
+
 type LoanPage implements Node & Document {
   title: String!
   metaTitle: String!
   metaDescription: String!
   loanType: String!
   hero: LoanPageHero
+  seo: LoanPageSeo
   body: JSON
   id: ID!
   _sys: SystemInfo!
@@ -206,12 +209,18 @@ input LoanPageHeroFilter {
   image: ImageFilter
 }
 
+input LoanPageSeoFilter {
+  keywords: StringFilter
+  ogImage: StringFilter
+}
+
 input LoanPageFilter {
   title: StringFilter
   metaTitle: StringFilter
   metaDescription: StringFilter
   loanType: StringFilter
   hero: LoanPageHeroFilter
+  seo: LoanPageSeoFilter
   body: RichTextFilter
 }
 
@@ -254,40 +263,6 @@ type LegalPageConnection implements Connection {
   pageInfo: PageInfo!
   totalCount: Float!
   edges: [LegalPageConnectionEdges]
-}
-
-type LoanTypePage implements Node & Document {
-  title: String!
-  metaTitle: String!
-  metaDescription: String!
-  heroHeadline: String
-  heroSubheadline: String
-  keywords: String
-  body: JSON
-  id: ID!
-  _sys: SystemInfo!
-  _values: JSON!
-}
-
-input LoanTypePageFilter {
-  title: StringFilter
-  metaTitle: StringFilter
-  metaDescription: StringFilter
-  heroHeadline: StringFilter
-  heroSubheadline: StringFilter
-  keywords: StringFilter
-  body: RichTextFilter
-}
-
-type LoanTypePageConnectionEdges {
-  cursor: String!
-  node: LoanTypePage
-}
-
-type LoanTypePageConnection implements Connection {
-  pageInfo: PageInfo!
-  totalCount: Float!
-  edges: [LoanTypePageConnectionEdges]
 }
 
 type BlogPost implements Node & Document {
@@ -438,8 +413,6 @@ type Mutation {
   createLoanPage(relativePath: String!, params: LoanPageMutation!): LoanPage!
   updateLegalPage(relativePath: String!, params: LegalPageMutation!): LegalPage!
   createLegalPage(relativePath: String!, params: LegalPageMutation!): LegalPage!
-  updateLoanTypePage(relativePath: String!, params: LoanTypePageMutation!): LoanTypePage!
-  createLoanTypePage(relativePath: String!, params: LoanTypePageMutation!): LoanTypePage!
   updateBlogPost(relativePath: String!, params: BlogPostMutation!): BlogPost!
   createBlogPost(relativePath: String!, params: BlogPostMutation!): BlogPost!
   updateGlobalSettings(relativePath: String!, params: GlobalSettingsMutation!): GlobalSettings!
@@ -450,7 +423,6 @@ input DocumentUpdateMutation {
   statePage: StatePageMutation
   loanPage: LoanPageMutation
   legalPage: LegalPageMutation
-  loanTypePage: LoanTypePageMutation
   blogPost: BlogPostMutation
   globalSettings: GlobalSettingsMutation
   relativePath: String
@@ -460,7 +432,6 @@ input DocumentMutation {
   statePage: StatePageMutation
   loanPage: LoanPageMutation
   legalPage: LegalPageMutation
-  loanTypePage: LoanTypePageMutation
   blogPost: BlogPostMutation
   globalSettings: GlobalSettingsMutation
 }
@@ -494,12 +465,18 @@ input LoanPageHeroMutation {
   image: String
 }
 
+input LoanPageSeoMutation {
+  keywords: String
+  ogImage: String
+}
+
 input LoanPageMutation {
   title: String
   metaTitle: String
   metaDescription: String
   loanType: String
   hero: LoanPageHeroMutation
+  seo: LoanPageSeoMutation
   body: JSON
 }
 
@@ -508,16 +485,6 @@ input LegalPageMutation {
   metaTitle: String
   metaDescription: String
   lastUpdated: String
-  body: JSON
-}
-
-input LoanTypePageMutation {
-  title: String
-  metaTitle: String
-  metaDescription: String
-  heroHeadline: String
-  heroSubheadline: String
-  keywords: String
   body: JSON
 }
 

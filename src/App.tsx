@@ -171,8 +171,8 @@ export default function App() {
           
           {/* Top-Level Pages */}
           <Route path="/prequal" element={<BuyersPrequalification />} />
-          <Route path="/purchase" element={<TinaPage collection="loan-types" slug="purchase" />} />
-          <Route path="/refinance" element={<TinaPage collection="loan-types" slug="refinance" />} />
+          <Route path="/purchase" element={<TinaPage collection="loanPage" slug="purchase" />} />
+          <Route path="/refinance" element={<TinaPage collection="loanPage" slug="refinance" />} />
           <Route path="/heloc" element={<HELOC />} />
           
           {/* Arizona Pages */}
@@ -203,15 +203,15 @@ export default function App() {
           <Route path="/az/usda-loans" element={<ArizonaUSDALoans />} />
           
           {/* Florida Pages */}
-          <Route path="/fl-mortgage-broker" element={<TinaPage collection="states" slug="fl-mortgage-broker" />} />
+          <Route path="/fl-mortgage-broker" element={<TinaPage collection="statePage" slug="fl-mortgage-broker" />} />
           
           {/* Texas Pages */}
-          <Route path="/tx-mortgage-broker" element={<TinaPage collection="states" slug="tx-mortgage-broker" />} />
+          <Route path="/tx-mortgage-broker" element={<TinaPage collection="statePage" slug="tx-mortgage-broker" />} />
           
           {/* Legal Pages */}
-          <Route path="/privacy-policy" element={<TinaPage collection="legal" slug="privacy-policy" />} />
-          <Route path="/terms-of-service" element={<TinaPage collection="legal" slug="terms-of-service" />} />
-          <Route path="/equal-housing-opportunity" element={<TinaPage collection="legal" slug="equal-housing-opportunity" />} />
+          <Route path="/privacy-policy" element={<TinaPage collection="legalPage" slug="privacy-policy" />} />
+          <Route path="/terms-of-service" element={<TinaPage collection="legalPage" slug="terms-of-service" />} />
+          <Route path="/equal-housing-opportunity" element={<TinaPage collection="legalPage" slug="equal-housing-opportunity" />} />
           <Route 
             path="/sitemap" 
             element={
