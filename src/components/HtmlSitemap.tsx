@@ -29,6 +29,9 @@ export function HtmlSitemap() {
               <li>
                 <a href="https://mortgagegenius.morty.com/login" target="_blank" rel="noopener noreferrer" className="text-[#10b981] hover:underline">Client Login</a>
               </li>
+              <li>
+                <Link to="/admin" className="text-[#10b981] hover:underline">Employee Login</Link>
+              </li>
             </ul>
           </div>
 
