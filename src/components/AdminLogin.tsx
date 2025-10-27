@@ -12,7 +12,7 @@ import { Mail, Lock, LogIn } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { projectId } from '../utils/supabase/info';
 import logo from '../assets/mortgage-genius-logo.png';
 
