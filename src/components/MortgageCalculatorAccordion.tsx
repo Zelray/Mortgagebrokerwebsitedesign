@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Calculator } from 'lucide-react';
+import { Calculator, ChevronDown, ChevronUp } from 'lucide-react';
 import { Input } from './ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Button } from './ui/button';
@@ -8,7 +8,9 @@ import { Label } from './ui/label';
 import { Slider } from './ui/slider';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 import { Checkbox } from './ui/checkbox';
-import { PieChart, Pie, Cell } from 'recharts';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
+import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('en-US', {
@@ -906,228 +908,275 @@ function RentVsBuyCalculator() {
 }
 
 function RefinanceCalculator() {
-  const [remainingBalance, setRemainingBalance] = useState(250000);
-  const [currentRate, setCurrentRate] = useState(7.5);
+  const [currentInfoOpen, setCurrentInfoOpen] = useState(true);
+  const [newInfoOpen, setNewInfoOpen] = useState(false);
+  
+  const [remainingBalance, setRemainingBalance] = useState(150000);
+  const [currentRate, setCurrentRate] = useState(8.00);
+  const [currentPayment, setCurrentPayment] = useState(1075);
+  const [remainingTerm, setRemainingTerm] = useState(20);
+  
   const [newRate, setNewRate] = useState(6.5);
-  const [closingCosts, setClosingCosts] = useState(5250);
-  const [loanTerm, setLoanTerm] = useState(30);
+  const [newTerm, setNewTerm] = useState(30);
 
   const calculate = () => {
-    const currentMonthlyRate = currentRate / 100 / 12;
     const newMonthlyRate = newRate / 100 / 12;
-    const numPayments = loanTerm * 12;
+    const newNumPayments = newTerm * 12;
     
-    const currentMonthlyPayment = remainingBalance * (currentMonthlyRate * Math.pow(1 + currentMonthlyRate, numPayments)) / (Math.pow(1 + currentMonthlyRate, numPayments) - 1);
-    const newMonthlyPayment = remainingBalance * (newMonthlyRate * Math.pow(1 + newMonthlyRate, numPayments)) / (Math.pow(1 + newMonthlyRate, numPayments) - 1);
+    const newMonthlyPayment = remainingBalance * (newMonthlyRate * Math.pow(1 + newMonthlyRate, newNumPayments)) / (Math.pow(1 + newMonthlyRate, newNumPayments) - 1);
     
-    const monthlySavings = currentMonthlyPayment - newMonthlyPayment;
-    const breakEvenMonths = monthlySavings > 0 ? closingCosts / monthlySavings : 0;
-    
-    const savings1Year = (monthlySavings * 12) - closingCosts;
-    const savings5Years = (monthlySavings * 60) - closingCosts;
-    const savingsLifetime = (monthlySavings * numPayments) - closingCosts;
+    const monthlySavings = currentPayment - newMonthlyPayment;
+    const totalSavingsOverTerm = monthlySavings * newNumPayments;
     
     return {
-      currentPayment: Math.round(currentMonthlyPayment),
+      currentPayment,
       newPayment: Math.round(newMonthlyPayment),
       monthlySavings: Math.round(monthlySavings),
-      breakEvenMonths: Math.round(breakEvenMonths),
-      savings1Year: Math.round(savings1Year),
-      savings5Years: Math.round(savings5Years),
-      savingsLifetime: Math.round(savingsLifetime)
+      totalSavings: Math.round(totalSavingsOverTerm)
     };
   };
 
   const result = calculate();
-  const maxPayment = Math.max(result.currentPayment, result.newPayment);
-  const currentPercentage = (result.currentPayment / maxPayment) * 100;
-  const newPercentage = (result.newPayment / maxPayment) * 100;
+
+  const monthlyChartData = [
+    { name: 'Current payment', value: result.currentPayment, color: '#0097A7' },
+    { name: 'New payment', value: result.newPayment, color: '#000000' }
+  ];
+
+  const totalChartData = [
+    { name: 'Current payment', value: result.currentPayment * (newTerm * 12), color: '#0097A7' },
+    { name: 'New payment', value: result.newPayment * (newTerm * 12), color: '#000000' }
+  ];
 
   return (
-    <div className="grid lg:grid-cols-2 gap-8 mt-6">
-      {/* Left Column - Inputs */}
-      <div>
-        <Card className="p-6 bg-gray-50/50 border-gray-200 shadow-sm">
-          <div className="space-y-6">
-            {/* Remaining Balance with Slider */}
-            <div className="space-y-2">
-              <div className="flex justify-between items-baseline">
-                <Label className="text-sm font-medium text-gray-700">Remaining loan balance</Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">$</span>
-                  <Input
-                    type="text"
-                    value={formatNumber(remainingBalance)}
-                    onChange={(e) => setRemainingBalance(parseCurrency(e.target.value))}
-                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
+    <div className="grid lg:grid-cols-[1fr_1.3fr] gap-8 mt-6">
+      {/* Left Column - Input Sections */}
+      <div className="space-y-4">
+        {/* Current Loan Information */}
+        <Collapsible open={currentInfoOpen} onOpenChange={setCurrentInfoOpen}>
+          <Card className="border-gray-200">
+            <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
+              <h3 className="text-base font-bold text-gray-900">Current Loan Information</h3>
+              {currentInfoOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="px-4 pb-4 space-y-4 border-t pt-4">
+                {/* Remaining Balance */}
+                <div className="space-y-2">
+                  <Label className="text-sm text-gray-700">Remaining balance</Label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-700 font-medium pointer-events-none">$</span>
+                    <Input
+                      type="text"
+                      value={formatNumber(remainingBalance)}
+                      onChange={(e) => setRemainingBalance(parseCurrency(e.target.value))}
+                      className="pl-7 font-medium bg-[#0097A7] text-white border-0"
+                    />
+                  </div>
+                  <Slider
+                    value={[remainingBalance]}
+                    onValueChange={([value]: number[]) => setRemainingBalance(value)}
+                    min={50000}
+                    max={500000}
+                    step={5000}
+                    className="[&_[role=slider]]:bg-[#0097A7] [&_[role=slider]]:border-[#0097A7] [&_[role=slider]]:h-4 [&_[role=slider]]:w-4 [&_.bg-primary]:bg-[#0097A7]"
                   />
                 </div>
-              </div>
-              <Slider
-                value={[remainingBalance]}
-                onValueChange={([value]: number[]) => setRemainingBalance(value)}
-                min={50000}
-                max={1000000}
-                step={10000}
-                className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
-              />
-            </div>
 
-            {/* Current Rate */}
-            <div className="space-y-2">
-              <Label className="text-sm font-medium text-gray-700">Current interest rate</Label>
-              <div className="relative">
-                <Input
-                  type="number"
-                  step="0.1"
-                  value={currentRate}
-                  onChange={(e) => setCurrentRate(parseFloat(e.target.value) || 0)}
-                  className="pr-8 bg-white border-gray-300"
-                />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">%</span>
-              </div>
-            </div>
+                {/* Interest Rate */}
+                <div className="space-y-2">
+                  <Label className="text-sm text-gray-700">Interest rate</Label>
+                  <div className="relative">
+                    <Input
+                      type="number"
+                      step="0.01"
+                      value={currentRate}
+                      onChange={(e) => setCurrentRate(parseFloat(e.target.value) || 0)}
+                      className="pr-8"
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-700 font-medium">%</span>
+                  </div>
+                </div>
 
-            {/* New Rate */}
-            <div className="space-y-2">
-              <Label className="text-sm font-medium text-gray-700">New interest rate</Label>
-              <div className="relative">
-                <Input
-                  type="number"
-                  step="0.1"
-                  value={newRate}
-                  onChange={(e) => setNewRate(parseFloat(e.target.value) || 0)}
-                  className="pr-8 bg-white border-gray-300"
-                />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">%</span>
-              </div>
-            </div>
+                {/* Monthly Payment */}
+                <div className="space-y-2">
+                  <Label className="text-sm text-gray-700">Monthly payment</Label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-700 font-medium pointer-events-none">$</span>
+                    <Input
+                      type="number"
+                      value={currentPayment}
+                      onChange={(e) => setCurrentPayment(parseFloat(e.target.value) || 0)}
+                      className="pl-7"
+                    />
+                  </div>
+                </div>
 
-            {/* Closing Costs with Slider */}
-            <div className="space-y-2">
-              <div className="flex justify-between items-baseline">
-                <Label className="text-sm font-medium text-gray-700">Closing costs</Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">$</span>
-                  <Input
-                    type="number"
-                    value={closingCosts}
-                    onChange={(e) => setClosingCosts(parseFloat(e.target.value) || 0)}
-                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
-                  />
+                {/* Remaining Term */}
+                <div className="space-y-2">
+                  <Label className="text-sm text-gray-700">Remaining term</Label>
+                  <div className="relative">
+                    <Input
+                      type="number"
+                      value={remainingTerm}
+                      onChange={(e) => setRemainingTerm(parseFloat(e.target.value) || 0)}
+                      className="pr-16"
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-700 text-sm">years</span>
+                  </div>
                 </div>
               </div>
-              <Slider
-                value={[closingCosts]}
-                onValueChange={([value]: number[]) => setClosingCosts(value)}
-                min={0}
-                max={20000}
-                step={250}
-                className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
-              />
-            </div>
+            </CollapsibleContent>
+          </Card>
+        </Collapsible>
 
-            {/* Loan Term */}
-            <div className="space-y-2">
-              <Label className="text-sm font-medium text-gray-700">Remaining loan term</Label>
-              <Select value={loanTerm.toString()} onValueChange={(v: string) => setLoanTerm(parseInt(v))}>
-                <SelectTrigger className="bg-white border-gray-300">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="10">10 years</SelectItem>
-                  <SelectItem value="15">15 years</SelectItem>
-                  <SelectItem value="20">20 years</SelectItem>
-                  <SelectItem value="30">30 years</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </Card>
+        {/* New Loan Information */}
+        <Collapsible open={newInfoOpen} onOpenChange={setNewInfoOpen}>
+          <Card className="border-gray-200">
+            <CollapsibleTrigger className="w-full p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
+              <h3 className="text-base font-bold text-gray-900">New Loan Information</h3>
+              {newInfoOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="px-4 pb-4 space-y-4 border-t pt-4">
+                {/* New Interest Rate */}
+                <div className="space-y-2">
+                  <Label className="text-sm text-gray-700">Interest rate</Label>
+                  <div className="relative">
+                    <Input
+                      type="number"
+                      step="0.01"
+                      value={newRate}
+                      onChange={(e) => setNewRate(parseFloat(e.target.value) || 0)}
+                      className="pr-8"
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-700 font-medium">%</span>
+                  </div>
+                </div>
+
+                {/* New Term */}
+                <div className="space-y-2">
+                  <Label className="text-sm text-gray-700">Loan term</Label>
+                  <div className="relative">
+                    <Input
+                      type="number"
+                      value={newTerm}
+                      onChange={(e) => setNewTerm(parseFloat(e.target.value) || 0)}
+                      className="pr-16"
+                    />
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-700 text-sm">years</span>
+                  </div>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Card>
+        </Collapsible>
       </div>
 
       {/* Right Column - Results */}
       <div className="space-y-6">
-        {/* Savings Display */}
-        <div>
-          <p className="text-sm text-gray-600 mb-2">Monthly savings from refinancing</p>
-          <div className="text-5xl font-bold text-primary mb-1">
-            {formatCurrency(result.monthlySavings)}
-          </div>
-          <p className="text-sm text-gray-500">
-            Break-even in {Math.floor(result.breakEvenMonths / 12)} years {result.breakEvenMonths % 12} months
+        {/* Hero Message */}
+        <div className="bg-white p-6 rounded-lg border border-gray-200">
+          <p className="text-xl text-gray-900 leading-relaxed">
+            Refinancing your mortgage could reduce your monthly payment by{' '}
+            <span className="text-[#0097A7] font-bold">{formatCurrency(result.monthlySavings)}</span>, 
+            and reduce your total payment by{' '}
+            <span className="text-[#0097A7] font-bold">{formatCurrency(result.totalSavings)}</span>{' '}
+            over {newTerm} years.
           </p>
+          
+          <div className="flex gap-3 mt-6">
+            <Button size="lg" className="bg-[#7623A8] hover:bg-[#5e1c86] text-white">
+              Apply Now
+            </Button>
+            <Button size="lg" variant="outline" className="border-[#7623A8] text-[#7623A8] hover:bg-[#7623A8] hover:text-white">
+              Meet The Team
+            </Button>
+          </div>
         </div>
 
-        {/* Payment Comparison Chart */}
-        <Card className="p-6 bg-white border-gray-200 shadow-sm">
-          <h4 className="font-semibold text-gray-900 mb-6">Payment comparison</h4>
+        {/* Chart Tabs */}
+        <Tabs defaultValue="monthly" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 bg-white border-b rounded-none h-auto p-0">
+            <TabsTrigger 
+              value="monthly" 
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-gray-900 data-[state=active]:bg-transparent py-3"
+            >
+              Monthly Payment
+            </TabsTrigger>
+            <TabsTrigger 
+              value="total"
+              className="rounded-none border-b-2 border-transparent data-[state=active]:border-gray-900 data-[state=active]:bg-transparent py-3"
+            >
+              Total Payment
+            </TabsTrigger>
+          </TabsList>
           
-          <div className="space-y-6">
-            {/* Current Payment Bar */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-gray-700">Current payment</span>
-                <span className="text-sm font-bold text-gray-900">{formatCurrency(result.currentPayment)}</span>
+          <TabsContent value="monthly" className="mt-6">
+            <div className="space-y-6">
+              <div style={{ width: '100%', height: 200 }}>
+                <ResponsiveContainer>
+                  <BarChart data={monthlyChartData} layout="vertical" margin={{ top: 5, right: 30, left: 100, bottom: 5 }}>
+                    <XAxis type="number" tickFormatter={(value) => `$${value}`} />
+                    <YAxis type="category" dataKey="name" width={100} />
+                    <Bar dataKey="value" radius={4}>
+                      {monthlyChartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
-              <div className="h-10 bg-gray-100 rounded-lg overflow-hidden">
-                <div 
-                  className="h-full bg-red-500 flex items-center justify-end pr-3 transition-all"
-                  style={{ width: `${currentPercentage}%` }}
-                >
-                  {currentPercentage > 15 && <span className="text-xs font-semibold text-white">{currentRate}% rate</span>}
+              
+              <div className="flex items-center gap-6 text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-[#0097A7]" />
+                  <span className="text-gray-600">Current payment</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-black" />
+                  <span className="text-gray-600">New payment</span>
                 </div>
               </div>
             </div>
-
-            {/* New Payment Bar */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-gray-700">New payment</span>
-                <span className="text-sm font-bold text-gray-900">{formatCurrency(result.newPayment)}</span>
+          </TabsContent>
+          
+          <TabsContent value="total" className="mt-6">
+            <div className="space-y-6">
+              <div style={{ width: '100%', height: 200 }}>
+                <ResponsiveContainer>
+                  <BarChart data={totalChartData} layout="vertical" margin={{ top: 5, right: 30, left: 100, bottom: 5 }}>
+                    <XAxis type="number" tickFormatter={(value) => `$${(value/1000).toFixed(0)}K`} />
+                    <YAxis type="category" dataKey="name" width={100} />
+                    <Bar dataKey="value" radius={4}>
+                      {totalChartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Bar>
+                  </BarChart>
+                </ResponsiveContainer>
               </div>
-              <div className="h-10 bg-gray-100 rounded-lg overflow-hidden">
-                <div 
-                  className="h-full bg-emerald-500 flex items-center justify-end pr-3 transition-all"
-                  style={{ width: `${newPercentage}%` }}
-                >
-                  {newPercentage > 15 && <span className="text-xs font-semibold text-white">{newRate}% rate</span>}
+              
+              <div className="flex items-center gap-6 text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-[#0097A7]" />
+                  <span className="text-gray-600">Current payment</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-black" />
+                  <span className="text-gray-600">New payment</span>
                 </div>
               </div>
             </div>
-          </div>
+          </TabsContent>
+        </Tabs>
 
-          {/* Savings Timeline */}
-          <div className="mt-6 pt-6 border-t space-y-3">
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-600">Savings after 1 year</span>
-              <span className={`font-semibold ${result.savings1Year > 0 ? 'text-emerald-600' : 'text-red-600'}`}>
-                {formatCurrency(result.savings1Year)}
-              </span>
-            </div>
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-600">Savings after 5 years</span>
-              <span className={`font-semibold ${result.savings5Years > 0 ? 'text-emerald-600' : 'text-red-600'}`}>
-                {formatCurrency(result.savings5Years)}
-              </span>
-            </div>
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-600">Lifetime savings ({loanTerm} years)</span>
-              <span className={`font-semibold ${result.savingsLifetime > 0 ? 'text-emerald-600' : 'text-red-600'}`}>
-                {formatCurrency(result.savingsLifetime)}
-              </span>
-            </div>
-          </div>
-        </Card>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col gap-3">
-          <Button size="lg" className="w-full">
-            Apply to Refinance
-          </Button>
-          <Button size="lg" variant="outline" className="w-full">
-            Contact a Loan Officer
-          </Button>
+        {/* Disclosure and Branding */}
+        <div className="flex items-center justify-between text-xs text-gray-500">
+          <button className="hover:underline flex items-center gap-1">
+            Disclosure <ChevronDown className="w-3 h-3" />
+          </button>
+          <span className="text-gray-400">powered by <span className="font-semibold text-gray-600">Chimney</span></span>
         </div>
       </div>
     </div>
