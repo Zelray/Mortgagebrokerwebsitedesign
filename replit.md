@@ -10,6 +10,17 @@ Mortgage Genius is a professional mortgage broker website, developed with React,
 - **Interactive Pages Stay as React:** Keep HELOC calculator, pre-qualification forms, and HTML sitemap as React components
 - **Content Pages Migrated to TinaCMS:** State pages, legal pages, and loan type overview pages now managed through TinaCMS
 
+## Recent Changes (October 29, 2025)
+
+### Homepage Calculator Updates
+- **Replaced single calculator with 4 professional accordion calculators:**
+  1. Home Affordability Calculator - Shows maximum home price based on income and debts
+  2. Mortgage Payment Calculator - Calculates monthly payments with taxes and insurance
+  3. Rent vs Buy Calculator - Compares long-term costs of renting versus buying
+  4. Refinance Calculator - Shows savings potential from refinancing
+- All calculators feature working math, real-time updates, and professional UI
+- Accordion format allows users to access all calculators without scrolling
+
 ## Recent Changes (October 27, 2025)
 
 ### TinaCMS Content Migration

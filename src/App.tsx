@@ -48,7 +48,7 @@ import { HeroSection } from './components/HeroSection';
 import { TrustIndicators } from './components/TrustIndicators';
 import { StateSelection } from './components/StateSelection';
 import { LoanProgramsGrid } from './components/LoanProgramsGrid';
-import { MortgageCalculator } from './components/MortgageCalculator';
+import { MortgageCalculatorAccordion } from './components/MortgageCalculatorAccordion';
 import { SocialProof } from './components/SocialProof';
 import { AboutMortgageGenius } from './components/AboutMortgageGenius';
 import { BlogPreview } from './components/BlogPreview';
@@ -99,7 +99,7 @@ function HomePage() {
           <TrustIndicators />
           <StateSelection />
           <LoanProgramsGrid />
-          <MortgageCalculator />
+          <MortgageCalculatorAccordion />
           <SocialProof />
           <AboutMortgageGenius />
           <BlogPreview />
