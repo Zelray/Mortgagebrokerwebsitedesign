@@ -415,15 +415,20 @@ function AffordabilityCalculator() {
   const [downPayment, setDownPayment] = useState(50000);
   const [monthlyDebts, setMonthlyDebts] = useState(500);
   const [interestRate, setInterestRate] = useState(6.5);
+  const [loanTerm, setLoanTerm] = useState(30);
 
   const calculate = () => {
     const monthlyIncome = annualIncome / 12;
-    const maxMonthlyPayment = (monthlyIncome * 0.43) - monthlyDebts;
+    const dtiRatio = 0.43;
+    const maxMonthlyPayment = (monthlyIncome * dtiRatio) - monthlyDebts;
     
     const monthlyRate = interestRate / 100 / 12;
-    const numPayments = 30 * 12;
+    const numPayments = loanTerm * 12;
     
-    const monthlyTaxInsurance = 450;
+    const propertyTax = 300;
+    const homeInsurance = 150;
+    const monthlyTaxInsurance = propertyTax + homeInsurance;
+    
     const availableForPI = maxMonthlyPayment - monthlyTaxInsurance;
     
     const maxLoanAmount = availableForPI * ((Math.pow(1 + monthlyRate, numPayments) - 1) / (monthlyRate * Math.pow(1 + monthlyRate, numPayments)));
@@ -432,98 +437,215 @@ function AffordabilityCalculator() {
     
     return {
       homePrice: Math.round(homePrice),
-      monthlyPayment: Math.round(maxMonthlyPayment)
+      maxMonthlyPayment: Math.round(maxMonthlyPayment),
+      monthlyIncome: Math.round(monthlyIncome),
+      availableForHousing: Math.round(maxMonthlyPayment),
+      principalInterest: Math.round(availableForPI),
+      taxes: propertyTax,
+      insurance: homeInsurance,
+      debts: monthlyDebts
     };
   };
 
   const result = calculate();
 
+  const chartData = [
+    { name: 'P&I', value: result.principalInterest, color: '#0ea5e9' },
+    { name: 'Taxes', value: result.taxes, color: '#10b981' },
+    { name: 'Insurance', value: result.insurance, color: '#f59e0b' }
+  ];
+
   return (
-    <div className="grid lg:grid-cols-2 gap-6 mt-4">
-      <Card className="p-6 bg-gray-50">
-        <div className="space-y-4">
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <Label className="text-sm">Annual Income</Label>
-              <div className="relative">
-                <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
-                <Input
-                  type="text"
-                  value={formatNumber(annualIncome)}
-                  onChange={(e) => setAnnualIncome(parseCurrency(e.target.value))}
-                  className="pl-6 w-32 text-right bg-white"
-                />
+    <div className="grid lg:grid-cols-2 gap-8 mt-6">
+      {/* Left Column - Inputs */}
+      <div>
+        <Card className="p-6 bg-gray-50/50 border-gray-200 shadow-sm">
+          <div className="space-y-6">
+            {/* Annual Income with Slider */}
+            <div className="space-y-2">
+              <div className="flex justify-between items-baseline">
+                <Label className="text-sm font-medium text-gray-700">Annual income</Label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">$</span>
+                  <Input
+                    type="text"
+                    value={formatNumber(annualIncome)}
+                    onChange={(e) => setAnnualIncome(parseCurrency(e.target.value))}
+                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
+                  />
+                </div>
               </div>
-            </div>
-            <Slider
-              value={[annualIncome]}
-              onValueChange={([value]: number[]) => setAnnualIncome(value)}
-              min={30000}
-              max={300000}
-              step={5000}
-              className="[&_[role=slider]]:bg-primary"
-            />
-          </div>
-
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <Label className="text-sm">Down Payment</Label>
-              <div className="relative">
-                <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
-                <Input
-                  type="text"
-                  value={formatNumber(downPayment)}
-                  onChange={(e) => setDownPayment(parseCurrency(e.target.value))}
-                  className="pl-6 w-32 text-right bg-white"
-                />
-              </div>
-            </div>
-            <Slider
-              value={[downPayment]}
-              onValueChange={([value]: number[]) => setDownPayment(value)}
-              min={0}
-              max={200000}
-              step={5000}
-              className="[&_[role=slider]]:bg-primary"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label className="text-sm">Monthly Debts</Label>
-            <div className="relative">
-              <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
-              <Input
-                type="number"
-                value={monthlyDebts}
-                onChange={(e) => setMonthlyDebts(parseFloat(e.target.value) || 0)}
-                className="pl-6 bg-white"
+              <Slider
+                value={[annualIncome]}
+                onValueChange={([value]: number[]) => setAnnualIncome(value)}
+                min={30000}
+                max={300000}
+                step={5000}
+                className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
               />
             </div>
-          </div>
 
-          <div className="space-y-2">
-            <Label className="text-sm">Interest Rate (%)</Label>
-            <Input
-              type="number"
-              step="0.1"
-              value={interestRate}
-              onChange={(e) => setInterestRate(parseFloat(e.target.value) || 0)}
-              className="bg-white"
-            />
+            {/* Down Payment with Slider */}
+            <div className="space-y-2">
+              <div className="flex justify-between items-baseline">
+                <Label className="text-sm font-medium text-gray-700">Down payment</Label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">$</span>
+                  <Input
+                    type="text"
+                    value={formatNumber(downPayment)}
+                    onChange={(e) => setDownPayment(parseCurrency(e.target.value))}
+                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
+                  />
+                </div>
+              </div>
+              <Slider
+                value={[downPayment]}
+                onValueChange={([value]: number[]) => setDownPayment(value)}
+                min={0}
+                max={200000}
+                step={5000}
+                className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
+              />
+            </div>
+
+            {/* Monthly Debts with Slider */}
+            <div className="space-y-2">
+              <div className="flex justify-between items-baseline">
+                <Label className="text-sm font-medium text-gray-700">Monthly debts</Label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">$</span>
+                  <Input
+                    type="number"
+                    value={monthlyDebts}
+                    onChange={(e) => setMonthlyDebts(parseFloat(e.target.value) || 0)}
+                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
+                  />
+                </div>
+              </div>
+              <Slider
+                value={[monthlyDebts]}
+                onValueChange={([value]: number[]) => setMonthlyDebts(value)}
+                min={0}
+                max={5000}
+                step={50}
+                className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
+              />
+            </div>
+
+            {/* Loan Term */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium text-gray-700">Loan term</Label>
+              <Select value={loanTerm.toString()} onValueChange={(v: string) => setLoanTerm(parseInt(v))}>
+                <SelectTrigger className="bg-white border-gray-300">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="10">10 years</SelectItem>
+                  <SelectItem value="15">15 years</SelectItem>
+                  <SelectItem value="20">20 years</SelectItem>
+                  <SelectItem value="30">30 years</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Interest Rate */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium text-gray-700">Interest rate</Label>
+              <div className="relative">
+                <Input
+                  type="number"
+                  step="0.1"
+                  value={interestRate}
+                  onChange={(e) => setInterestRate(parseFloat(e.target.value) || 0)}
+                  className="pr-8 bg-white border-gray-300"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">%</span>
+              </div>
+            </div>
           </div>
+        </Card>
+      </div>
+
+      {/* Right Column - Results */}
+      <div className="space-y-6">
+        {/* Home Price Display */}
+        <div>
+          <p className="text-sm text-gray-600 mb-2">You may be able to afford a home worth</p>
+          <div className="text-5xl font-bold text-primary mb-1">
+            {formatCurrency(result.homePrice)}
+          </div>
+          <p className="text-sm text-gray-500">with a monthly payment of {formatCurrency(result.maxMonthlyPayment)}</p>
         </div>
-      </Card>
 
-      <div className="space-y-4">
-        <Card className="p-6 bg-gradient-to-br from-primary to-primary/80 text-white">
-          <p className="text-sm opacity-90 mb-2">You may be able to afford a home worth</p>
-          <div className="text-4xl font-bold mb-1">{formatCurrency(result.homePrice)}</div>
-          <p className="text-sm opacity-90">with a monthly payment of {formatCurrency(result.monthlyPayment)}</p>
+        {/* Income Breakdown Card */}
+        <Card className="p-6 bg-white border-gray-200 shadow-sm">
+          <h4 className="font-semibold text-gray-900 mb-6">Monthly budget breakdown</h4>
+          
+          <div className="space-y-4 mb-6">
+            <div className="flex items-center justify-between pb-3 border-b">
+              <span className="text-sm text-gray-600">Monthly income</span>
+              <span className="text-sm font-semibold text-gray-900">{formatCurrency(result.monthlyIncome)}</span>
+            </div>
+            <div className="flex items-center justify-between pb-3 border-b">
+              <span className="text-sm text-gray-600">Existing debts</span>
+              <span className="text-sm font-semibold text-red-600">−{formatCurrency(result.debts)}</span>
+            </div>
+            <div className="flex items-center justify-between pb-3 border-b border-gray-300">
+              <span className="text-sm font-semibold text-gray-700">Available for housing</span>
+              <span className="text-sm font-bold text-primary">{formatCurrency(result.availableForHousing)}</span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-8">
+            {/* Donut Chart */}
+            <div className="relative flex-shrink-0">
+              <div style={{ width: 180, height: 180 }}>
+                <PieChart width={180} height={180}>
+                  <Pie
+                    data={chartData}
+                    cx={90}
+                    cy={90}
+                    innerRadius={55}
+                    outerRadius={80}
+                    paddingAngle={2}
+                    dataKey="value"
+                  >
+                    {chartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <div className="text-xs text-gray-500">Payment</div>
+                <div className="text-lg font-bold text-gray-900">{formatCurrency(result.maxMonthlyPayment)}</div>
+              </div>
+            </div>
+
+            {/* Legend */}
+            <div className="space-y-2.5 flex-1">
+              {chartData.map((item) => (
+                <div key={item.name} className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-sm flex-shrink-0" style={{ backgroundColor: item.color }} />
+                    <span className="text-sm text-gray-600">{item.name}</span>
+                  </div>
+                  <span className="text-sm font-semibold text-gray-900">{formatCurrency(item.value)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </Card>
 
-        <div className="flex gap-2">
-          <Button className="flex-1">Apply Now</Button>
-          <Button variant="outline" className="flex-1">Contact Us</Button>
+        {/* CTA Buttons */}
+        <div className="flex flex-col gap-3">
+          <Button size="lg" className="w-full">
+            Get Pre-Approved
+          </Button>
+          <Button size="lg" variant="outline" className="w-full">
+            Contact a Loan Officer
+          </Button>
         </div>
       </div>
     </div>
