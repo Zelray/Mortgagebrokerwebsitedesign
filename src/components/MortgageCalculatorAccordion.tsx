@@ -126,7 +126,8 @@ export function MortgageCalculatorAccordion() {
 
 function PaymentCalculator() {
   const [homePrice, setHomePrice] = useState(300000);
-  const [downPayment, setDownPayment] = useState(60000);
+  const [downPayment, setDownPayment] = useState(10500);
+  const [downPaymentPercent, setDownPaymentPercent] = useState(3.5);
   const [loanTerm, setLoanTerm] = useState(30);
   const [interestRate, setInterestRate] = useState(6.5);
   const [showAssumptions, setShowAssumptions] = useState(false);
@@ -134,6 +135,16 @@ function PaymentCalculator() {
   const [homeInsurance, setHomeInsurance] = useState(150);
   const [hoaDues, setHoaDues] = useState(0);
   const [includePMI, setIncludePMI] = useState(true);
+
+  const handleHomePriceChange = (newPrice: number) => {
+    setHomePrice(newPrice);
+    setDownPayment(Math.round(newPrice * (downPaymentPercent / 100)));
+  };
+
+  const handleDownPaymentChange = (newDownPayment: number) => {
+    setDownPayment(newDownPayment);
+    setDownPaymentPercent((newDownPayment / homePrice) * 100);
+  };
 
   const calculate = () => {
     const loanAmount = homePrice - downPayment;
@@ -182,18 +193,18 @@ function PaymentCalculator() {
               <div className="flex justify-between items-baseline">
                 <Label className="text-sm font-medium text-gray-700">Home price</Label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">$</span>
                   <Input
                     type="text"
                     value={formatNumber(homePrice)}
-                    onChange={(e) => setHomePrice(parseCurrency(e.target.value))}
-                    className="pl-7 w-36 text-right bg-white border-gray-300 font-medium"
+                    onChange={(e) => handleHomePriceChange(parseCurrency(e.target.value))}
+                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
                   />
                 </div>
               </div>
               <Slider
                 value={[homePrice]}
-                onValueChange={([value]: number[]) => setHomePrice(value)}
+                onValueChange={([value]: number[]) => handleHomePriceChange(value)}
                 min={50000}
                 max={2000000}
                 step={10000}
@@ -207,25 +218,25 @@ function PaymentCalculator() {
                 <Label className="text-sm font-medium text-gray-700">Down payment</Label>
                 <div className="flex items-center gap-2">
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">$</span>
                     <Input
                       type="text"
                       value={formatNumber(downPayment)}
-                      onChange={(e) => setDownPayment(parseCurrency(e.target.value))}
-                      className="pl-7 w-28 text-right bg-white border-gray-300 font-medium"
+                      onChange={(e) => handleDownPaymentChange(parseCurrency(e.target.value))}
+                      className="pl-9 w-28 text-right bg-white border-gray-300 font-medium"
                     />
                   </div>
                   <span className="text-sm text-gray-600 font-medium min-w-[48px] text-right">
-                    {((downPayment / homePrice) * 100).toFixed(0)}%
+                    {downPaymentPercent.toFixed(1)}%
                   </span>
                 </div>
               </div>
               <Slider
                 value={[downPayment]}
-                onValueChange={([value]: number[]) => setDownPayment(Math.min(value, homePrice * 0.5))}
+                onValueChange={([value]: number[]) => handleDownPaymentChange(Math.min(value, homePrice * 0.5))}
                 min={0}
                 max={homePrice * 0.5}
-                step={5000}
+                step={1000}
                 className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
               />
             </div>
@@ -287,12 +298,12 @@ function PaymentCalculator() {
                   <div className="space-y-2">
                     <Label className="text-sm font-medium text-gray-700">Property tax (monthly)</Label>
                     <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">$</span>
                       <Input
                         type="number"
                         value={propertyTax}
                         onChange={(e) => setPropertyTax(parseFloat(e.target.value) || 0)}
-                        className="pl-7 bg-white border-gray-300"
+                        className="pl-9 bg-white border-gray-300"
                       />
                     </div>
                   </div>
@@ -300,12 +311,12 @@ function PaymentCalculator() {
                   <div className="space-y-2">
                     <Label className="text-sm font-medium text-gray-700">Home insurance (monthly)</Label>
                     <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">$</span>
                       <Input
                         type="number"
                         value={homeInsurance}
                         onChange={(e) => setHomeInsurance(parseFloat(e.target.value) || 0)}
-                        className="pl-7 bg-white border-gray-300"
+                        className="pl-9 bg-white border-gray-300"
                       />
                     </div>
                   </div>
@@ -313,12 +324,12 @@ function PaymentCalculator() {
                   <div className="space-y-2">
                     <Label className="text-sm font-medium text-gray-700">HOA dues (monthly)</Label>
                     <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">$</span>
                       <Input
                         type="number"
                         value={hoaDues}
                         onChange={(e) => setHoaDues(parseFloat(e.target.value) || 0)}
-                        className="pl-7 bg-white border-gray-300"
+                        className="pl-9 bg-white border-gray-300"
                       />
                     </div>
                   </div>
