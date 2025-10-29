@@ -657,19 +657,32 @@ function RentVsBuyCalculator() {
   const [downPayment, setDownPayment] = useState(80000);
   const [monthlyRent, setMonthlyRent] = useState(2100);
   const [yearsToCompare, setYearsToCompare] = useState(5);
+  const [interestRate, setInterestRate] = useState(6.5);
+  const homeAppreciation = 3;
+  const rentIncrease = 3;
 
   const calculate = () => {
     const initialLoanAmount = homePrice - downPayment;
-    const monthlyRate = 6.5 / 100 / 12;
+    const monthlyRate = interestRate / 100 / 12;
     const numPayments = 30 * 12;
     
     const monthlyPI = initialLoanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) / (Math.pow(1 + monthlyRate, numPayments) - 1);
-    const monthlyBuying = monthlyPI + 600;
+    const propertyTax = 300;
+    const homeInsurance = 150;
+    const maintenance = 200;
+    const monthlyBuying = monthlyPI + propertyTax + homeInsurance + maintenance;
     
-    let totalRenting = monthlyRent * yearsToCompare * 12;
-    let totalBuying = downPayment + (monthlyBuying * yearsToCompare * 12);
+    let totalRentPaid = 0;
+    let currentRent = monthlyRent;
+    for (let year = 0; year < yearsToCompare; year++) {
+      totalRentPaid += currentRent * 12;
+      currentRent *= (1 + rentIncrease / 100);
+    }
     
-    const homeValueAfter = homePrice * Math.pow(1.03, yearsToCompare);
+    const totalPaymentsMade = monthlyBuying * yearsToCompare * 12;
+    const totalBuying = downPayment + totalPaymentsMade;
+    
+    const homeValueAfter = homePrice * Math.pow(1 + homeAppreciation / 100, yearsToCompare);
     let remainingBalance = initialLoanAmount;
     
     for (let month = 1; month <= yearsToCompare * 12; month++) {
@@ -682,99 +695,212 @@ function RentVsBuyCalculator() {
     const netCostBuying = totalBuying - equity;
     
     return {
-      savingsFromBuying: Math.round(totalRenting - netCostBuying)
+      totalRenting: Math.round(totalRentPaid),
+      totalBuying: Math.round(totalBuying),
+      netCostBuying: Math.round(netCostBuying),
+      equity: Math.round(equity),
+      homeValueAfter: Math.round(homeValueAfter),
+      monthlyBuying: Math.round(monthlyBuying),
+      savingsFromBuying: Math.round(totalRentPaid - netCostBuying)
     };
   };
 
   const result = calculate();
+  const buyingIsBetter = result.savingsFromBuying > 0;
+
+  const maxValue = Math.max(result.totalRenting, result.netCostBuying);
+  const rentPercentage = (result.totalRenting / maxValue) * 100;
+  const buyPercentage = (result.netCostBuying / maxValue) * 100;
 
   return (
-    <div className="grid lg:grid-cols-2 gap-6 mt-4">
-      <Card className="p-6 bg-gray-50">
-        <div className="space-y-4">
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <Label>Home Price</Label>
-              <div className="relative">
-                <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
-                <Input
-                  type="text"
-                  value={formatNumber(homePrice)}
-                  onChange={(e) => setHomePrice(parseCurrency(e.target.value))}
-                  className="pl-6 w-32 text-right bg-white"
-                />
+    <div className="grid lg:grid-cols-2 gap-8 mt-6">
+      {/* Left Column - Inputs */}
+      <div>
+        <Card className="p-6 bg-gray-50/50 border-gray-200 shadow-sm">
+          <div className="space-y-6">
+            {/* Home Price with Slider */}
+            <div className="space-y-2">
+              <div className="flex justify-between items-baseline">
+                <Label className="text-sm font-medium text-gray-700">Home price</Label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">$</span>
+                  <Input
+                    type="text"
+                    value={formatNumber(homePrice)}
+                    onChange={(e) => setHomePrice(parseCurrency(e.target.value))}
+                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
+                  />
+                </div>
               </div>
-            </div>
-            <Slider
-              value={[homePrice]}
-              onValueChange={([value]: number[]) => setHomePrice(value)}
-              min={100000}
-              max={1000000}
-              step={10000}
-              className="[&_[role=slider]]:bg-primary"
-            />
-          </div>
-
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <Label>Down Payment</Label>
-              <div className="relative">
-                <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
-                <Input
-                  type="text"
-                  value={formatNumber(downPayment)}
-                  onChange={(e) => setDownPayment(parseCurrency(e.target.value))}
-                  className="pl-6 w-32 text-right bg-white"
-                />
-              </div>
-            </div>
-            <Slider
-              value={[downPayment]}
-              onValueChange={([value]: number[]) => setDownPayment(value)}
-              min={0}
-              max={homePrice * 0.5}
-              step={5000}
-              className="[&_[role=slider]]:bg-primary"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label>Monthly Rent</Label>
-            <div className="relative">
-              <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
-              <Input
-                type="number"
-                value={monthlyRent}
-                onChange={(e) => setMonthlyRent(parseFloat(e.target.value) || 0)}
-                className="pl-6 bg-white"
+              <Slider
+                value={[homePrice]}
+                onValueChange={([value]: number[]) => setHomePrice(value)}
+                min={100000}
+                max={1000000}
+                step={10000}
+                className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
               />
             </div>
+
+            {/* Down Payment with Slider */}
+            <div className="space-y-2">
+              <div className="flex justify-between items-baseline">
+                <Label className="text-sm font-medium text-gray-700">Down payment</Label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">$</span>
+                  <Input
+                    type="text"
+                    value={formatNumber(downPayment)}
+                    onChange={(e) => setDownPayment(parseCurrency(e.target.value))}
+                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
+                  />
+                </div>
+              </div>
+              <Slider
+                value={[downPayment]}
+                onValueChange={([value]: number[]) => setDownPayment(value)}
+                min={0}
+                max={homePrice * 0.5}
+                step={5000}
+                className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
+              />
+            </div>
+
+            {/* Monthly Rent with Slider */}
+            <div className="space-y-2">
+              <div className="flex justify-between items-baseline">
+                <Label className="text-sm font-medium text-gray-700">Monthly rent</Label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">$</span>
+                  <Input
+                    type="number"
+                    value={monthlyRent}
+                    onChange={(e) => setMonthlyRent(parseFloat(e.target.value) || 0)}
+                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
+                  />
+                </div>
+              </div>
+              <Slider
+                value={[monthlyRent]}
+                onValueChange={([value]: number[]) => setMonthlyRent(value)}
+                min={500}
+                max={5000}
+                step={100}
+                className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
+              />
+            </div>
+
+            {/* Years to Compare */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium text-gray-700">Years to compare</Label>
+              <Select value={yearsToCompare.toString()} onValueChange={(v: string) => setYearsToCompare(parseInt(v))}>
+                <SelectTrigger className="bg-white border-gray-300">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="3">3 years</SelectItem>
+                  <SelectItem value="5">5 years</SelectItem>
+                  <SelectItem value="7">7 years</SelectItem>
+                  <SelectItem value="10">10 years</SelectItem>
+                  <SelectItem value="15">15 years</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Interest Rate */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium text-gray-700">Interest rate</Label>
+              <div className="relative">
+                <Input
+                  type="number"
+                  step="0.1"
+                  value={interestRate}
+                  onChange={(e) => setInterestRate(parseFloat(e.target.value) || 0)}
+                  className="pr-8 bg-white border-gray-300"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">%</span>
+              </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      {/* Right Column - Results */}
+      <div className="space-y-6">
+        {/* Winner Display */}
+        <div>
+          <p className="text-sm text-gray-600 mb-2">After {yearsToCompare} years, {buyingIsBetter ? 'buying' : 'renting'} saves you</p>
+          <div className="text-5xl font-bold text-primary mb-1">
+            {formatCurrency(Math.abs(result.savingsFromBuying))}
+          </div>
+          <p className="text-sm text-gray-500">compared to {buyingIsBetter ? 'renting' : 'buying'}</p>
+        </div>
+
+        {/* Cost Comparison Chart */}
+        <Card className="p-6 bg-white border-gray-200 shadow-sm">
+          <h4 className="font-semibold text-gray-900 mb-6">Total cost comparison</h4>
+          
+          <div className="space-y-6">
+            {/* Renting Bar */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-gray-700">Renting</span>
+                <span className="text-sm font-bold text-gray-900">{formatCurrency(result.totalRenting)}</span>
+              </div>
+              <div className="h-10 bg-gray-100 rounded-lg overflow-hidden">
+                <div 
+                  className="h-full bg-red-500 flex items-center justify-end pr-3 transition-all"
+                  style={{ width: `${rentPercentage}%` }}
+                >
+                  {rentPercentage > 15 && <span className="text-xs font-semibold text-white">Total rent paid</span>}
+                </div>
+              </div>
+            </div>
+
+            {/* Buying Bar */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-gray-700">Buying (net cost)</span>
+                <span className="text-sm font-bold text-gray-900">{formatCurrency(result.netCostBuying)}</span>
+              </div>
+              <div className="h-10 bg-gray-100 rounded-lg overflow-hidden">
+                <div 
+                  className="h-full bg-emerald-500 flex items-center justify-end pr-3 transition-all"
+                  style={{ width: `${buyPercentage}%` }}
+                >
+                  {buyPercentage > 20 && <span className="text-xs font-semibold text-white">After equity: {formatCurrency(result.equity)}</span>}
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="space-y-2">
-            <Label>Years to Compare</Label>
-            <Select value={yearsToCompare.toString()} onValueChange={(v: string) => setYearsToCompare(parseInt(v))}>
-              <SelectTrigger className="bg-white">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="3">3 years</SelectItem>
-                <SelectItem value="5">5 years</SelectItem>
-                <SelectItem value="10">10 years</SelectItem>
-                <SelectItem value="15">15 years</SelectItem>
-              </SelectContent>
-            </Select>
+          {/* Details Breakdown */}
+          <div className="mt-6 pt-6 border-t space-y-3">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-600">Monthly payment (buying)</span>
+              <span className="font-semibold text-gray-900">{formatCurrency(result.monthlyBuying)}</span>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-600">Home value after {yearsToCompare} years</span>
+              <span className="font-semibold text-gray-900">{formatCurrency(result.homeValueAfter)}</span>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-600">Built equity</span>
+              <span className="font-semibold text-emerald-600">{formatCurrency(result.equity)}</span>
+            </div>
           </div>
-        </div>
-      </Card>
+        </Card>
 
-      <Card className="p-6 bg-gradient-to-br from-primary to-primary/80 text-white">
-        <p className="text-sm opacity-90 mb-2">After {yearsToCompare} years,</p>
-        <div className="text-2xl font-bold mb-2">
-          {result.savingsFromBuying > 0 ? 'Buying' : 'Renting'} will save you
+        {/* CTA Buttons */}
+        <div className="flex flex-col gap-3">
+          <Button size="lg" className="w-full">
+            Start Your Home Search
+          </Button>
+          <Button size="lg" variant="outline" className="w-full">
+            Contact a Loan Officer
+          </Button>
         </div>
-        <div className="text-4xl font-bold">{formatCurrency(Math.abs(result.savingsFromBuying))}</div>
-      </Card>
+      </div>
     </div>
   );
 }
