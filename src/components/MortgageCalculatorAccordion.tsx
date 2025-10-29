@@ -8,7 +8,7 @@ import { Label } from './ui/label';
 import { Slider } from './ui/slider';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 import { Checkbox } from './ui/checkbox';
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, Cell } from 'recharts';
 
 const formatCurrency = (value: number) => {
   return new Intl.NumberFormat('en-US', {
@@ -172,226 +172,227 @@ function PaymentCalculator() {
   ];
 
   return (
-    <div className="grid lg:grid-cols-[400px_1fr] gap-8 mt-4">
+    <div className="grid lg:grid-cols-2 gap-8 mt-6">
       {/* Left Column - Inputs */}
-      <Card className="p-6 bg-gray-50 border-gray-200">
-        <h4 className="font-bold mb-4 text-gray-900">Loan Information</h4>
-        <div className="space-y-5">
-          {/* Home Price with Slider */}
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <Label className="text-sm text-gray-700">Home price</Label>
-              <div className="relative">
-                <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
-                <Input
-                  type="text"
-                  value={formatNumber(homePrice)}
-                  onChange={(e) => setHomePrice(parseCurrency(e.target.value))}
-                  className="pl-6 w-32 text-right bg-white"
-                />
-              </div>
-            </div>
-            <Slider
-              value={[homePrice]}
-              onValueChange={([value]: number[]) => setHomePrice(value)}
-              min={50000}
-              max={2000000}
-              step={10000}
-              className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary"
-            />
-          </div>
-
-          {/* Down Payment with Slider */}
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <Label className="text-sm text-gray-700">Down payment</Label>
-              <div className="flex items-center gap-2">
+      <div>
+        <Card className="p-6 bg-gray-50/50 border-gray-200 shadow-sm">
+          <div className="space-y-6">
+            {/* Home Price with Slider */}
+            <div className="space-y-2">
+              <div className="flex justify-between items-baseline">
+                <Label className="text-sm font-medium text-gray-700">Home price</Label>
                 <div className="relative">
-                  <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
                   <Input
                     type="text"
-                    value={formatNumber(downPayment)}
-                    onChange={(e) => setDownPayment(parseCurrency(e.target.value))}
-                    className="pl-6 w-28 text-right bg-white"
+                    value={formatNumber(homePrice)}
+                    onChange={(e) => setHomePrice(parseCurrency(e.target.value))}
+                    className="pl-7 w-36 text-right bg-white border-gray-300 font-medium"
                   />
                 </div>
-                <span className="text-sm text-gray-600 w-12">
-                  {((downPayment / homePrice) * 100).toFixed(1)}%
-                </span>
               </div>
-            </div>
-            <Slider
-              value={[downPayment]}
-              onValueChange={([value]: number[]) => setDownPayment(Math.min(value, homePrice * 0.5))}
-              min={0}
-              max={homePrice * 0.5}
-              step={5000}
-              className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary"
-            />
-          </div>
-
-          {/* Loan Term Dropdown */}
-          <div className="space-y-2">
-            <Label className="text-sm text-gray-700">Loan term</Label>
-            <Select value={loanTerm.toString()} onValueChange={(v: string) => setLoanTerm(parseInt(v))}>
-              <SelectTrigger className="bg-white">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="10">10 years</SelectItem>
-                <SelectItem value="15">15 years</SelectItem>
-                <SelectItem value="20">20 years</SelectItem>
-                <SelectItem value="30">30 years</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          {/* Interest Rate */}
-          <div className="space-y-2">
-            <Label className="text-sm text-gray-700">Interest rate</Label>
-            <div className="relative">
-              <Input
-                type="number"
-                step="0.1"
-                value={interestRate}
-                onChange={(e) => setInterestRate(parseFloat(e.target.value) || 0)}
-                className="pr-8 bg-white"
+              <Slider
+                value={[homePrice]}
+                onValueChange={([value]: number[]) => setHomePrice(value)}
+                min={50000}
+                max={2000000}
+                step={10000}
+                className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
               />
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">%</span>
             </div>
-          </div>
 
-          {/* Assumptions Toggle */}
-          <div className="pt-3 border-t">
-            <button
-              onClick={() => setShowAssumptions(!showAssumptions)}
-              className="flex items-center justify-between w-full text-sm font-semibold text-gray-700 hover:text-gray-900"
-            >
-              <span>Assumptions</span>
-              <span className="text-lg">{showAssumptions ? '−' : '+'}</span>
-            </button>
-            
-            {showAssumptions && (
-              <div className="mt-4 space-y-4">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="pmi"
-                    checked={includePMI}
-                    onCheckedChange={(checked: boolean) => setIncludePMI(checked)}
-                  />
-                  <label htmlFor="pmi" className="text-sm text-gray-600">
-                    Include PMI (if down &lt; 20%)
-                  </label>
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm text-gray-700">Property tax (monthly)</Label>
+            {/* Down Payment with Slider */}
+            <div className="space-y-2">
+              <div className="flex justify-between items-baseline">
+                <Label className="text-sm font-medium text-gray-700">Down payment</Label>
+                <div className="flex items-center gap-2">
                   <div className="relative">
-                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
                     <Input
-                      type="number"
-                      value={propertyTax}
-                      onChange={(e) => setPropertyTax(parseFloat(e.target.value) || 0)}
-                      className="pl-6 bg-white"
+                      type="text"
+                      value={formatNumber(downPayment)}
+                      onChange={(e) => setDownPayment(parseCurrency(e.target.value))}
+                      className="pl-7 w-28 text-right bg-white border-gray-300 font-medium"
                     />
                   </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm text-gray-700">Home insurance (monthly)</Label>
-                  <div className="relative">
-                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
-                    <Input
-                      type="number"
-                      value={homeInsurance}
-                      onChange={(e) => setHomeInsurance(parseFloat(e.target.value) || 0)}
-                      className="pl-6 bg-white"
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label className="text-sm text-gray-700">HOA dues (monthly)</Label>
-                  <div className="relative">
-                    <span className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
-                    <Input
-                      type="number"
-                      value={hoaDues}
-                      onChange={(e) => setHoaDues(parseFloat(e.target.value) || 0)}
-                      className="pl-6 bg-white"
-                    />
-                  </div>
+                  <span className="text-sm text-gray-600 font-medium min-w-[48px] text-right">
+                    {((downPayment / homePrice) * 100).toFixed(0)}%
+                  </span>
                 </div>
               </div>
-            )}
+              <Slider
+                value={[downPayment]}
+                onValueChange={([value]: number[]) => setDownPayment(Math.min(value, homePrice * 0.5))}
+                min={0}
+                max={homePrice * 0.5}
+                step={5000}
+                className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
+              />
+            </div>
+
+            {/* Loan Term */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium text-gray-700">Loan term</Label>
+              <Select value={loanTerm.toString()} onValueChange={(v: string) => setLoanTerm(parseInt(v))}>
+                <SelectTrigger className="bg-white border-gray-300">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="10">10 years</SelectItem>
+                  <SelectItem value="15">15 years</SelectItem>
+                  <SelectItem value="20">20 years</SelectItem>
+                  <SelectItem value="30">30 years</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Interest Rate */}
+            <div className="space-y-2">
+              <Label className="text-sm font-medium text-gray-700">Interest rate</Label>
+              <div className="relative">
+                <Input
+                  type="number"
+                  step="0.1"
+                  value={interestRate}
+                  onChange={(e) => setInterestRate(parseFloat(e.target.value) || 0)}
+                  className="pr-8 bg-white border-gray-300"
+                />
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">%</span>
+              </div>
+            </div>
+
+            {/* Assumptions Toggle */}
+            <div className="pt-4 border-t border-gray-200">
+              <button
+                onClick={() => setShowAssumptions(!showAssumptions)}
+                className="flex items-center justify-between w-full text-sm font-semibold text-gray-700 hover:text-gray-900 transition-colors"
+              >
+                <span>Additional costs</span>
+                <span className="text-xl">{showAssumptions ? '−' : '+'}</span>
+              </button>
+              
+              {showAssumptions && (
+                <div className="mt-4 space-y-4 pt-4 border-t border-gray-100">
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="pmi"
+                      checked={includePMI}
+                      onCheckedChange={(checked: boolean) => setIncludePMI(checked)}
+                    />
+                    <label htmlFor="pmi" className="text-sm text-gray-600 cursor-pointer">
+                      Include PMI (if down payment &lt; 20%)
+                    </label>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">Property tax (monthly)</Label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
+                      <Input
+                        type="number"
+                        value={propertyTax}
+                        onChange={(e) => setPropertyTax(parseFloat(e.target.value) || 0)}
+                        className="pl-7 bg-white border-gray-300"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">Home insurance (monthly)</Label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
+                      <Input
+                        type="number"
+                        value={homeInsurance}
+                        onChange={(e) => setHomeInsurance(parseFloat(e.target.value) || 0)}
+                        className="pl-7 bg-white border-gray-300"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label className="text-sm font-medium text-gray-700">HOA dues (monthly)</Label>
+                    <div className="relative">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
+                      <Input
+                        type="number"
+                        value={hoaDues}
+                        onChange={(e) => setHoaDues(parseFloat(e.target.value) || 0)}
+                        className="pl-7 bg-white border-gray-300"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </Card>
+        </Card>
+      </div>
 
       {/* Right Column - Results */}
       <div className="space-y-6">
-        {/* Payment Amount */}
+        {/* Payment Display */}
         <div>
-          <p className="text-gray-600 mb-2">Your estimated monthly mortgage payment is</p>
-          <div className="text-5xl font-bold text-primary mb-4">
-            {formatCurrency(result.total)}.
+          <p className="text-sm text-gray-600 mb-2">Your estimated monthly payment</p>
+          <div className="text-5xl font-bold text-primary mb-1">
+            {formatCurrency(result.total)}
           </div>
+          <p className="text-sm text-gray-500">per month</p>
         </div>
 
-        {/* CTA Buttons */}
-        <div className="flex gap-3">
-          <Button size="lg" className="px-8">
-            Mortgage Application
-          </Button>
-          <Button size="lg" variant="outline" className="px-8">
-            Home Equity Loan Application
-          </Button>
-        </div>
+        {/* Chart Section */}
+        <Card className="p-6 bg-white border-gray-200 shadow-sm">
+          <h4 className="font-semibold text-gray-900 mb-6">Payment breakdown</h4>
+          
+          <div className="flex items-center gap-8">
+            {/* Donut Chart */}
+            <div className="relative flex-shrink-0">
+              <div style={{ width: 200, height: 200 }}>
+                <PieChart width={200} height={200}>
+                  <Pie
+                    data={chartData}
+                    cx={100}
+                    cy={100}
+                    innerRadius={60}
+                    outerRadius={90}
+                    paddingAngle={2}
+                    dataKey="value"
+                  >
+                    {chartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                <div className="text-xs text-gray-500">Total</div>
+                <div className="text-xl font-bold text-gray-900">{formatCurrency(result.total)}</div>
+              </div>
+            </div>
 
-        {/* Tabs */}
-        <div className="border-b">
-          <div className="flex gap-8">
-            <button className="pb-3 px-1 border-b-2 border-primary font-semibold">Breakdown</button>
-            <button className="pb-3 px-1 text-gray-500 hover:text-gray-700">Schedule</button>
-          </div>
-        </div>
-
-        {/* Donut Chart */}
-        <div className="flex items-center justify-center gap-12">
-          <div className="relative">
-            <ResponsiveContainer width={240} height={240}>
-              <PieChart>
-                <Pie
-                  data={chartData}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={70}
-                  outerRadius={110}
-                  paddingAngle={2}
-                  dataKey="value"
-                >
-                  {chartData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
-            <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <div className="text-gray-600 text-sm">Total</div>
-              <div className="text-2xl font-bold">{formatCurrency(result.total)}</div>
+            {/* Legend */}
+            <div className="space-y-2.5 flex-1">
+              {chartData.map((item) => (
+                <div key={item.name} className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-sm flex-shrink-0" style={{ backgroundColor: item.color }} />
+                    <span className="text-sm text-gray-600">{item.name}</span>
+                  </div>
+                  <span className="text-sm font-semibold text-gray-900">{formatCurrency(item.value)}</span>
+                </div>
+              ))}
             </div>
           </div>
+        </Card>
 
-          {/* Legend */}
-          <div className="space-y-3">
-            {chartData.map((item) => (
-              <div key={item.name} className="flex items-center gap-3">
-                <div className="w-4 h-4 rounded-full" style={{ backgroundColor: item.color }} />
-                <span className="text-sm text-gray-600 min-w-[80px]">{item.name}</span>
-                <span className="text-sm font-semibold">{formatCurrency(item.value)}</span>
-              </div>
-            ))}
-          </div>
+        {/* CTA Buttons */}
+        <div className="flex flex-col gap-3">
+          <Button size="lg" className="w-full">
+            Apply for Mortgage
+          </Button>
+          <Button size="lg" variant="outline" className="w-full">
+            Contact a Loan Officer
+          </Button>
         </div>
       </div>
     </div>
