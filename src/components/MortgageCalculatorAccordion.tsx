@@ -414,14 +414,15 @@ function PaymentCalculator() {
 
 function AffordabilityCalculator() {
   const [annualIncome, setAnnualIncome] = useState(75000);
-  const [downPayment, setDownPayment] = useState(50000);
+  const [creditScore, setCreditScore] = useState('below'); // 'below' or 'above' 680
   const [monthlyDebts, setMonthlyDebts] = useState(500);
   const [interestRate, setInterestRate] = useState(6.5);
   const [loanTerm, setLoanTerm] = useState(30);
 
   const calculate = () => {
     const monthlyIncome = annualIncome / 12;
-    const dtiRatio = 0.43;
+    // Credit score determines max DTI ratio
+    const dtiRatio = creditScore === 'above' ? 0.50 : 0.41;
     const maxMonthlyPayment = (monthlyIncome * dtiRatio) - monthlyDebts;
     
     const monthlyRate = interestRate / 100 / 12;
@@ -435,7 +436,8 @@ function AffordabilityCalculator() {
     
     const maxLoanAmount = availableForPI * ((Math.pow(1 + monthlyRate, numPayments) - 1) / (monthlyRate * Math.pow(1 + monthlyRate, numPayments)));
     
-    const homePrice = maxLoanAmount + downPayment;
+    // Home price is just the max loan amount (no down payment in affordability calc)
+    const homePrice = maxLoanAmount;
     
     return {
       homePrice: Math.round(homePrice),
@@ -445,7 +447,8 @@ function AffordabilityCalculator() {
       principalInterest: Math.round(availableForPI),
       taxes: propertyTax,
       insurance: homeInsurance,
-      debts: monthlyDebts
+      debts: monthlyDebts,
+      dtiRatio: Math.round(dtiRatio * 100)
     };
   };
 
@@ -487,28 +490,33 @@ function AffordabilityCalculator() {
               />
             </div>
 
-            {/* Down Payment with Slider */}
-            <div className="space-y-2">
-              <div className="flex justify-between items-baseline">
-                <Label className="text-sm font-medium text-gray-700">Down payment</Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm pointer-events-none">$</span>
-                  <Input
-                    type="text"
-                    value={formatNumber(downPayment)}
-                    onChange={(e) => setDownPayment(parseCurrency(e.target.value))}
-                    className="pl-10 w-36 text-right bg-white border-gray-300 font-medium"
+            {/* Credit Score Selection */}
+            <div className="space-y-3">
+              <Label className="text-sm font-medium text-gray-700">Credit score</Label>
+              <div className="space-y-2">
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="creditScore"
+                    value="below"
+                    checked={creditScore === 'below'}
+                    onChange={() => setCreditScore('below')}
+                    className="w-4 h-4 text-primary focus:ring-primary border-gray-300"
                   />
-                </div>
+                  <span className="text-sm text-gray-700">Below 680 (41% max DTI)</span>
+                </label>
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="creditScore"
+                    value="above"
+                    checked={creditScore === 'above'}
+                    onChange={() => setCreditScore('above')}
+                    className="w-4 h-4 text-primary focus:ring-primary border-gray-300"
+                  />
+                  <span className="text-sm text-gray-700">680 or above (50% max DTI)</span>
+                </label>
               </div>
-              <Slider
-                value={[downPayment]}
-                onValueChange={([value]: number[]) => setDownPayment(value)}
-                min={0}
-                max={200000}
-                step={5000}
-                className="[&_[role=slider]]:bg-primary [&_[role=slider]]:border-primary [&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
-              />
             </div>
 
             {/* Monthly Debts with Slider */}
@@ -577,7 +585,8 @@ function AffordabilityCalculator() {
           <div className="text-5xl font-bold text-primary mb-1">
             {formatCurrency(result.homePrice)}
           </div>
-          <p className="text-sm text-gray-500">with a monthly payment of {formatCurrency(result.maxMonthlyPayment)}</p>
+          <p className="text-sm text-gray-500 mb-1">with a monthly payment of {formatCurrency(result.maxMonthlyPayment)}</p>
+          <p className="text-xs text-gray-500 italic">Based on {result.dtiRatio}% debt-to-income ratio</p>
         </div>
 
         {/* Income Breakdown Card */}

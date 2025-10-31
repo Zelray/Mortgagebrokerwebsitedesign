@@ -7,6 +7,16 @@ Each entry should be concise but complete enough to understand what was changed 
 
 ## October 31, 2025
 
+### 🧮 Feature Fix - Home Affordability Calculator Logic Correction
+- **Issue:** Calculator was incorrectly using down payment in affordability calculation
+- **Fix:** Replaced down payment input with credit score selection
+- **Logic Changes:**
+  - Credit score below 680: Uses 41% max debt-to-income ratio
+  - Credit score 680+: Uses 50% max debt-to-income ratio
+  - Removed down payment from calculation (doesn't affect affordability)
+- **UI Changes:** Added radio buttons for credit score selection
+- **Status:** ✅ Complete
+
 ### 🐛 Bug Fix - Dollar Sign Overlap in All Calculators
 - **Issue:** Dollar signs were overlapping with numbers in all calculator input fields
 - **Fix:** Updated padding from `pl-9` to `pl-10` on all currency input fields
