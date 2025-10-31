@@ -200,7 +200,7 @@ function PaymentCalculator() {
                     type="text"
                     value={formatNumber(homePrice)}
                     onChange={(e) => handleHomePriceChange(parseCurrency(e.target.value))}
-                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
+                    className="pl-10 w-36 text-right bg-white border-gray-300 font-medium"
                   />
                 </div>
               </div>
@@ -225,7 +225,7 @@ function PaymentCalculator() {
                       type="text"
                       value={formatNumber(downPayment)}
                       onChange={(e) => handleDownPaymentChange(parseCurrency(e.target.value))}
-                      className="pl-9 w-28 text-right bg-white border-gray-300 font-medium"
+                      className="pl-10 w-28 text-right bg-white border-gray-300 font-medium"
                     />
                   </div>
                   <span className="text-sm text-gray-600 font-medium min-w-[48px] text-right">
@@ -305,7 +305,7 @@ function PaymentCalculator() {
                         type="number"
                         value={propertyTax}
                         onChange={(e) => setPropertyTax(parseFloat(e.target.value) || 0)}
-                        className="pl-9 bg-white border-gray-300"
+                        className="pl-10 bg-white border-gray-300"
                       />
                     </div>
                   </div>
@@ -318,7 +318,7 @@ function PaymentCalculator() {
                         type="number"
                         value={homeInsurance}
                         onChange={(e) => setHomeInsurance(parseFloat(e.target.value) || 0)}
-                        className="pl-9 bg-white border-gray-300"
+                        className="pl-10 bg-white border-gray-300"
                       />
                     </div>
                   </div>
@@ -331,7 +331,7 @@ function PaymentCalculator() {
                         type="number"
                         value={hoaDues}
                         onChange={(e) => setHoaDues(parseFloat(e.target.value) || 0)}
-                        className="pl-9 bg-white border-gray-300"
+                        className="pl-10 bg-white border-gray-300"
                       />
                     </div>
                   </div>
@@ -473,7 +473,7 @@ function AffordabilityCalculator() {
                     type="text"
                     value={formatNumber(annualIncome)}
                     onChange={(e) => setAnnualIncome(parseCurrency(e.target.value))}
-                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
+                    className="pl-10 w-36 text-right bg-white border-gray-300 font-medium"
                   />
                 </div>
               </div>
@@ -497,7 +497,7 @@ function AffordabilityCalculator() {
                     type="text"
                     value={formatNumber(downPayment)}
                     onChange={(e) => setDownPayment(parseCurrency(e.target.value))}
-                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
+                    className="pl-10 w-36 text-right bg-white border-gray-300 font-medium"
                   />
                 </div>
               </div>
@@ -521,7 +521,7 @@ function AffordabilityCalculator() {
                     type="number"
                     value={monthlyDebts}
                     onChange={(e) => setMonthlyDebts(parseFloat(e.target.value) || 0)}
-                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
+                    className="pl-10 w-36 text-right bg-white border-gray-300 font-medium"
                   />
                 </div>
               </div>
@@ -730,7 +730,7 @@ function RentVsBuyCalculator() {
                     type="text"
                     value={formatNumber(homePrice)}
                     onChange={(e) => setHomePrice(parseCurrency(e.target.value))}
-                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
+                    className="pl-10 w-36 text-right bg-white border-gray-300 font-medium"
                   />
                 </div>
               </div>
@@ -754,7 +754,7 @@ function RentVsBuyCalculator() {
                     type="text"
                     value={formatNumber(downPayment)}
                     onChange={(e) => setDownPayment(parseCurrency(e.target.value))}
-                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
+                    className="pl-10 w-36 text-right bg-white border-gray-300 font-medium"
                   />
                 </div>
               </div>
@@ -778,7 +778,7 @@ function RentVsBuyCalculator() {
                     type="number"
                     value={monthlyRent}
                     onChange={(e) => setMonthlyRent(parseFloat(e.target.value) || 0)}
-                    className="pl-9 w-36 text-right bg-white border-gray-300 font-medium"
+                    className="pl-10 w-36 text-right bg-white border-gray-300 font-medium"
                   />
                 </div>
               </div>
@@ -970,7 +970,7 @@ function RefinanceCalculator() {
                       type="text"
                       value={formatNumber(remainingBalance)}
                       onChange={(e) => setRemainingBalance(parseCurrency(e.target.value))}
-                      className="pl-7 font-medium bg-[#0097A7] text-white border-0"
+                      className="pl-10 font-medium bg-[#0097A7] text-white border-0"
                     />
                   </div>
                   <Slider
@@ -1007,7 +1007,7 @@ function RefinanceCalculator() {
                       type="number"
                       value={currentPayment}
                       onChange={(e) => setCurrentPayment(parseFloat(e.target.value) || 0)}
-                      className="pl-7"
+                      className="pl-10"
                     />
                   </div>
                 </div>

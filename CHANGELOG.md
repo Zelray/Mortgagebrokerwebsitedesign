@@ -5,6 +5,15 @@ Each entry should be concise but complete enough to understand what was changed 
 
 ---
 
+## October 31, 2025
+
+### 🐛 Bug Fix - Dollar Sign Overlap in All Calculators
+- **Issue:** Dollar signs were overlapping with numbers in all calculator input fields
+- **Fix:** Updated padding from `pl-9` to `pl-10` on all currency input fields
+- **Components Affected:** All 4 calculators (Payment, Affordability, Rent vs Buy, Refinance)
+- **Technical:** Changed padding-left values to accommodate dollar sign positioning
+- **Status:** ✅ Resolved
+
 ## October 30, 2025
 
 ### 🎨 UI/UX - Refinance Calculator Complete Redesign
